@@ -3,7 +3,7 @@ import os
 import requests
 import sys
 
-messenger_access_token = "EAAC70o39wCcBAKZCmRwVtAHQIroZCEgBi5lHYOcpxf244v8rWVeDgjEfL23dZC3pNXECwPXecWloS2tceoxnX0fgkTrXG4DXOp2y8mZCVeamITNANqzgDAGX2ZCwUFosCHMZC8APRqDEjC0ZBMGaRzj8SgYbqnJUpQXcr4hS22g1QZDZD"
+messenger_access_token = "EAAXZCEOFOoHgBABZBiSmONE3B3rnVO27CC0wx8DLAXHgZB74SCIVP8jbErniWemLH6Ay6bZBq9dnSZALwvLkObHEWcVt9GrJKc01ib3TP7BhpR8GKnl7noZB6imkhjswZAeLjVYXSKGNFAUVYXLZA3lVORrEnnqYhu3ANYOXuDolRgZDZD"
 messenger_root_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token="
 # messenger_root_url = str(os.environ.get("messenger_url"))
 # messenger_access_token = str(os.environ.get("messenger_access_token"))
