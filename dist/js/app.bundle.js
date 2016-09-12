@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1f455fe1c7f86f9831fe"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0ba3581bea331370dd10"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -35817,7 +35817,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(17), RootInstanceProvider = __webpack_require__(15), ReactMount = __webpack_require__(6), React = __webpack_require__(1); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	   value: true
@@ -35840,59 +35840,59 @@
 	//import FBApp from '../modules/firebase';
 
 
+	/*
+	FacebookButton connects user to authentication via Facebook and firebase
+
+
+	*/
+
 	var FacebookButton = function (_React$Component) {
 	   _inherits(FacebookButton, _React$Component);
 
 	   function FacebookButton(props) {
 	      _classCallCheck(this, FacebookButton);
 
+	      //whats inside prps
 	      var _this = _possibleConstructorReturn(this, (FacebookButton.__proto__ || Object.getPrototypeOf(FacebookButton)).call(this, props));
 
-	      console.log(props.fb);
-	      //this.FB = props.fb;
-	      console.log("in constructor");
-	      _this.state = {
-	         message: ""
-	      };
+	      console.log(props);
 
 	      return _this;
 	   }
 
 	   _createClass(FacebookButton, [{
-	      key: "componentDidMount",
+	      key: 'componentDidMount',
 	      value: function componentDidMount() {
-	         console.log("component did mount");
+
 	         FB.Event.subscribe('auth.logout', this.onLogout.bind(this));
 	         FB.Event.subscribe('auth.statusChange', this.onStatusChange.bind(this));
 	         FB.Event.subscribe('auth.authResponseChange', this.checkLoginState.bind(this));
 	      }
 	   }, {
-	      key: "onStatusChange",
+	      key: 'onStatusChange',
 	      value: function onStatusChange(response) {
 
 	         var self = this;
 
 	         if (response.status === "connected") {
-	            this.FB.api('/me', function (response) {
+	            FB.api('/me', function (response) {
 	               var message = "Welcome " + response.name;
-	               self.setState({
-	                  message: message
-	               });
+	               console.log(message);
+	               // self.setState({
+	               //    message: message
+	               // });
 	            });
 	         }
 	      }
 	   }, {
-	      key: "onLogout",
-	      value: function onLogout(response) {
-	         this.setState({
-	            message: ""
-	         });
-	      }
+	      key: 'onLogout',
+	      value: function onLogout(response) {}
 	   }, {
-	      key: "checkLoginState",
+	      key: 'checkLoginState',
 	      value: function checkLoginState(event) {
 	         console.log("made it to event");
 	         console.log(event);
+
 	         if (event.authResponse != null) {
 	            // User is signed-in Facebook.
 	            var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
@@ -35901,10 +35901,12 @@
 	               console.log("in this block");
 	               console.log(firebaseUser);
 
+	               //see if the user is logged 
 	               var check = false;
 
 	               if (firebaseUser) {
 	                  var providerData = firebaseUser.providerData;
+
 	                  for (var i = 0; i < providerData.length; i++) {
 	                     if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID && providerData[i].uid === event.authResponse.userID) {
 	                        // We don't need to re-auth the Firebase connection.
@@ -35922,6 +35924,28 @@
 
 	                  var credential = firebase.auth.FacebookAuthProvider.credential(event.authResponse.accessToken);
 	                  // Sign in with the credential from the Facebook user.
+
+	                  // //first time user 
+	                  // if (firebase.database().ref('users/' + event.authResponse.accessToken) === null) {
+
+	                  FB.api('/me/accounts', function (response) {
+	                     console.log("about to log response");
+	                     console.log(response);
+	                     var pages = [];
+	                     for (var i = 0; i < response.data.length; i++) {
+	                        pages.push(response.data[i].name);
+	                     }
+
+	                     firebase.database().ref('users/' + event.authResponse.userID).set({
+
+	                        uid: event.authResponse.userID,
+	                        bot_connected: false,
+	                        credential: event.authResponse.accessToken,
+	                        pages: pages
+
+	                     });
+	                  });
+
 	                  firebase.auth().signInWithCredential(credential).catch(function (error) {
 	                     // Handle Errors here.
 	                     var errorCode = error.code;
@@ -35944,42 +35968,19 @@
 	         }
 	      }
 	   }, {
-	      key: "isUserEqual",
-	      value: function isUserEqual(facebookAuthResponse, firebaseUser) {
-
-	         console.log('in user');
-	         console.log(firebaseUser);
-
-	         if (firebaseUser) {
-	            var providerData = firebaseUser.providerData;
-	            for (var i = 0; i < providerData.length; i++) {
-	               if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID && providerData[i].uid === facebookAuthResponse.userID) {
-	                  // We don't need to re-auth the Firebase connection.
-	                  return true;
-	               }
-	            }
-	         }
-	         return false;
-	      }
-	   }, {
-	      key: "render",
+	      key: 'render',
 	      value: function render() {
 	         return _react2.default.createElement(
-	            "div",
+	            'div',
 	            null,
-	            _react2.default.createElement("div", {
-	               className: "fb-login-button",
-	               "data-max-rows": "1",
-	               "data-size": "xlarge",
-	               "data-show-faces": "false",
-	               scope: "public_profile,email",
-	               "data-auto-logout-link": "true"
-	            }),
-	            _react2.default.createElement(
-	               "div",
-	               null,
-	               this.state.message
-	            )
+	            _react2.default.createElement('div', {
+	               className: 'fb-login-button',
+	               'data-max-rows': '1',
+	               'data-size': 'xlarge',
+	               'data-show-faces': 'false',
+	               scope: 'public_profile,email, manage_pages, publish_pages',
+	               'data-auto-logout-link': 'true'
+	            })
 	         );
 	      }
 	   }]);
@@ -36995,77 +36996,45 @@
 	var SingleView = function (_React$Component) {
 	    _inherits(SingleView, _React$Component);
 
-	    //     constructor() {
-	    //         super();
-	    // //        alert("hello");
-	    //          // Get Firebase Database reference.
-
-	    //       // var firepadRef = firebase.database().ref();
-
-	    // // firebase.database().ref('users/').set({
-	    // //     username: "sdf",
-	    // //     email: "EEEE",
-	    // //     profile_picture : "CSSS"
-	    // //   });
-
-	    // var user = firebase.auth().currentUser;
-
-	    // if (user != null) {
-	    //     alert("I am in single view testing shit")
-	    //   user.providerData.forEach(function (profile) {
-	    //     alert("Sign-in provider: "+profile.providerId);
-	    //     alert("  Provider-specific UID: "+profile.uid);
-	    //     alert("  Name: "+profile.displayName);
-	    //     alert("  Email: "+profile.email);
-	    //     alert("  Photo URL: "+profile.photoURL);
-	    //   });
-	    // }
-
-	    // alert("i am out of single view ")
-	    //     }
-
 	    function SingleView() {
 	        _classCallCheck(this, SingleView);
 
 	        var _this = _possibleConstructorReturn(this, (SingleView.__proto__ || Object.getPrototypeOf(SingleView)).call(this));
 
-	        var user = firebase.auth().currentUser;
-	        var user_name = "";
-	        alert("I am i cn0st e");
-	        if (user != null) {
-	            alert("I am in single view testing shit");
-	            user.providerData.forEach(function (profile) {
-	                alert("Sign-in provider: " + profile.providerId);
-	                alert("  Provider-specific UID: " + profile.uid);
-	                alert("  Name: " + profile.displayName);
-	                user_name = profile.displayName;
-	                alert("  Email: " + profile.email);
-	                alert("  Photo URL: " + profile.photoURL);
-	            });
-	            _this.state = {
-
-	                user: user_name
-	            };
-	            //this.setState({user: user_name});
-	            alert(_this.state.user);
-	        } else {
-	            //
-	            _this.state = {
-
-	                user: ""
-	            };
-	            alert(_this.state.user);
-	        }
-
+	        _this.state = { connected: '', pages: [] };
+	        console.log("hey in constructor");
 	        return _this;
 	    }
 
 	    _createClass(SingleView, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            console.log("compponent s");
+
+	            var user = firebase.auth().currentUser;
+	            console.log(user);
+
+	            if (user != null) {
+
+	                var starCountRef = firebase.database().ref('users/' + user.providerData[0].uid);
+	                starCountRef.on('value', function (snapshot) {
+	                    console.log(snapshot.val());
+	                    console.log(snapshot.val().bot_connected);
+	                    console.log(snapshot.val().pages);
+	                    this.setState({
+	                        connected: snapshot.val().bot_connected,
+	                        pages: snapshot.val().pages
+
+	                    });
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            alert("bout to render");
+	            console.log(this.state);
 
-	            if (this.state.user != "") {
+	            if (this.state.connected === "false") {
 	                return _react2.default.createElement(
 	                    _ContentWrapper2.default,
 	                    null,
@@ -37073,16 +37042,31 @@
 	                        _reactBootstrap.Row,
 	                        null,
 	                        _react2.default.createElement(
-	                            _reactBootstrap.Col,
-	                            { xs: 12, className: 'text-center' },
+	                            'div',
+	                            { className: 'pull-right' },
 	                            _react2.default.createElement(
-	                                'h2',
-	                                { className: 'text-thin' },
-	                                '     ',
-	                                this.state.user,
-	                                ' you currently have a bot subscribed '
-	                            ),
-	                            _react2.default.createElement('p', null)
+	                                _reactBootstrap.Dropdown,
+	                                { id: 'dropdown-tr', pullRight: true },
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Dropdown.Toggle,
+	                                    null,
+	                                    this.state.pages[0]
+	                                ),
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Dropdown.Menu,
+	                                    { className: 'animated fadeInUpShort' },
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.MenuItem,
+	                                        { eventKey: '1', 'data-set-lang': 'en' },
+	                                        this.state.pages[0]
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.MenuItem,
+	                                        { eventKey: '2', 'data-set-lang': 'es' },
+	                                        this.state.pages[1]
+	                                    )
+	                                )
+	                            )
 	                        )
 	                    )
 	                );
@@ -37105,9 +37089,7 @@
 	                        _react2.default.createElement(
 	                            'p',
 	                            null,
-	                            'This project is an application skeleton. You can use it to quickly bootstrap your ReactJS webapp projects and dev environment for these projects.',
-	                            _react2.default.createElement('br', null),
-	                            'The seed app doesn\'t do much and has most of the feature removed so you can add theme as per your needs just following the demo app examples.'
+	                            'It is connected'
 	                        )
 	                    )
 	                )

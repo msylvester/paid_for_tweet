@@ -16,86 +16,65 @@ const firebase = Firebase.initializeApp(firebaseConfig);
 
 class SingleView extends React.Component {
 
-//     constructor() {
-//         super();
-// //        alert("hello");
-//          // Get Firebase Database reference.
-
-//       // var firepadRef = firebase.database().ref();
-
-// // firebase.database().ref('users/').set({
-// //     username: "sdf",
-// //     email: "EEEE",
-// //     profile_picture : "CSSS"
-// //   });
-
-// var user = firebase.auth().currentUser;
-
-// if (user != null) {
-//     alert("I am in single view testing shit")
-//   user.providerData.forEach(function (profile) {
-//     alert("Sign-in provider: "+profile.providerId);
-//     alert("  Provider-specific UID: "+profile.uid);
-//     alert("  Name: "+profile.displayName);
-//     alert("  Email: "+profile.email);
-//     alert("  Photo URL: "+profile.photoURL);
-//   });
-// }
-
-// alert("i am out of single view ")
-//     }
-
   constructor() {
+
     super();
-            var user = firebase.auth().currentUser;
-            var user_name = "";
-        alert("I am i cn0st e")
-        if (user != null) {
-            alert("I am in single view testing shit")
-          user.providerData.forEach(function (profile) {
-            alert("Sign-in provider: "+profile.providerId);
-            alert("  Provider-specific UID: "+profile.uid);
-            alert("  Name: "+profile.displayName);
-            user_name = profile.displayName;
-            alert("  Email: "+profile.email);
-            alert("  Photo URL: "+profile.photoURL);
-          });
-          this.state = {
+    this.state = {connected: '', pages:[]}
+    console.log("hey in constructor")
+}
 
-            user:user_name
-          };
-           //this.setState({user: user_name});
-           alert(this.state.user);
-        }
-        else { 
-           //
-           this.state = {
 
-            user:""
-           };
-           alert(this.state.user)
-        }
+componentWillMount() { 
+    console.log("compponent s")
+
+    var user = firebase.auth().currentUser;
+    console.log(user)
+
+    if (user != null) {
     
-  }
+          var starCountRef = firebase.database().ref('users/' +   user.providerData[0].uid);
+          starCountRef.on('value', function(snapshot) {
+                       console.log(snapshot.val());
+                console.log(snapshot.val().bot_connected);
+                 console.log(snapshot.val().pages);
+              this.setState ( {  
+                connected:snapshot.val().bot_connected,
+                pages:snapshot.val().pages
+              
+              })
+          });
+
+
+
+
+}
+  
+}
+
 
     render() {
-        alert("bout to render")
+        console.log(this.state)
 
-        if (this.state.user!="") {
+        if (this.state.connected==="false") {
                     return (
             <ContentWrapper>
 
                 <Row>
-                    <Col xs={12} className="text-center">
-                        <h2 className="text-thin">     {this.state.user} you currently have a bot subscribed </h2>
-                        <p>
-                       
-                        </p>
-                    </Col>
+                  <div className="pull-right">
+                        <Dropdown id="dropdown-tr" pullRight>
+                            <Dropdown.Toggle>
+                                {this.state.pages[0]}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu className="animated fadeInUpShort">
+                                <MenuItem eventKey="1" data-set-lang="en">{this.state.pages[0]}</MenuItem>
+                                <MenuItem eventKey="2" data-set-lang="es">{this.state.pages[1]}</MenuItem>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                 </Row>
             </ContentWrapper>
         )
-}
+      }
         
         return (
             <ContentWrapper>
@@ -104,9 +83,7 @@ class SingleView extends React.Component {
                     <Col xs={12} className="text-center">
                         <h2 className="text-thin">This is where we see the bots </h2>
                         <p>
-                            This project is an application skeleton. You can use it to quickly bootstrap your ReactJS webapp projects and dev environment for these projects.
-                            <br/>
-                            The seed app doesn't do much and has most of the feature removed so you can add theme as per your needs just following the demo app examples.
+                            It is connected 
                         </p>
                     </Col>
                 </Row>
