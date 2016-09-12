@@ -20,6 +20,7 @@ import Base from './components/Layout/Base';
 import BasePage from './components/Layout/BasePage';
 import BaseHorizontal from './components/Layout/BaseHorizontal';
 
+import Login from './components/Login/Login';
 import SingleView from './components/SingleView/SingleView';
 import SubMenu from './components/SubMenu/SubMenu';
 
@@ -27,15 +28,22 @@ import SubMenu from './components/SubMenu/SubMenu';
 initTranslation();
 // Init css loader (for themes)
 initLoadCss();
-
+window.fbAsyncInit = function() {
+  FB.init({
+    appId: '1140287732712074',
+    cookie: true,
+     status:true,
+    xfbml: true,
+    version: 'v2.7',
+  });
 ReactDOM.render(
     <Router history={browserHistory}>
 
         <Route path="/" component={Base}>
 
             {/* Default route*/}
-            <IndexRoute component={SingleView} />
-
+            <IndexRoute component={Login} />
+            <Route path="login"  component={Login} />
             <Route path="singleview" component={SingleView}/>
             <Route path="submenu" component={SubMenu}/>
 
@@ -47,3 +55,15 @@ ReactDOM.render(
     </Router>,
     document.getElementById('app')
 );
+
+};
+
+(function(d, s, id){
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+
