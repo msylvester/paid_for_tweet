@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Router, Route, Link, hashHistory, browserHistory, IndexRoute } from 'react-router';
 //import FBApp from '../modules/firebase';
 
 
@@ -27,6 +27,7 @@ export default class FacebookButton extends React.Component {
       FB.Event.subscribe('auth.statusChange', 
          this.onStatusChange.bind(this));
       FB.Event.subscribe('auth.authResponseChange', this.checkLoginState.bind(this));
+
    }
       
    onStatusChange(response) {
@@ -119,6 +120,9 @@ export default class FacebookButton extends React.Component {
 
 
                 firebase.auth().signInWithCredential(credential).catch(function(error) {
+                  
+
+
                   // Handle Errors here.
                   var errorCode = error.code;
                   var errorMessage = error.message;
@@ -129,14 +133,19 @@ export default class FacebookButton extends React.Component {
                   var credential = error.credential;
                   // ...
                 });
+
               } else {
+                console.log("gere i a me in the this shit")
+                   browserHistory.push('/singleview');
+
                 // User is already signed-in Firebase with the correct user.
               }
             });
     } else {
       // User is signed-out of Facebook.
-      console.log("loggin user out")
+      console.log("loggin user out");
       this.firebase.auth().signOut();
+
     }
   }
 

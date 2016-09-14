@@ -2,7 +2,8 @@ import React from 'react';
 import pubsub from 'pubsub-js';
 import HeaderRun from './Header.run'
 import { NavDropdown, MenuItem } from 'react-bootstrap';
-
+import FacebookButton  from './FacebookButton';
+import { Router, Route, Link, hashHistory, browserHistory, IndexRoute } from 'react-router';
 class Header extends React.Component {
 
     componentDidMount() {
@@ -16,6 +17,15 @@ class Header extends React.Component {
         pubsub.publish('toggleUserblock');
     }
 
+
+    logout() {
+        console.log("tryuing to logout")
+        FB.logout(function(response) {
+  // user is now logged out
+        this.firebase.auth().signOut();
+       
+});
+    }
     render() {
         const ddAlertTitle = (
             <span>
@@ -71,6 +81,9 @@ class Header extends React.Component {
                                     <em className="icon-magnifier"></em>
                                 </a>
                             </li>
+                            <li>
+                                  <a onClick={this.logout}>Logout</a>
+                            </li>
                             { /* START Alert menu */ }
                             <NavDropdown noCaret eventKey={ 3 } title={ ddAlertTitle } id="basic-nav-dropdown" >
                                 <MenuItem className="animated flipInX" eventKey={3.1}>Login</MenuItem>
@@ -92,6 +105,7 @@ class Header extends React.Component {
                     </div>
                     { /* END Nav wrapper */ }
                     { /* START Search form */ }
+              
                     <form role="search" action="search.html" className="navbar-form">
                         <div className="form-group has-feedback">
                             <input type="text" placeholder="Type and hit enter ..." className="form-control" />
