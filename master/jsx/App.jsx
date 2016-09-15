@@ -27,10 +27,13 @@ import SubMenu from './components/SubMenu/SubMenu';
 // Init translation system
 initTranslation();
 // Init css loader (for themes)
+
+
+
 initLoadCss();
 window.fbAsyncInit = function() {
   FB.init({
-    appId: '1140287732712074',
+   appId: '1754356628111030',
     cookie: true,
      status:true,
     xfbml: true,
@@ -38,17 +41,17 @@ window.fbAsyncInit = function() {
   });
 ReactDOM.render(
     <Router history={browserHistory}>
-
-        <Route path="/" component={Base}>
+        <Route path="/"  component={Login} />
+        <Route component={Base}>
 
             {/* Default route*/}
-            <IndexRoute component={Login} />
-            <Route path="login"  component={Login} />
+            <IndexRoute component={SingleView} />
+       
             <Route path="singleview" component={SingleView}/>
             <Route path="submenu" component={SubMenu}/>
-
-        </Route>
-
+          </Route>
+    
+      
         {/* Not found handler */}
         {/*<Route path="*" component={NotFound}/>*/}
 

@@ -26,10 +26,12 @@ export default class FacebookButton extends React.Component {
          this.onLogout.bind(this));
       FB.Event.subscribe('auth.statusChange', 
          this.onStatusChange.bind(this));
+
+
+
       FB.Event.subscribe('auth.authResponseChange', this.checkLoginState.bind(this));
 
-   }
-      
+     } 
    onStatusChange(response) {
  
       var self = this;
@@ -92,22 +94,35 @@ export default class FacebookButton extends React.Component {
 
                 // //first time user 
                 // if (firebase.database().ref('users/' + event.authResponse.accessToken) === null) {
-                   
+                
+     
                     FB.api('/me/accounts', function(response) {
                       console.log("about to log response");
                       console.log(response);
                       var pages = [];
+                      var page_names = {};
                       for (var i =0; i<response.data.length; i++) {
-                          pages.push(response.data[i].name);
+                          var a = { 
+                              page_name:response.data[i].name,
+                              page_token:response.data[i].access_token
+
+                          }
+                          page_names[response.data[i].name] = response.data[i].access_token;
+                         
+                          pages.push(a);
                       }
+
 
                       firebase.database().ref('users/' + event.authResponse.userID).set({
 
                           uid:event.authResponse.userID,
                           bot_connected:false,
                           credential:event.authResponse.accessToken,
-                          pages: pages
+                          pages:  page_names,
+                          messenger_token: ""
 
+
+                          
                     })
 
 
@@ -115,7 +130,6 @@ export default class FacebookButton extends React.Component {
 
                     })
             
-
                 
 
 
@@ -135,7 +149,40 @@ export default class FacebookButton extends React.Component {
                 });
 
               } else {
-                console.log("gere i a me in the this shit")
+                console.log("gere i a me in the this shit");
+                 
+                    FB.api('/me/accounts', function(response) {
+                      console.log("about to log response");
+                      console.log(response);
+                      var pages = [];
+                      var page_names = {};
+                      for (var i =0; i<response.data.length; i++) {
+                          var a = { 
+                              page_name:response.data[i].name,
+                              page_token:response.data[i].access_token
+
+                          }
+                          page_names[response.data[i].name] = response.data[i].access_token;
+                         
+                          pages.push(a);
+                      }
+
+                      console.log("about to log push");
+                      console.log("da fuq");
+                      firebase.database().ref('users/' + event.authResponse.userID).set({
+
+                          uid:event.authResponse.userID,
+                          bot_connected:false,
+                          credential:event.authResponse.accessToken,
+                          pages:  page_names 
+
+                          
+                    })
+
+
+
+
+                    })
                    browserHistory.push('/singleview');
 
                 // User is already signed-in Firebase with the correct user.
@@ -153,8 +200,13 @@ export default class FacebookButton extends React.Component {
 
 
    render() {
+      console.log("i need ro render button");
       return (
          <div>
+            <p>helll</p>
+
+
+
             <div 
                className="fb-login-button" 
                data-max-rows="1" 
@@ -164,8 +216,10 @@ export default class FacebookButton extends React.Component {
                data-auto-logout-link="true"
                >
             </div>
+            {  FB.XFBML.parse()}
 
          </div>
+
       );
    }
 };
