@@ -4,6 +4,9 @@ import { Grid, Row, Col, Dropdown, MenuItem, Button } from 'react-bootstrap';
 import Firebase from 'firebase';
 
 
+
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyCBMuCtrDeAD8b7AcZykVGPoYnJrFf3Kjg",
   authDomain: "hansweb-beac1.firebaseapp.com",
@@ -157,7 +160,10 @@ console.log(user_id)
 
       xhttp.open("PATCH", "https://hansweb-beac1.firebaseio.com/users/"+ user_id, true);
       xhttp.send(postData);
-      
+
+
+
+
  //  updates['/users/' + user_id] = postData;
  //  firebase.database().ref().update(updates);
   var updates = {};
