@@ -109,8 +109,12 @@ class SingleView extends React.Component {
           bot_connected: false,
           messenger_token: ""
       }
+      
       updates['/users/' + user_id] = postData;
       firebase.database().ref().update(updates);
+
+
+
       var updates = {};
       var postData = {
 
@@ -124,6 +128,9 @@ class SingleView extends React.Component {
 
 
   }
+  //https://hansweb-beac1.firebaseio.com/users/user_id/
+
+  //  'https://docs-examples.firebaseio.com/rest/saving-data/users/alanisawesome.json 
 
   generateKey() { 
 
@@ -147,8 +154,12 @@ console.log(user_id)
       messenger_token: this.state.pages[this.state.select]
 
   }
-  updates['/users/' + user_id] = postData;
-  firebase.database().ref().update(updates);
+
+      xhttp.open("PATCH", "https://hansweb-beac1.firebaseio.com/users/"+ user_id, true);
+      xhttp.send(postData);
+      
+ //  updates['/users/' + user_id] = postData;
+ //  firebase.database().ref().update(updates);
   var updates = {};
   var postData = {
 
