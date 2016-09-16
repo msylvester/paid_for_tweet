@@ -13,6 +13,7 @@ class Sidebar extends React.Component {
             userBlockCollapse: false,
             collapse: {
                 singleview: this.routeActive(['singleview']),
+                fans: this.routeActive(['fans']),
                 submenu: this.routeActive(['submenu'])
             }
         };
@@ -93,6 +94,14 @@ class Sidebar extends React.Component {
                                 <span data-localize="sidebar.nav.SINGLEVIEW">Single View</span>
                                 </Link>
                             </li>
+
+                            <li className={ this.routeActive('fans') ? 'active' : '' }>
+                                <Link to="fans" title="Fans">
+                                <em className="icon-grid"></em>
+                                <span data-localize="sidebar.nav.SINGLEVIEW">Fans</span>
+                                </Link>
+                            </li>
+
 
                             <li className={ this.routeActive(['submenu']) ? 'active' : '' }>
                                 <div className="nav-item" onClick={ this.toggleItemCollapse.bind(this, 'submenu') }>

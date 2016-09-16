@@ -23,6 +23,7 @@ import BaseHorizontal from './components/Layout/BaseHorizontal';
 import Login from './components/Login/Login';
 import SingleView from './components/SingleView/SingleView';
 import SubMenu from './components/SubMenu/SubMenu';
+import Fans from './components/Fans/Fans';
 
 // Init translation system
 initTranslation();
@@ -46,12 +47,13 @@ ReactDOM.render(
 
             {/* Default route*/}
             <IndexRoute component={SingleView} />
-       
+
             <Route path="singleview" component={SingleView}/>
             <Route path="submenu" component={SubMenu}/>
+            <Route path="fans" component={Fans}/>
           </Route>
-    
-      
+
+
         {/* Not found handler */}
         {/*<Route path="*" component={NotFound}/>*/}
 
@@ -68,5 +70,3 @@ ReactDOM.render(
   js.src = "//connect.facebook.net/en_US/sdk.js";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
-
