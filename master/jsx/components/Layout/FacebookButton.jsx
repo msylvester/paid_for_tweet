@@ -22,34 +22,34 @@ export default class FacebookButton extends React.Component {
 
    componentDidMount() {
 
-      FB.Event.subscribe('auth.logout', 
-         this.onLogout.bind(this));
-      FB.Event.subscribe('auth.statusChange', 
-         this.onStatusChange.bind(this));
+      // FB.Event.subscribe('auth.logout', 
+      //    this.onLogout.bind(this));
+      // FB.Event.subscribe('auth.statusChange', 
+      //    this.onStatusChange.bind(this));
 
 
 
       FB.Event.subscribe('auth.authResponseChange', this.checkLoginState.bind(this));
 
      } 
-   onStatusChange(response) {
+   // onStatusChange(response) {
  
-      var self = this;
+   //    var self = this;
 
-      if( response.status === "connected" ) {
-         FB.api('/me', function(response) {
-            var message = "Welcome " + response.name;
-            console.log(message)
-            // self.setState({
-            //    message: message
-            // });
-         })
-      }
-   }
+   //    if( response.status === "connected" ) {
+   //       FB.api('/me', function(response) {
+   //          var message = "Welcome " + response.name;
+   //          console.log(message)
+   //          // self.setState({
+   //          //    message: message
+   //          // });
+   //       })
+   //    }
+   // }
 
-   onLogout(response) {
+   // onLogout(response) {
 
-   }
+   // }
 
 
   checkLoginState(event) {
@@ -91,11 +91,7 @@ export default class FacebookButton extends React.Component {
                 var credential = firebase.auth.FacebookAuthProvider.credential(
                     event.authResponse.accessToken);
                 // Sign in with the credential from the Facebook user.
-
-                // //first time user 
-                // if (firebase.database().ref('users/' + event.authResponse.accessToken) === null) {
-                
-     
+ 
                     FB.api('/me/accounts', function(response) {
                       console.log("about to log response");
                       console.log(response);
@@ -191,8 +187,9 @@ export default class FacebookButton extends React.Component {
     } else {
       // User is signed-out of Facebook.
       console.log("loggin user out");
+      browserHistory.push('/')
       this.firebase.auth().signOut();
-
+        browserHistory.push('/')
     }
   }
 
@@ -203,7 +200,7 @@ export default class FacebookButton extends React.Component {
       console.log("i need ro render button");
       return (
          <div>
-            <p>helll</p>
+ 
 
 
 
@@ -216,7 +213,7 @@ export default class FacebookButton extends React.Component {
                data-auto-logout-link="true"
                >
             </div>
-            {  FB.XFBML.parse()}
+
 
          </div>
 

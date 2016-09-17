@@ -13,7 +13,8 @@
       "HEADER": "Main Navigation"
     },
     "nav": {
-      "SINGLEVIEW": "Single View",
+      "SINGLEVIEW": "Bot Setup",
+      "FANS": "Fans",
       "menu": {
         "MENU": "Menu",
         "SUBMENU": "Sub Menu"

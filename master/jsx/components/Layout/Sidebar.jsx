@@ -91,14 +91,14 @@ class Sidebar extends React.Component {
                             <li className={ this.routeActive('singleview') ? 'active' : '' }>
                                 <Link to="singleview" title="Single View">
                                 <em className="icon-grid"></em>
-                                <span data-localize="sidebar.nav.SINGLEVIEW">Single View</span>
+                                <span data-localize="sidebar.nav.SINGLEVIEW">Bot Status</span>
                                 </Link>
                             </li>
 
                             <li className={ this.routeActive('fans') ? 'active' : '' }>
                                 <Link to="fans" title="Fans">
                                 <em className="icon-grid"></em>
-                                <span data-localize="sidebar.nav.SINGLEVIEW">Fans</span>
+                                <span data-localize="sidebar.nav.FANS">Fans</span>
                                 </Link>
                             </li>
 

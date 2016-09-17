@@ -88,45 +88,78 @@ class SingleView extends React.Component {
             var starCountRef = firebase.database().ref('users/' +   user_id);
             starCountRef.once('value').then(function(snapshot) {
                          console.log(snapshot.val());
-                          messenger_token = snapshot.val().messenger_token
-                           var xhttp = new window.XMLHttpRequest();
-                          xhttp.open("DELETE", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
-                          xhttp.send();
-                          this.setState( {
-                                  connected:false,
-                                  pages:that.pages,
-                                  select:""
+                         var page_one=  snapshot.val().pages;
+                          var messenger_token = snapshot.val().messenger_token
+                          var h = that;
+                          var url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+ messenger_token
 
 
-                          });
-         
+                          var updates = {};
+                          var postData =false ;
+                          var postData_two = "";
+                          var postData_three = "";
+
+
+
+                          updates['/users/' + user_id + '/bot_connected']= postData;
+                          updates['/users/' + user_id + '/messenger_token']= postData_two;
+
+                          updates['/users/' + user_id + '/bot_connected_name']= postData_three;
+
+                     
+                          firebase.database().ref().update(updates);
+
+
+
+                   
+                           $.ajax({
+                                                  url: url_delete,
+                                                  type: 'DELETE',
+                                                  success: function(result) {
+
+                                                    console.log("shit was deleted")
+
+                                                                              h.setState( {
+                                                                                connected:false,
+                                                                                pages:page_one,
+                                                                                select:""
+
+
+                                                                        });
+                                                      // Do something with the result
+                                                  }
+                                });
+
+
+
+          
             });
 
    
-    console.log(user_id)
-        //firebase 
-         // Write the new post's data simultaneously in the posts list and the user's post list.
-      var updates = {};
-      var postData = {
+    // console.log(user_id)
+    //     //firebase 
+    //      // Write the new post's data simultaneously in the posts list and the user's post list.
+    //   var updates = {};
+    //   var postData = {
 
-          bot_connected: false,
-          messenger_token: ""
-      }
+    //       bot_connected: false,
+    //       messenger_token: ""
+    //   }
       
-      updates['/users/' + user_id] = postData;
-      firebase.database().ref().update(updates);
+    //   updates['/users/' + user_id] = postData;
+    //   firebase.database().ref().update(updates);
 
 
 
-      var updates = {};
-      var postData = {
+    //   var updates = {};
+    //   var postData = {
 
-          bot_connected: false,
-          messenger_token: ""
+    //       bot_connected: false,
+    //       messenger_token: ""
 
-      }
-      updates['/bot/messenger_token'] = postData;
-       firebase.database().ref().update(updates);
+    //   }
+    //   updates['/bot/messenger_token'] = postData;
+    //    firebase.database().ref().update(updates);
 
 
 
@@ -144,36 +177,35 @@ class SingleView extends React.Component {
     //make a get request 
     var xhttp = new window.XMLHttpRequest();
     xhttp.open("POST", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
-xhttp.send();
+  xhttp.send();
 
 var user_id = firebase.auth().currentUser.providerData[0].uid;
 console.log(user_id)
     //firebase 
      // Write the new post's data simultaneously in the posts list and the user's post list.
   var updates = {};
-  var postData = {
+  var postData = true;
+  var postData_two = this.state.pages[this.state.select];
+  var postData_three = {
 
       bot_connected: true,
       messenger_token: this.state.pages[this.state.select]
 
   }
 
-      xhttp.open("PATCH", "https://hansweb-beac1.firebaseio.com/users/"+ user_id, true);
-      xhttp.send(postData);
+  var postData_four = this.state.select;
+ 
+
+       updates['/users/' + user_id + '/bot_connected']= postData;
+      updates['/users/' + user_id + '/messenger_token']= postData_two;
+
+      updates['/users/' + user_id + '/bot_connected_name']= postData_four;
+
+        updates['/bot/messenger_token'] = postData_three;
+      firebase.database().ref().update(updates);
 
 
 
-
- //  updates['/users/' + user_id] = postData;
- //  firebase.database().ref().update(updates);
-  var updates = {};
-  var postData = {
-
-      bot_connected: true,
-      messenger_token: this.state.pages[this.state.select]
-
-  }
-  updates['/bot/messenger_token'] = postData;
 
  var that = this; 
 
@@ -217,7 +249,7 @@ console.log(user_id)
                
                         <Dropdown>
                             <Dropdown.Toggle>
-                                {key_page[0]}
+                                  Choose a Page 
                     
                             </Dropdown.Toggle>
                             <Dropdown.Menu className="animated fadeInUpShort">
@@ -226,13 +258,13 @@ console.log(user_id)
                            
                               key_page.map(function(key, i) {
 
-                                return (<MenuItem key={key.id} eventKey={key} data-set-lang="en" onSelect={func_select}>{key}</MenuItem>)
+                                return (<MenuItem key={key.id} eventKey={key} data-set-lang="en" onSelect={func_select}>{key}</MenuItem>);
 
 
                               })
 
                               }
-                            }
+                            
                             </Dropdown.Menu>
                             
                           </Dropdown>
@@ -247,7 +279,10 @@ console.log(user_id)
         
         return (
             <ContentWrapper>
-            <p>You have a bot connected to fb page</p>
+            <p>You have a bot connected </p>
+
+
+
                 <Button bsStyle="primary" bsSize="large" onClick={func_disc}>Disconnect</Button>
                   </ContentWrapper>
         );

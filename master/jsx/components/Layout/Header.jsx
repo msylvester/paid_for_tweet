@@ -64,34 +64,19 @@ class Header extends React.Component {
                                 </a>
                             </li>
                             { /* START User avatar toggle */ }
-                            <li>
-                                { /* Button used to collapse the left sidebar. Only visible on tablet and desktops */ }
-                                <a id="user-block-toggle" href="#" onClick={ this.toggleUserblock }>
-                                    <em className="icon-user"></em>
-                                </a>
-                            </li>
+        
                             { /* END User avatar toggle */ }
                         </ul>
                         { /* END Left navbar */ }
                         { /* START Right Navbar */ }
                         <ul className="nav navbar-nav navbar-right">
                             { /* Search icon */ }
-                            <li>
-                                <a href="#" data-search-open="">
-                                    <em className="icon-magnifier"></em>
-                                </a>
-                            </li>
+
                             <li>
                                   <a onClick={this.logout}>Logout</a>
                             </li>
                             { /* START Alert menu */ }
-                            <NavDropdown noCaret eventKey={ 3 } title={ ddAlertTitle } id="basic-nav-dropdown" >
-                                <MenuItem className="animated flipInX" eventKey={3.1}>Login</MenuItem>
-                                <MenuItem className="animated flipInX" eventKey={3.2}>Profile</MenuItem>
-                                <MenuItem className="animated flipInX" eventKey={3.3}>Dashboard</MenuItem>
-                                <MenuItem divider />
-                                <MenuItem className="animated flipInX" eventKey={3.3}>Logout</MenuItem>
-                            </NavDropdown>
+
                             { /* END Alert menu */ }
                             { /* START Offsidebar button */ }
                             <li>

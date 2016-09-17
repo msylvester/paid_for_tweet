@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dad758ecdfb13e5f3cb1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "80853e8bd16349c25f0f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18254,7 +18254,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18283,195 +18283,191 @@
 	*/
 
 	var FacebookButton = function (_React$Component) {
-	   _inherits(FacebookButton, _React$Component);
+	  _inherits(FacebookButton, _React$Component);
 
-	   function FacebookButton(props) {
-	      _classCallCheck(this, FacebookButton);
+	  function FacebookButton(props) {
+	    _classCallCheck(this, FacebookButton);
 
-	      //whats inside prps
-	      var _this = _possibleConstructorReturn(this, (FacebookButton.__proto__ || Object.getPrototypeOf(FacebookButton)).call(this, props));
+	    //whats inside prps
+	    var _this = _possibleConstructorReturn(this, (FacebookButton.__proto__ || Object.getPrototypeOf(FacebookButton)).call(this, props));
 
-	      console.log(props);
+	    console.log(props);
 
-	      return _this;
-	   }
+	    return _this;
+	  }
 
-	   _createClass(FacebookButton, [{
-	      key: 'componentDidMount',
-	      value: function componentDidMount() {
+	  _createClass(FacebookButton, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
 
-	         FB.Event.subscribe('auth.logout', this.onLogout.bind(this));
-	         FB.Event.subscribe('auth.statusChange', this.onStatusChange.bind(this));
+	      // FB.Event.subscribe('auth.logout', 
+	      //    this.onLogout.bind(this));
+	      // FB.Event.subscribe('auth.statusChange', 
+	      //    this.onStatusChange.bind(this));
 
-	         FB.Event.subscribe('auth.authResponseChange', this.checkLoginState.bind(this));
-	      }
-	   }, {
-	      key: 'onStatusChange',
-	      value: function onStatusChange(response) {
 
-	         var self = this;
+	      FB.Event.subscribe('auth.authResponseChange', this.checkLoginState.bind(this));
+	    }
+	    // onStatusChange(response) {
 
-	         if (response.status === "connected") {
-	            FB.api('/me', function (response) {
-	               var message = "Welcome " + response.name;
-	               console.log(message);
-	               // self.setState({
-	               //    message: message
-	               // });
+	    //    var self = this;
+
+	    //    if( response.status === "connected" ) {
+	    //       FB.api('/me', function(response) {
+	    //          var message = "Welcome " + response.name;
+	    //          console.log(message)
+	    //          // self.setState({
+	    //          //    message: message
+	    //          // });
+	    //       })
+	    //    }
+	    // }
+
+	    // onLogout(response) {
+
+	    // }
+
+
+	  }, {
+	    key: 'checkLoginState',
+	    value: function checkLoginState(event) {
+	      console.log("made it to event");
+	      console.log(event);
+
+	      if (event.authResponse != null) {
+	        // User is signed-in Facebook.
+	        var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
+	          unsubscribe();
+	          // Check if we are already signed-in Firebase with the correct user.
+	          console.log("in this block");
+	          console.log(firebaseUser);
+
+	          //see if the user is logged 
+	          var check = false;
+
+	          if (firebaseUser) {
+	            var providerData = firebaseUser.providerData;
+
+	            for (var i = 0; i < providerData.length; i++) {
+	              if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID && providerData[i].uid === event.authResponse.userID) {
+	                // We don't need to re-auth the Firebase connection.
+	                check = true;
+	              }
+	            }
+	          }
+	          console.log("this didnt crash");
+	          console.log(check);
+
+	          if (!check) {
+	            // Build Firebase credential with the Facebook auth token.
+
+	            console.log("this shoudl be a hit");
+
+	            var credential = firebase.auth.FacebookAuthProvider.credential(event.authResponse.accessToken);
+	            // Sign in with the credential from the Facebook user.
+
+	            FB.api('/me/accounts', function (response) {
+	              console.log("about to log response");
+	              console.log(response);
+	              var pages = [];
+	              var page_names = {};
+	              for (var i = 0; i < response.data.length; i++) {
+	                var a = {
+	                  page_name: response.data[i].name,
+	                  page_token: response.data[i].access_token
+
+	                };
+	                page_names[response.data[i].name] = response.data[i].access_token;
+
+	                pages.push(a);
+	              }
+
+	              firebase.database().ref('users/' + event.authResponse.userID).set({
+
+	                uid: event.authResponse.userID,
+	                bot_connected: false,
+	                credential: event.authResponse.accessToken,
+	                pages: page_names,
+	                messenger_token: ""
+
+	              });
 	            });
-	         }
-	      }
-	   }, {
-	      key: 'onLogout',
-	      value: function onLogout(response) {}
-	   }, {
-	      key: 'checkLoginState',
-	      value: function checkLoginState(event) {
-	         console.log("made it to event");
-	         console.log(event);
 
-	         if (event.authResponse != null) {
-	            // User is signed-in Facebook.
-	            var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
-	               unsubscribe();
-	               // Check if we are already signed-in Firebase with the correct user.
-	               console.log("in this block");
-	               console.log(firebaseUser);
+	            firebase.auth().signInWithCredential(credential).catch(function (error) {
 
-	               //see if the user is logged 
-	               var check = false;
-
-	               if (firebaseUser) {
-	                  var providerData = firebaseUser.providerData;
-
-	                  for (var i = 0; i < providerData.length; i++) {
-	                     if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID && providerData[i].uid === event.authResponse.userID) {
-	                        // We don't need to re-auth the Firebase connection.
-	                        check = true;
-	                     }
-	                  }
-	               }
-	               console.log("this didnt crash");
-	               console.log(check);
-
-	               if (!check) {
-	                  // Build Firebase credential with the Facebook auth token.
-
-	                  console.log("this shoudl be a hit");
-
-	                  var credential = firebase.auth.FacebookAuthProvider.credential(event.authResponse.accessToken);
-	                  // Sign in with the credential from the Facebook user.
-
-	                  // //first time user 
-	                  // if (firebase.database().ref('users/' + event.authResponse.accessToken) === null) {
-
-
-	                  FB.api('/me/accounts', function (response) {
-	                     console.log("about to log response");
-	                     console.log(response);
-	                     var pages = [];
-	                     var page_names = {};
-	                     for (var i = 0; i < response.data.length; i++) {
-	                        var a = {
-	                           page_name: response.data[i].name,
-	                           page_token: response.data[i].access_token
-
-	                        };
-	                        page_names[response.data[i].name] = response.data[i].access_token;
-
-	                        pages.push(a);
-	                     }
-
-	                     firebase.database().ref('users/' + event.authResponse.userID).set({
-
-	                        uid: event.authResponse.userID,
-	                        bot_connected: false,
-	                        credential: event.authResponse.accessToken,
-	                        pages: page_names,
-	                        messenger_token: ""
-
-	                     });
-	                  });
-
-	                  firebase.auth().signInWithCredential(credential).catch(function (error) {
-
-	                     // Handle Errors here.
-	                     var errorCode = error.code;
-	                     var errorMessage = error.message;
-	                     console.log(errorMessage);
-	                     // The email of the user's account used.
-	                     var email = error.email;
-	                     // The firebase.auth.AuthCredential type that was used.
-	                     var credential = error.credential;
-	                     // ...
-	                  });
-	               } else {
-	                  console.log("gere i a me in the this shit");
-
-	                  FB.api('/me/accounts', function (response) {
-	                     console.log("about to log response");
-	                     console.log(response);
-	                     var pages = [];
-	                     var page_names = {};
-	                     for (var i = 0; i < response.data.length; i++) {
-	                        var a = {
-	                           page_name: response.data[i].name,
-	                           page_token: response.data[i].access_token
-
-	                        };
-	                        page_names[response.data[i].name] = response.data[i].access_token;
-
-	                        pages.push(a);
-	                     }
-
-	                     console.log("about to log push");
-	                     console.log("da fuq");
-	                     firebase.database().ref('users/' + event.authResponse.userID).set({
-
-	                        uid: event.authResponse.userID,
-	                        bot_connected: false,
-	                        credential: event.authResponse.accessToken,
-	                        pages: page_names
-
-	                     });
-	                  });
-	                  _reactRouter.browserHistory.push('/singleview');
-
-	                  // User is already signed-in Firebase with the correct user.
-	               }
+	              // Handle Errors here.
+	              var errorCode = error.code;
+	              var errorMessage = error.message;
+	              console.log(errorMessage);
+	              // The email of the user's account used.
+	              var email = error.email;
+	              // The firebase.auth.AuthCredential type that was used.
+	              var credential = error.credential;
+	              // ...
 	            });
-	         } else {
-	            // User is signed-out of Facebook.
-	            console.log("loggin user out");
-	            this.firebase.auth().signOut();
-	         }
-	      }
-	   }, {
-	      key: 'render',
-	      value: function render() {
-	         console.log("i need ro render button");
-	         return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	               'p',
-	               null,
-	               'helll'
-	            ),
-	            _react2.default.createElement('div', {
-	               className: 'fb-login-button',
-	               'data-max-rows': '1',
-	               'data-size': 'xlarge',
-	               'data-show-faces': 'false',
-	               scope: 'public_profile,email, manage_pages, publish_pages',
-	               'data-auto-logout-link': 'true'
-	            }),
-	            FB.XFBML.parse()
-	         );
-	      }
-	   }]);
+	          } else {
+	            console.log("gere i a me in the this shit");
 
-	   return FacebookButton;
+	            FB.api('/me/accounts', function (response) {
+	              console.log("about to log response");
+	              console.log(response);
+	              var pages = [];
+	              var page_names = {};
+	              for (var i = 0; i < response.data.length; i++) {
+	                var a = {
+	                  page_name: response.data[i].name,
+	                  page_token: response.data[i].access_token
+
+	                };
+	                page_names[response.data[i].name] = response.data[i].access_token;
+
+	                pages.push(a);
+	              }
+
+	              console.log("about to log push");
+	              console.log("da fuq");
+	              firebase.database().ref('users/' + event.authResponse.userID).set({
+
+	                uid: event.authResponse.userID,
+	                bot_connected: false,
+	                credential: event.authResponse.accessToken,
+	                pages: page_names
+
+	              });
+	            });
+	            _reactRouter.browserHistory.push('/singleview');
+
+	            // User is already signed-in Firebase with the correct user.
+	          }
+	        });
+	      } else {
+	        // User is signed-out of Facebook.
+	        console.log("loggin user out");
+	        _reactRouter.browserHistory.push('/');
+	        this.firebase.auth().signOut();
+	        _reactRouter.browserHistory.push('/');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log("i need ro render button");
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('div', {
+	          className: 'fb-login-button',
+	          'data-max-rows': '1',
+	          'data-size': 'xlarge',
+	          'data-show-faces': 'false',
+	          scope: 'public_profile,email, manage_pages, publish_pages',
+	          'data-auto-logout-link': 'true'
+	        })
+	      );
+	    }
+	  }]);
+
+	  return FacebookButton;
 	}(_react2.default.Component);
 
 	exports.default = FacebookButton;
@@ -18524,7 +18520,7 @@
 	                _react2.default.createElement(
 	                    'span',
 	                    null,
-	                    '© 2016 - Angle'
+	                    '© 2016 - Brainitch'
 	                )
 	            );
 	        }
@@ -35827,15 +35823,14 @@
 	    function Fans() {
 	        _classCallCheck(this, Fans);
 
-	        //initialize state
-
 	        var _this = _possibleConstructorReturn(this, (Fans.__proto__ || Object.getPrototypeOf(Fans)).call(this));
 
 	        console.log("made it to fans dot jsx constructor");
 
 	        _this.state = {
 
-	            users_object: {}
+	            users_object: {},
+	            user_has_bot: false
 
 	        };
 	        return _this;
@@ -35850,6 +35845,9 @@
 	            var user = firebase.auth().currentUser;
 	            var user_id = user.providerData[0].uid;
 
+	            //see if user has bot 
+	            var current_user = firebase.database().ref('/users/' + user_id);
+
 	            //get a reference to the users
 	            var refUsers = firebase.database().ref('bot/users/');
 
@@ -35857,22 +35855,42 @@
 
 	            var that = this;
 
-	            //firebase callback to get a snapsot of the entity
+	            //firebase cal lback to get a snapsot of the entity
+	            if (user != null) {
 
-	            refUsers.once('value').then(function (snapshot) {
-	                //log the users
-	                console.log("printing object within fireavse callback");
-	                console.log(snapshot.val());
-	                var a = snapshot.val();
-	                var keys = Object.keys(a);
-	                console.log(a);
-	                console.log(keys);
-	                that.setState({
+	                refUsers.once('value').then(function (snapshot) {
+	                    //log the users
+	                    console.log("printing object within fireavse callback");
+	                    console.log(snapshot.val());
+	                    var a = snapshot.val();
+	                    var keys = Object.keys(a);
+	                    console.log(a);
+	                    console.log(keys);
 
-	                    users_object: a
+	                    that.setState({
 
+	                        users_object: a,
+	                        user_has_bot: that.state.user_hasBot
+
+	                    });
 	                });
-	            });
+
+	                current_user.once('value').then(function (snapshot) {
+
+	                    //see if user has a bot connected and update state
+	                    console.log("getting user info");
+	                    console.log(snapshot.val());
+	                    console.log(snapshot.val().bot_connected);
+	                    var local_bot_connected = snapshot.val().bot_connected;
+
+	                    that.setState({
+
+	                        users_object: that.state.users_object,
+	                        user_has_bot: local_bot_connected
+
+	                    });
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -35883,10 +35901,12 @@
 	            console.log("print keys");
 	            console.log("going to print state");
 	            console.log(this.state.users_object);
+	            console.log(this.state.user_has_bot);
 
 	            console.log("print object");
+	            var user_array = Object.keys(this.state.users_object);
 
-	            if (this.state.users_object != null) {
+	            if (this.state.users_object['1169415246433831'] != null && this.state.user_has_bot) {
 
 	                return _react2.default.createElement(
 	                    _ContentWrapper2.default,
@@ -35894,11 +35914,11 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'content-heading' },
-	                        'Articles'
+	                        'Users'
 	                    ),
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Panel,
-	                        { header: 'Blog articles manager' },
+	                        { header: 'User List' },
 	                        _react2.default.createElement(
 	                            _reactBootstrap.Table,
 	                            { id: 'datatable1', responsive: true, striped: true, hover: true },
@@ -35911,7 +35931,7 @@
 	                                    _react2.default.createElement(
 	                                        'th',
 	                                        { className: 'wd-md' },
-	                                        'Post title'
+	                                        'Users'
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'th',
@@ -35921,7 +35941,7 @@
 	                                    _react2.default.createElement(
 	                                        'th',
 	                                        null,
-	                                        'Name'
+	                                        'ID'
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'th',
@@ -35941,11 +35961,6 @@
 	                                    _react2.default.createElement(
 	                                        'th',
 	                                        null,
-	                                        'Comments'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
 	                                        'Status'
 	                                    )
 	                                )
@@ -35953,15 +35968,22 @@
 	                            _react2.default.createElement(
 	                                'tbody',
 	                                null,
-	                                that.state.user_array.map(function (user, index) {
-
+	                                user_array.map(function (user, index) {
+	                                    {
+	                                        console.log(user);
+	                                        console.log(index);
+	                                        console.log(that.state.users_object[user]);
+	                                        console.log(that.state.users_object[user].first_name);
+	                                        var d = that.state.users_object[user];
+	                                        console.log(d['first_name']);
+	                                    }
 	                                    return _react2.default.createElement(
 	                                        'tr',
 	                                        null,
 	                                        _react2.default.createElement(
 	                                            'td',
 	                                            null,
-	                                            that.state.users_object['user']['first_name']
+	                                            that.state.users_object[user].first_name + that.state.users_object[user].last_name
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'td',
@@ -35969,37 +35991,19 @@
 	                                            _react2.default.createElement(
 	                                                'a',
 	                                                { href: '' },
-	                                                'Keith Gutierrez'
+	                                                that.state.users_object[user].profile_pic
 	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'td',
 	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '', className: 'mr' },
-	                                                'HTML5'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '' },
-	                                                'JAVASCRIPT'
-	                                            )
+	                                            user
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'td',
 	                                            null,
 	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '', className: 'mr-sm label label-primary' },
-	                                                'angularjs'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '', className: 'mr-sm label label-primary' },
-	                                                'mvc'
-	                                            )
+	                                            that.state.users_object[user].gender
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'td',
@@ -36008,13 +36012,8 @@
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'td',
-	                                            null,
-	                                            '10/05/2015'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'td',
-	                                            null,
-	                                            '1251'
+	                                            { align: 'center', valign: 'middle' },
+	                                            _react2.default.createElement('img', { alt: 'Loading ...', src: 'imgs/logo.png' })
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'td',
@@ -36039,7 +36038,7 @@
 	                _react2.default.createElement(
 	                    'p',
 	                    null,
-	                    'hello'
+	                    'You need to connect a bot to a page to see who has messaged the page'
 	                ),
 	                ')'
 	            );
@@ -36450,15 +36449,6 @@
 	                                    { href: '#', 'data-toggle-state': 'aside-toggled', 'data-no-persist': 'true', className: 'visible-xs sidebar-toggle' },
 	                                    _react2.default.createElement('em', { className: 'fa fa-navicon' })
 	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { id: 'user-block-toggle', href: '#', onClick: this.toggleUserblock },
-	                                    _react2.default.createElement('em', { className: 'icon-user' })
-	                                )
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -36469,41 +36459,7 @@
 	                                null,
 	                                _react2.default.createElement(
 	                                    'a',
-	                                    { href: '#', 'data-search-open': '' },
-	                                    _react2.default.createElement('em', { className: 'icon-magnifier' })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
 	                                    { onClick: this.logout },
-	                                    'Logout'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.NavDropdown,
-	                                { noCaret: true, eventKey: 3, title: ddAlertTitle, id: 'basic-nav-dropdown' },
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.MenuItem,
-	                                    { className: 'animated flipInX', eventKey: 3.1 },
-	                                    'Login'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.MenuItem,
-	                                    { className: 'animated flipInX', eventKey: 3.2 },
-	                                    'Profile'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.MenuItem,
-	                                    { className: 'animated flipInX', eventKey: 3.3 },
-	                                    'Dashboard'
-	                                ),
-	                                _react2.default.createElement(_reactBootstrap.MenuItem, { divider: true }),
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.MenuItem,
-	                                    { className: 'animated flipInX', eventKey: 3.3 },
 	                                    'Logout'
 	                                )
 	                            ),
@@ -36982,7 +36938,7 @@
 	                                    _react2.default.createElement(
 	                                        'span',
 	                                        { 'data-localize': 'sidebar.nav.SINGLEVIEW' },
-	                                        'Single View'
+	                                        'Bot Status'
 	                                    )
 	                                )
 	                            ),
@@ -36995,7 +36951,7 @@
 	                                    _react2.default.createElement('em', { className: 'icon-grid' }),
 	                                    _react2.default.createElement(
 	                                        'span',
-	                                        { 'data-localize': 'sidebar.nav.SINGLEVIEW' },
+	                                        { 'data-localize': 'sidebar.nav.FANS' },
 	                                        'Fans'
 	                                    )
 	                                )
@@ -37474,40 +37430,65 @@
 	      var starCountRef = firebase.database().ref('users/' + user_id);
 	      starCountRef.once('value').then(function (snapshot) {
 	        console.log(snapshot.val());
-	        messenger_token = snapshot.val().messenger_token;
-	        var xhttp = new window.XMLHttpRequest();
-	        xhttp.open("DELETE", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token=" + this.state.pages[this.state.select], true);
-	        xhttp.send();
-	        this.setState({
-	          connected: false,
-	          pages: that.pages,
-	          select: ""
+	        var page_one = snapshot.val().pages;
+	        var messenger_token = snapshot.val().messenger_token;
+	        var h = that;
+	        var url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token=" + messenger_token;
 
+	        var updates = {};
+	        var postData = false;
+	        var postData_two = "";
+	        var postData_three = "";
+
+	        updates['/users/' + user_id + '/bot_connected'] = postData;
+	        updates['/users/' + user_id + '/messenger_token'] = postData_two;
+
+	        updates['/users/' + user_id + '/bot_connected_name'] = postData_three;
+
+	        firebase.database().ref().update(updates);
+
+	        $.ajax({
+	          url: url_delete,
+	          type: 'DELETE',
+	          success: function success(result) {
+
+	            console.log("shit was deleted");
+
+	            h.setState({
+	              connected: false,
+	              pages: page_one,
+	              select: ""
+
+	            });
+	            // Do something with the result
+	          }
 	        });
 	      });
 
-	      console.log(user_id);
-	      //firebase 
-	      // Write the new post's data simultaneously in the posts list and the user's post list.
-	      var updates = {};
-	      var postData = {
+	      // console.log(user_id)
+	      //     //firebase 
+	      //      // Write the new post's data simultaneously in the posts list and the user's post list.
+	      //   var updates = {};
+	      //   var postData = {
 
-	        bot_connected: false,
-	        messenger_token: ""
-	      };
+	      //       bot_connected: false,
+	      //       messenger_token: ""
+	      //   }
 
-	      updates['/users/' + user_id] = postData;
-	      firebase.database().ref().update(updates);
+	      //   updates['/users/' + user_id] = postData;
+	      //   firebase.database().ref().update(updates);
 
-	      var updates = {};
-	      var postData = {
 
-	        bot_connected: false,
-	        messenger_token: ""
+	      //   var updates = {};
+	      //   var postData = {
 
-	      };
-	      updates['/bot/messenger_token'] = postData;
-	      firebase.database().ref().update(updates);
+	      //       bot_connected: false,
+	      //       messenger_token: ""
+
+	      //   }
+	      //   updates['/bot/messenger_token'] = postData;
+	      //    firebase.database().ref().update(updates);
+
 	    }
 	    //https://hansweb-beac1.firebaseio.com/users/user_id/
 
@@ -37531,26 +37512,24 @@
 	      //firebase 
 	      // Write the new post's data simultaneously in the posts list and the user's post list.
 	      var updates = {};
-	      var postData = {
+	      var postData = true;
+	      var postData_two = this.state.pages[this.state.select];
+	      var postData_three = {
 
 	        bot_connected: true,
 	        messenger_token: this.state.pages[this.state.select]
 
 	      };
 
-	      xhttp.open("PATCH", "https://hansweb-beac1.firebaseio.com/users/" + user_id, true);
-	      xhttp.send(postData);
+	      var postData_four = this.state.select;
 
-	      //  updates['/users/' + user_id] = postData;
-	      //  firebase.database().ref().update(updates);
-	      var updates = {};
-	      var postData = {
+	      updates['/users/' + user_id + '/bot_connected'] = postData;
+	      updates['/users/' + user_id + '/messenger_token'] = postData_two;
 
-	        bot_connected: true,
-	        messenger_token: this.state.pages[this.state.select]
+	      updates['/users/' + user_id + '/bot_connected_name'] = postData_four;
 
-	      };
-	      updates['/bot/messenger_token'] = postData;
+	      updates['/bot/messenger_token'] = postData_three;
+	      firebase.database().ref().update(updates);
 
 	      var that = this;
 
@@ -37593,7 +37572,7 @@
 	              _react2.default.createElement(
 	                _reactBootstrap.Dropdown.Toggle,
 	                null,
-	                key_page[0]
+	                'Choose a Page'
 	              ),
 	              _react2.default.createElement(
 	                _reactBootstrap.Dropdown.Menu,
@@ -37605,8 +37584,7 @@
 	                    { key: key.id, eventKey: key, 'data-set-lang': 'en', onSelect: func_select },
 	                    key
 	                  );
-	                }),
-	                '}'
+	                })
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -37624,7 +37602,7 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'You have a bot connected to fb page'
+	          'You have a bot connected '
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Button,
