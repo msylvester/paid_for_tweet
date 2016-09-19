@@ -65,6 +65,12 @@ class SingleView extends React.Component {
   }
 
   getSelected(eventKey, a) { 
+  
+
+    //make sure still logged in 
+
+
+
     console.log("what");
     console.log(a);
     var that = this.state; 
@@ -82,6 +88,14 @@ class SingleView extends React.Component {
     //delete request to fb 
     //bot connected == false
     //udpate state? 
+
+
+//make sure still logged in 
+
+
+
+
+
     var that = this; 
 
  var user_id = firebase.auth().currentUser.providerData[0].uid;
@@ -136,30 +150,7 @@ class SingleView extends React.Component {
             });
 
    
-    // console.log(user_id)
-    //     //firebase 
-    //      // Write the new post's data simultaneously in the posts list and the user's post list.
-    //   var updates = {};
-    //   var postData = {
 
-    //       bot_connected: false,
-    //       messenger_token: ""
-    //   }
-      
-    //   updates['/users/' + user_id] = postData;
-    //   firebase.database().ref().update(updates);
-
-
-
-    //   var updates = {};
-    //   var postData = {
-
-    //       bot_connected: false,
-    //       messenger_token: ""
-
-    //   }
-    //   updates['/bot/messenger_token'] = postData;
-    //    firebase.database().ref().update(updates);
 
 
 
@@ -247,7 +238,7 @@ console.log(user_id)
 
                 <Row>
                
-                        <Dropdown>
+                        <Dropdown id = {"base"}>
                             <Dropdown.Toggle>
                                   Choose a Page 
                     
@@ -256,6 +247,8 @@ console.log(user_id)
 
                               {  
                            
+                                
+
                               key_page.map(function(key, i) {
 
                                 return (<MenuItem key={key.id} eventKey={key} data-set-lang="en" onSelect={func_select}>{key}</MenuItem>);
@@ -263,8 +256,15 @@ console.log(user_id)
 
                               })
 
-                              }
+
+
+
                             
+
+
+
+                              }
+
                             </Dropdown.Menu>
                             
                           </Dropdown>

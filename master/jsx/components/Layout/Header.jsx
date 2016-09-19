@@ -2,7 +2,7 @@ import React from 'react';
 import pubsub from 'pubsub-js';
 import HeaderRun from './Header.run'
 import { NavDropdown, MenuItem } from 'react-bootstrap';
-import FacebookButton  from './FacebookButton';
+
 import { Router, Route, Link, hashHistory, browserHistory, IndexRoute } from 'react-router';
 class Header extends React.Component {
 
@@ -18,14 +18,7 @@ class Header extends React.Component {
     }
 
 
-    logout() {
-        console.log("tryuing to logout")
-        FB.logout(function(response) {
-  // user is now logged out
-        this.firebase.auth().signOut();
-       
-});
-    }
+
     render() {
         const ddAlertTitle = (
             <span>
@@ -48,11 +41,17 @@ class Header extends React.Component {
                             </div>
                         </a>
                     </div>
+
+
+
+
                     { /* END navbar header */ }
                     { /* START Nav wrapper */ }
                     <div className="nav-wrapper">
                         { /* START Left navbar */ }
-                        <ul className="nav navbar-nav">
+
+
+                                        <ul className="nav navbar-nav">
                             <li>
                                 { /* Button used to collapse the left sidebar. Only visible on tablet and desktops */ }
                                 <a href="#" data-trigger-resize="" data-toggle-state="aside-collapsed" className="hidden-xs">
@@ -72,9 +71,6 @@ class Header extends React.Component {
                         <ul className="nav navbar-nav navbar-right">
                             { /* Search icon */ }
 
-                            <li>
-                                  <a onClick={this.logout}>Logout</a>
-                            </li>
                             { /* START Alert menu */ }
 
                             { /* END Alert menu */ }
