@@ -27,11 +27,11 @@ class SingleView extends React.Component {
     this.generateKey = this.generateKey.bind(this);
     this.getSelected = this.getSelected.bind(this);
     this.disconnect = this.disconnect.bind(this);
-    //this.selector = ""; 
+    //this.selector = "";
 }
 
 
-  componentWillMount() { 
+  componentWillMount() {
       console.log("compponent s")
 
       var user = firebase.auth().currentUser;
@@ -45,14 +45,14 @@ class SingleView extends React.Component {
                          console.log(snapshot.val());
                   console.log(snapshot.val().bot_connected);
                    console.log(snapshot.val().pages);
-                that.setState ( {  
+                that.setState ( {
                   connected:snapshot.val().bot_connected,
                   pages:snapshot.val().pages,
                   select:""
 
-                
+
                 })
-         
+
             });
             console.log("about to log pages");
                 console.log(that.state.pages);
@@ -61,21 +61,21 @@ class SingleView extends React.Component {
 
 
     }
-    
+
   }
 
-  getSelected(eventKey, a) { 
-  
+  getSelected(eventKey, a) {
 
-    //make sure still logged in 
+
+    //make sure still logged in
 
 
 
     console.log("what");
     console.log(a);
-    var that = this.state; 
-  
-    this.setState( { 
+    var that = this.state;
+
+    this.setState( {
       connected:that.connected,
       pages:that.pages,
       select:a
@@ -85,18 +85,18 @@ class SingleView extends React.Component {
   }
 
   disconnect() {
-    //delete request to fb 
+    //delete request to fb
     //bot connected == false
-    //udpate state? 
+    //udpate state?
 
 
-//make sure still logged in 
+//make sure still logged in
 
 
 
 
 
-    var that = this; 
+    var that = this;
 
  var user_id = firebase.auth().currentUser.providerData[0].uid;
             var starCountRef = firebase.database().ref('users/' +   user_id);
@@ -120,12 +120,12 @@ class SingleView extends React.Component {
 
                           updates['/users/' + user_id + '/bot_connected_name']= postData_three;
 
-                     
+
                           firebase.database().ref().update(updates);
 
 
 
-                   
+
                            $.ajax({
                                                   url: url_delete,
                                                   type: 'DELETE',
@@ -146,10 +146,10 @@ class SingleView extends React.Component {
 
 
 
-          
+
             });
 
-   
+
 
 
 
@@ -157,22 +157,22 @@ class SingleView extends React.Component {
   }
   //https://hansweb-beac1.firebaseio.com/users/user_id/
 
-  //  'https://docs-examples.firebaseio.com/rest/saving-data/users/alanisawesome.json 
+  //  'https://docs-examples.firebaseio.com/rest/saving-data/users/alanisawesome.json
 
-  generateKey() { 
+  generateKey() {
 
     console.log("in key bitch ");
 
     console.log(this.state.pages[this.state.select]);
     console.log(this.state.pages[this.state.select]);
-    //make a get request 
+    //make a get request
     var xhttp = new window.XMLHttpRequest();
     xhttp.open("POST", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
   xhttp.send();
 
 var user_id = firebase.auth().currentUser.providerData[0].uid;
 console.log(user_id)
-    //firebase 
+    //firebase
      // Write the new post's data simultaneously in the posts list and the user's post list.
   var updates = {};
   var postData = true;
@@ -185,7 +185,7 @@ console.log(user_id)
   }
 
   var postData_four = this.state.select;
- 
+
 
        updates['/users/' + user_id + '/bot_connected']= postData;
       updates['/users/' + user_id + '/messenger_token']= postData_two;
@@ -198,11 +198,11 @@ console.log(user_id)
 
 
 
- var that = this; 
+ var that = this;
 
   firebase.database().ref().update(updates);
 
-    this.setState ( { 
+    this.setState ( {
                         connected:true,
                   pages:that.state.pages,
                   select:""
@@ -221,33 +221,55 @@ console.log(user_id)
         console.log(this.state.connected)
         // const mainMenu = this.state.pages.map((page) => <MenuItem eventKey={i} data-set-lang="en">page</MenuItem>);
 
-        var index = 0; 
+        var index = 0;
         var func_click = this.generateKey;
         var func_select = this.getSelected;
-        var counter = 0; 
-        var that = this; 
+        var counter = 0;
+        var that = this;
         console.log(Object.keys(this.state.pages));
         var key_page = Object.keys(this.state.pages)
         var func_disc = this.disconnect;
-        //get bot anme that is connected 
-        //var connected_bot = firebae.database().ref('\users' + user.providerData[0].uid/bot_connected)
-        //if bot is no
+
         if (!this.state.connected) {
+
+          //have to make sure that all data has beee processed
+
+          if (!key_page || key_page.length < 1) {
+
+
+
+                      return (
+              <ContentWrapper>
+
+                  <Row>
+
+                    <p>loading</p>
+
+                  </Row>
+              </ContentWrapper>
+          )
+
+
+
+          }
+
+
+
                     return (
             <ContentWrapper>
 
                 <Row>
-               
+
                         <Dropdown id = {"base"}>
                             <Dropdown.Toggle>
-                                  Choose a Page 
-                    
+                                  Choose a Page
+
                             </Dropdown.Toggle>
                             <Dropdown.Menu className="animated fadeInUpShort">
 
-                              {  
-                           
-                                
+                              {
+
+
 
                               key_page.map(function(key, i) {
 
@@ -259,24 +281,24 @@ console.log(user_id)
 
 
 
-                            
+
 
 
 
                               }
 
                             </Dropdown.Menu>
-                            
+
                           </Dropdown>
 
     <Button bsStyle="primary" bsSize="large" onClick={func_click}>Connect</Button>
- 
-                        
+
+
                 </Row>
             </ContentWrapper>
         )
       }
-        
+
         return (
             <ContentWrapper>
             <p>You have a bot connected </p>

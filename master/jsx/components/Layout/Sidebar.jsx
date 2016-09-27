@@ -14,6 +14,7 @@ class Sidebar extends React.Component {
             collapse: {
                 singleview: this.routeActive(['singleview']),
                 fans: this.routeActive(['fans']),
+                logout: this.routeActive(['logout']),
                 submenu: this.routeActive(['submenu'])
             }
         };
@@ -101,6 +102,16 @@ class Sidebar extends React.Component {
                                 <span data-localize="sidebar.nav.FANS">Fans</span>
                                 </Link>
                             </li>
+
+
+                            <li className={ this.routeActive('logout') ? 'active' : '' }>
+                                <Link to="logout" title="Logout">
+                                <em className="icon-grid"></em>
+                                <span data-localize="sidebar.nav.LOGOUT">Logout</span>
+                                </Link>
+                            </li>
+
+
 
 
                             <li className={ this.routeActive(['submenu']) ? 'active' : '' }>

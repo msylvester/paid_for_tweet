@@ -24,11 +24,10 @@ import Login from './components/Login/Login';
 import SingleView from './components/SingleView/SingleView';
 import SubMenu from './components/SubMenu/SubMenu';
 import Fans from './components/Fans/Fans';
-
+import Logout from './components/Logout/Logout';
 // Init translation system
 initTranslation();
 // Init css loader (for themes)
-
 
 
 initLoadCss();
@@ -42,15 +41,16 @@ window.fbAsyncInit = function() {
   });
 ReactDOM.render(
     <Router history={browserHistory}>
-        <Route path="/"  component={Login} />
-        <Route component={Base}>
+
+        <Route path="/" component={Base}>
 
             {/* Default route*/}
             <IndexRoute component={SingleView} />
-
+              <Route path="login"  component={Login} />
             <Route path="singleview" component={SingleView}/>
             <Route path="submenu" component={SubMenu}/>
             <Route path="fans" component={Fans}/>
+              <Route path="logout"  component={Logout} />
           </Route>
 
 

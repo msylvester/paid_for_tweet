@@ -10,7 +10,7 @@ class Login extends React.Component {
 
 	constructor() {
 		super()
-		
+
 
 
 	}
@@ -19,21 +19,20 @@ class Login extends React.Component {
     render() {
 
 
+
         return (
 
-
-          
-            <div 
-               className="fb-login-button" 
-               data-max-rows="1" 
-               data-size="xlarge" 
-               data-show-faces="false" 
-               scope="public_profile,email, manage_pages, publish_pages"
-               data-auto-logout-link="true"
-               >
-            </div>
-
-
+				<ContentWrapper>
+				<div
+					 className="fb-login-button"
+					 data-max-rows="1"
+					 data-size="xlarge"
+					 data-show-faces="false"
+					 scope="public_profile,email, manage_pages, publish_pages"
+					 data-auto-logout-link="true"
+					 >
+				</div>
+	</ContentWrapper>
 
         );
     }
