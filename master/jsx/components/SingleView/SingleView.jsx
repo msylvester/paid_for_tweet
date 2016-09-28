@@ -2,7 +2,7 @@ import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Dropdown, MenuItem, Button } from 'react-bootstrap';
 import Firebase from 'firebase';
-
+import Spinner from 'react-spinkit';
 
 
 
@@ -23,7 +23,7 @@ class SingleView extends React.Component {
 
     super();
     this.state = {connected: '', pages:{}, select: ""}
-    console.log("hey in constructor")
+
     this.generateKey = this.generateKey.bind(this);
     this.getSelected = this.getSelected.bind(this);
     this.disconnect = this.disconnect.bind(this);
@@ -32,13 +32,13 @@ class SingleView extends React.Component {
 
 
   componentWillMount() {
-      console.log("compponent s")
+
 
       var user = firebase.auth().currentUser;
       console.log(user)
 
       if (user != null) {
-        console.log("bout to get freqkay")
+  
             var that = this;
             var starCountRef = firebase.database().ref('users/' +   user.providerData[0].uid);
             starCountRef.once('value').then(function(snapshot) {
@@ -54,10 +54,6 @@ class SingleView extends React.Component {
                 })
 
             });
-            console.log("about to log pages");
-                console.log(that.state.pages);
-
-
 
 
     }
@@ -71,8 +67,7 @@ class SingleView extends React.Component {
 
 
 
-    console.log("what");
-    console.log(a);
+
     var that = this.state;
 
     this.setState( {
@@ -168,7 +163,7 @@ class SingleView extends React.Component {
     //make a get request
     var xhttp = new window.XMLHttpRequest();
     xhttp.open("POST", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
-  xhttp.send();
+    xhttp.send();
 
 var user_id = firebase.auth().currentUser.providerData[0].uid;
 console.log(user_id)
@@ -243,7 +238,7 @@ console.log(user_id)
 
                   <Row>
 
-                    <p>loading</p>
+                    <Spinner spinnerName='double-bounce' />
 
                   </Row>
               </ContentWrapper>

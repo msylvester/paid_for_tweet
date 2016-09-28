@@ -7,7 +7,7 @@ import Firebase from 'firebase';
 class Fans extends React.Component {
 
     constructor() {
-      
+
       super();
 
       console.log("made it to fans dot jsx constructor");
@@ -27,9 +27,9 @@ class Fans extends React.Component {
       var user = firebase.auth().currentUser;
       var user_id = user.providerData[0].uid;
 
-      //see if user has bot 
+      //see if user has bot
       var current_user = firebase.database().ref('/users/'+ user_id);
-      
+
       //get a reference to the users
       var refUsers= firebase.database().ref('bot/users/');
 
@@ -40,7 +40,7 @@ class Fans extends React.Component {
 
       //firebase cal lback to get a snapsot of the entity
       if (user!=null) {
-    
+
           refUsers.once('value').then(function(snapshot) {
               //log the users
               console.log("printing object within fireavse callback")
@@ -114,7 +114,7 @@ class Fans extends React.Component {
                                 <th>Gender</th>
                                 <th>Created</th>
                                 <th>Updated</th>
-    
+
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -126,29 +126,35 @@ class Fans extends React.Component {
                             {console.log(user);
                               console.log(index);
                               console.log(that.state.users_object[user]);
-                              console.log(that.state.users_object[user].first_name); 
+                              console.log(that.state.users_object[user].first_name);
                               var d = that.state.users_object[user];
                               console.log(d['first_name'])
 
-                            } 
+                            }
                           return (<tr>
                               <td>{that.state.users_object[user].first_name + that.state.users_object[user].last_name }
                               </td>
-                              <td><a href="">{that.state.users_object[user].profile_pic }</a>
+                              <td>
+
+                          {/*  // <!--    <a href="">   </a> --> */}
+
+<img src={that.state.users_object[user].profile_pic }  alt="Smiley face" />
+
+
                               </td>
 
-                          
+
                               <td>{user}
                               </td>
                               <td> {that.state.users_object[user].gender }
                               </td>
                               <td>10/05/2015</td>
-                          
-                          <td  align="center"     valign="middle" > 
-                          <img alt="Loading ..." src="imgs/logo.png"></img>
+
+                          <td  align="center"     valign="middle" >
+                        <a>?</a>
                           </td>
 
-                    
+
                               <td><a href="" className="mr-sm label label-success">Public</a>
                               </td>
                           </tr>
