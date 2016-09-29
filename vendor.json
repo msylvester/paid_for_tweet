@@ -10,6 +10,7 @@
   "bower_components/fontawesome/css/font-awesome.min.css",
   "bower_components/fontawesome/fonts/*",
   "bower_components/animate.css/animate.min.css",
+  "bower_components/Chart.js/Chart.js",
   "bower_components/jquery-localize-i18n/dist/jquery.localize.js",
   "bower_components/simple-line-icons/css/simple-line-icons.css",
   "bower_components/simple-line-icons/fonts/*"

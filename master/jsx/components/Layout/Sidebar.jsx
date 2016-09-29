@@ -16,7 +16,6 @@ class Sidebar extends React.Component {
                 fans: this.routeActive(['fans']),
                 newFans: this.routeActive(['newFans']),
                 topUsers: this.routeActive(['topUsers']),
-                charts: this.routeActive(['chart-chartjs']),
                 logout: this.routeActive(['logout']),
                 submenu: this.routeActive(['submenu'])
             }
@@ -104,25 +103,6 @@ class Sidebar extends React.Component {
                                 <em className="icon-grid"></em>
                                 <span data-localize="sidebar.nav.FANS">Fans</span>
                                 </Link>
-                            </li>
-
-                            <li className={ this.routeActive(['chart-chartjs']) ? 'active' : '' }>
-                                <div className="nav-item" title="Charts" onClick={ this.toggleItemCollapse.bind(this, 'charts') }>
-                                    <em className="icon-graph"></em>
-                                    <span data-localize="sidebar.nav.chart.CHART">Charts</span>
-                                </div>
-                                <Collapse in={ this.state.collapse.charts }>
-                                    <ul id="" className="nav sidebar-subnav">
-                                        <li className="sidebar-subnav-header">Charts</li>
-
-                                        <li className={ this.routeActive('chart-chartjs') ? 'active' : '' }>
-                                            <Link to="chart-chartjs" title="Chart JS">
-                                            <span>Chart JS</span>
-                                            </Link>
-                                        </li>
-
-                                    </ul>
-                                </Collapse>
                             </li>
 
                             <li className={ this.routeActive('newFans') ? 'active' : '' }>

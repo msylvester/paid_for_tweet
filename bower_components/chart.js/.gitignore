@@ -1,9 +1,7 @@
-/coverage
-/custom
-/dist
-/docs/index.md
-/node_modules
 
 .DS_Store
-.idea
-bower.json
+
+node_modules/*
+custom/*
+
+docs/index.md

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c739251c7dab3fe16c84"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8103b32f5c522558f248"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -37968,7 +37968,6 @@
 	                fans: _this.routeActive(['fans']),
 	                newFans: _this.routeActive(['newFans']),
 	                topUsers: _this.routeActive(['topUsers']),
-	                charts: _this.routeActive(['chart-chartjs']),
 	                logout: _this.routeActive(['logout']),
 	                submenu: _this.routeActive(['submenu'])
 	            }
@@ -38097,46 +38096,6 @@
 	                                        'span',
 	                                        { 'data-localize': 'sidebar.nav.FANS' },
 	                                        'Fans'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: this.routeActive(['chart-chartjs']) ? 'active' : '' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'nav-item', title: 'Charts', onClick: this.toggleItemCollapse.bind(this, 'charts') },
-	                                    _react2.default.createElement('em', { className: 'icon-graph' }),
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { 'data-localize': 'sidebar.nav.chart.CHART' },
-	                                        'Charts'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.Collapse,
-	                                    { 'in': this.state.collapse.charts },
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        { id: '', className: 'nav sidebar-subnav' },
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            { className: 'sidebar-subnav-header' },
-	                                            'Charts'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            { className: this.routeActive('chart-chartjs') ? 'active' : '' },
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: 'chart-chartjs', title: 'Chart JS' },
-	                                                _react2.default.createElement(
-	                                                    'span',
-	                                                    null,
-	                                                    'Chart JS'
-	                                                )
-	                                            )
-	                                        )
 	                                    )
 	                                )
 	                            ),
@@ -38533,26 +38492,32 @@
 	    value: true
 	});
 
-	exports.default = function () {
+	exports.default = function (dateLabels, newUsers, existingUsers) {
 
-	    console.log("CHART CHART JS!!!");
-	    console.log(Chart);
-
-	    if (typeof Chart === 'undefined') {
-	        console.log("Chart is undefined!!!");
-	        return;
-	    }
+	    if (typeof Chart === 'undefined') return;
 
 	    // random values for demo
 	    var rFactor = function rFactor() {
 	        return Math.round(Math.random() * 100);
 	    };
 
+	    var firstDataSet = [10, 20, 50, 50, 40, 75, 10];
+
+	    var newDates = $(dateLabels).slice(0, 6);
+
+	    console.log("DATE LABELS ARRAY");
+	    console.log(newDates[0]);
+	    console.log("NEW USERS ARRAY");
+	    console.log(newUsers);
+	    console.log("Existing USERS ARRAY");
+	    console.log(existingUsers);
+
 	    // Line chart
 	    // -----------------------------------
 
 	    var lineData = {
-	        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+	        labels: ['Januaryyy', 'February', 'March', 'April', 'May', 'June', 'July'],
+	        // labels: dateLabels,
 	        datasets: [{
 	            label: 'My First dataset',
 	            fillColor: 'rgba(114,102,186,0.2)',
@@ -38561,17 +38526,19 @@
 	            pointStrokeColor: '#fff',
 	            pointHighlightFill: '#fff',
 	            pointHighlightStroke: 'rgba(114,102,186,1)',
-	            data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
-	        }, {
-	            label: 'My Second dataset',
-	            fillColor: 'rgba(35,183,229,0.2)',
-	            strokeColor: 'rgba(35,183,229,1)',
-	            pointColor: 'rgba(35,183,229,1)',
-	            pointStrokeColor: '#fff',
-	            pointHighlightFill: '#fff',
-	            pointHighlightStroke: 'rgba(35,183,229,1)',
-	            data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
+	            data: firstDataSet
+	            // data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
 	        }]
+	        //   {
+	        //      label: 'My Second dataset',
+	        //      fillColor: 'rgba(35,183,229,0.2)',
+	        //      strokeColor: 'rgba(35,183,229,1)',
+	        //      pointColor: 'rgba(35,183,229,1)',
+	        //      pointStrokeColor: '#fff',
+	        //      pointHighlightFill: '#fff',
+	        //      pointHighlightStroke: 'rgba(35,183,229,1)',
+	        //      data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
+	        //  }
 	    };
 
 	    var lineOptions = {
@@ -38591,9 +38558,218 @@
 	    };
 
 	    if (document.getElementById("chartjs-linechart")) {
-	        console.log("LINE CHART!!!");
 	        var linectx = document.getElementById("chartjs-linechart").getContext("2d");
 	        var lineChart = new Chart(linectx).Line(lineData, lineOptions);
+	    }
+
+	    // Bar chart
+	    // -----------------------------------
+
+	    var barData = {
+	        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+	        datasets: [{
+	            fillColor: '#23b7e5',
+	            strokeColor: '#23b7e5',
+	            highlightFill: '#23b7e5',
+	            highlightStroke: '#23b7e5',
+	            data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
+	        }, {
+	            fillColor: '#5d9cec',
+	            strokeColor: '#5d9cec',
+	            highlightFill: '#5d9cec',
+	            highlightStroke: '#5d9cec',
+	            data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
+	        }]
+	    };
+
+	    var barOptions = {
+	        scaleBeginAtZero: true,
+	        scaleShowGridLines: true,
+	        scaleGridLineColor: 'rgba(0,0,0,.05)',
+	        scaleGridLineWidth: 1,
+	        barShowStroke: true,
+	        barStrokeWidth: 2,
+	        barValueSpacing: 5,
+	        barDatasetSpacing: 1,
+	        responsive: true
+	    };
+
+	    if (document.getElementById("chartjs-barchart")) {
+	        var barctx = document.getElementById("chartjs-barchart").getContext("2d");
+	        var barChart = new Chart(barctx).Bar(barData, barOptions);
+	    }
+
+	    //  Doughnut chart
+	    // -----------------------------------
+
+	    var doughnutData = [{
+	        value: 300,
+	        color: '#7266ba',
+	        highlight: '#7266ba',
+	        label: 'Purple'
+	    }, {
+	        value: 50,
+	        color: '#23b7e5',
+	        highlight: '#23b7e5',
+	        label: 'Info'
+	    }, {
+	        value: 100,
+	        color: '#fad732',
+	        highlight: '#fad732',
+	        label: 'Yellow'
+	    }];
+
+	    var doughnutOptions = {
+	        segmentShowStroke: true,
+	        segmentStrokeColor: '#fff',
+	        segmentStrokeWidth: 2,
+	        percentageInnerCutout: 85,
+	        animationSteps: 100,
+	        animationEasing: 'easeOutBounce',
+	        animateRotate: true,
+	        animateScale: false,
+	        responsive: true
+	    };
+
+	    if (document.getElementById("chartjs-doughnutchart")) {
+	        var doughnutctx = document.getElementById("chartjs-doughnutchart").getContext("2d");
+	        var doughnutChart = new Chart(doughnutctx).Doughnut(doughnutData, doughnutOptions);
+	    }
+
+	    // Pie chart
+	    // -----------------------------------
+
+	    var pieData = [{
+	        value: 300,
+	        color: '#7266ba',
+	        highlight: '#7266ba',
+	        label: 'Purple'
+	    }, {
+	        value: 40,
+	        color: '#fad732',
+	        highlight: '#fad732',
+	        label: 'Yellow'
+	    }, {
+	        value: 120,
+	        color: '#23b7e5',
+	        highlight: '#23b7e5',
+	        label: 'Info'
+	    }];
+
+	    var pieOptions = {
+	        segmentShowStroke: true,
+	        segmentStrokeColor: '#fff',
+	        segmentStrokeWidth: 2,
+	        percentageInnerCutout: 0, // Setting this to zero convert a doughnut into a Pie
+	        animationSteps: 100,
+	        animationEasing: 'easeOutBounce',
+	        animateRotate: true,
+	        animateScale: false,
+	        responsive: true
+	    };
+
+	    if (document.getElementById("chartjs-piechart")) {
+	        var piectx = document.getElementById("chartjs-piechart").getContext("2d");
+	        var pieChart = new Chart(piectx).Pie(pieData, pieOptions);
+	    }
+
+	    // Polar chart
+	    // -----------------------------------
+
+	    var polarData = [{
+	        value: 300,
+	        color: '#f532e5',
+	        highlight: '#f532e5',
+	        label: 'Red'
+	    }, {
+	        value: 50,
+	        color: '#7266ba',
+	        highlight: '#7266ba',
+	        label: 'Green'
+	    }, {
+	        value: 100,
+	        color: '#f532e5',
+	        highlight: '#f532e5',
+	        label: 'Yellow'
+	    }, {
+	        value: 140,
+	        color: '#7266ba',
+	        highlight: '#7266ba',
+	        label: 'Grey'
+	    }];
+
+	    var polarOptions = {
+	        scaleShowLabelBackdrop: true,
+	        scaleBackdropColor: 'rgba(255,255,255,0.75)',
+	        scaleBeginAtZero: true,
+	        scaleBackdropPaddingY: 1,
+	        scaleBackdropPaddingX: 1,
+	        scaleShowLine: true,
+	        segmentShowStroke: true,
+	        segmentStrokeColor: '#fff',
+	        segmentStrokeWidth: 2,
+	        animationSteps: 100,
+	        animationEasing: 'easeOutBounce',
+	        animateRotate: true,
+	        animateScale: false,
+	        responsive: true
+	    };
+
+	    if (document.getElementById("chartjs-polarchart")) {
+	        var polarctx = document.getElementById("chartjs-polarchart").getContext("2d");
+	        var polarChart = new Chart(polarctx).PolarArea(polarData, polarOptions);
+	    }
+
+	    // Radar chart
+	    // -----------------------------------
+
+	    var radarData = {
+	        labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+	        datasets: [{
+	            label: 'My First dataset',
+	            fillColor: 'rgba(114,102,186,0.2)',
+	            strokeColor: 'rgba(114,102,186,1)',
+	            pointColor: 'rgba(114,102,186,1)',
+	            pointStrokeColor: '#fff',
+	            pointHighlightFill: '#fff',
+	            pointHighlightStroke: 'rgba(114,102,186,1)',
+	            data: [65, 59, 90, 81, 56, 55, 40]
+	        }, {
+	            label: 'My Second dataset',
+	            fillColor: 'rgba(151,187,205,0.2)',
+	            strokeColor: 'rgba(151,187,205,1)',
+	            pointColor: 'rgba(151,187,205,1)',
+	            pointStrokeColor: '#fff',
+	            pointHighlightFill: '#fff',
+	            pointHighlightStroke: 'rgba(151,187,205,1)',
+	            data: [28, 48, 40, 19, 96, 27, 100]
+	        }]
+	    };
+
+	    var radarOptions = {
+	        scaleShowLine: true,
+	        angleShowLineOut: true,
+	        scaleShowLabels: false,
+	        scaleBeginAtZero: true,
+	        angleLineColor: 'rgba(0,0,0,.1)',
+	        angleLineWidth: 1,
+	        pointLabelFontFamily: "'Arial'",
+	        pointLabelFontStyle: 'bold',
+	        pointLabelFontSize: 10,
+	        pointLabelFontColor: '#565656',
+	        pointDot: true,
+	        pointDotRadius: 3,
+	        pointDotStrokeWidth: 1,
+	        pointHitDetectionRadius: 20,
+	        datasetStroke: true,
+	        datasetStrokeWidth: 2,
+	        datasetFill: true,
+	        responsive: true
+	    };
+
+	    if (document.getElementById("chartjs-radarchart")) {
+	        var radarctx = document.getElementById("chartjs-radarchart").getContext("2d");
+	        var radarChart = new Chart(radarctx).Radar(radarData, radarOptions);
 	    }
 	};
 
@@ -38636,19 +38812,97 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var dateLabels = [];
+	var newUsers = [];
+	var existingUsers = [];
+
 	var NewFans = function (_React$Component) {
 	    _inherits(NewFans, _React$Component);
 
 	    function NewFans() {
 	        _classCallCheck(this, NewFans);
 
-	        return _possibleConstructorReturn(this, (NewFans.__proto__ || Object.getPrototypeOf(NewFans)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (NewFans.__proto__ || Object.getPrototypeOf(NewFans)).call(this));
+
+	        _this.state = {
+	            users_object: {},
+	            user_has_bot: false
+	        };
+	        return _this;
 	    }
 
 	    _createClass(NewFans, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            //get users
+
+	            var user = firebase.auth().currentUser;
+	            var user_id = user.providerData[0].uid;
+
+	            var current_user = firebase.database().ref('/users/' + user_id);
+	            var refUsers = firebase.database().ref('bot/users/');
+
+	            var that = this;
+
+	            //firebase callback to get a snapshot of the entity
+	            if (user != null) {
+
+	                refUsers.once('value').then(function (snapshot) {
+	                    //log the users
+	                    var a = snapshot.val();
+	                    var keys = Object.keys(a);
+	                    that.setState({
+	                        users_object: a,
+	                        user_has_bot: that.state.user_hasBot
+
+	                    });
+	                });
+
+	                current_user.once('value').then(function (snapshot) {
+	                    var local_bot_connected = snapshot.val().bot_connected;
+
+	                    that.setState({
+	                        users_object: that.state.users_object,
+	                        user_has_bot: local_bot_connected
+	                    });
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            (0, _ChartChartJS2.default)();
+
+	            var that = this;
+
+	            // Create a reference to the new user data
+	            var refNewUserData = firebase.database().ref('bots/EAAXcAzXFvEQBAMYoH4M2kuZBGdeZC5UjZAUpTBOv7lNfhzCoR3FHnUFAIcBb1IYg0KTTe6szKV8zZCYFhaRMk67KsG2w6ZBMQec5TGsNQNP0535meIHY8D5pApjPMgvsdnJsuZB8Tq76efExJGEzfcVSZCmcGBGWAmjZC1dqKxzfWwZDZD/messages_received/date/');
+
+	            refNewUserData.once('value').then(function (snapshot) {
+	                //log the dates
+	                var a = snapshot.val(); // spits out the whole branch as a dict
+
+	                // We need to construct 3 arrays. 1 for dates, 1 for new users, and 1 for existing users.
+	                // new users
+	                // Using jQuery to iterate through key value pair: https://stackoverflow.com/questions/684672/how-do-i-loop-through-or-enumerate-a-javascript-object
+	                $.each(a, function (key, value) {
+	                    newUsers.push(value.new_users);
+	                });
+
+	                // existing users
+	                $.each(a, function (key, value) {
+	                    existingUsers.push(value.existing_users);
+	                });
+
+	                $.each(a, function (key, value) {
+	                    dateLabels.push(key);
+	                });
+
+	                that.setState({
+	                    users_object: a
+	                });
+	            });
+
+	            (0, _ChartChartJS2.default)(dateLabels, newUsers, existingUsers);
 	        }
 	    }, {
 	        key: 'render',
@@ -38657,9 +38911,14 @@
 	                _ContentWrapper2.default,
 	                null,
 	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    'Chart JS'
+	                    'div',
+	                    { className: 'content-heading' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'pull-right text-center' },
+	                        _react2.default.createElement('div', { 'data-sparkline': '', 'data-bar-color': '#cfdbe2', 'data-height': '20', 'data-bar-width': '3', 'data-bar-spacing': '2', 'data-values': '1,0,4,9,5,7,8,9,5,7,8,4,7' })
+	                    ),
+	                    'New Users'
 	                ),
 	                _react2.default.createElement(
 	                    _reactBootstrap.Grid,
@@ -38668,18 +38927,14 @@
 	                        _reactBootstrap.Row,
 	                        { className: 'mb-lg' },
 	                        _react2.default.createElement(
-	                            _reactBootstrap.Col,
-	                            { lg: 6 },
-	                            _react2.default.createElement(
-	                                'h4',
-	                                null,
-	                                'Line Chart'
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                null,
-	                                _react2.default.createElement('canvas', { id: 'chartjs-linechart' })
-	                            )
+	                            'h4',
+	                            null,
+	                            'Line Chart'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('canvas', { id: 'chartjs-linechart' })
 	                        )
 	                    )
 	                )

@@ -31,6 +31,6 @@
     "whirl": "1.0.0",
     "jquery-localize-i18n": "*",
     "simple-line-icons": "2.2.3",
-    "chart.js": "^2.3.0"
+    "Chart.js": "1.0.2",
   }
 }
