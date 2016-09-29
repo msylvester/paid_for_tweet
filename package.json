@@ -4,9 +4,13 @@
   "description": "Angle - Bootstrap Admin App + jQuery",
   "author": "@themicon_co",
   "dependencies": {
+    "chartjs": "^0.3.24",
     "classnames": "^2.2.3",
     "firebase": "^3.3.1",
+    "flot": "^0.8.0-alpha",
     "history": "^2.0.0-rc2",
+    "jquery": "^3.1.1",
+    "jsdom": "^9.5.0",
     "pubsub-js": "^1.5.3",
     "react": "^0.14.6",
     "react-addons-css-transition-group": "^0.14.7",

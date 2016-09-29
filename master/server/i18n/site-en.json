@@ -15,6 +15,8 @@
     "nav": {
       "SINGLEVIEW": "Bot Setup",
       "FANS": "Fans",
+      "NEWFANS": "New Fans",
+      "TOPUSERS": "Top Users",
       "menu": {
         "MENU": "Menu",
         "SUBMENU": "Sub Menu"

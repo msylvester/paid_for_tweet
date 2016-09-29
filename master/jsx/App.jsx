@@ -24,7 +24,13 @@ import Login from './components/Login/Login';
 import SingleView from './components/SingleView/SingleView';
 import SubMenu from './components/SubMenu/SubMenu';
 import Fans from './components/Fans/Fans';
+import TopUsers from './components/TopUsers/TopUsers';
+import NewFans from './components/NewFans/NewFans';
+
 import Logout from './components/Logout/Logout';
+
+import ChartChartJS from './components/Charts/ChartChartJS';
+
 // Init translation system
 initTranslation();
 // Init css loader (for themes)
@@ -50,7 +56,11 @@ ReactDOM.render(
             <Route path="singleview" component={SingleView}/>
             <Route path="submenu" component={SubMenu}/>
             <Route path="fans" component={Fans}/>
-              <Route path="logout"  component={Logout} />
+            <Route path="newFans" component={NewFans}/>
+            <Route path="topUsers" component={TopUsers}/>
+            <Route path="logout"  component={Logout} />
+            <Route path="chart-chartjs" component={ChartChartJS}/>
+
           </Route>
 
 
