@@ -7,10 +7,10 @@ export default function(dateLabels, newUsers, existingUsers) {
         return Math.round(Math.random() * 100);
     };
 
-    var firstDataSet = [10, 20, 50, 50, 40, 75, 10]
+    var firstDataSet = [newUsers[0], newUsers[1], newUsers[2], newUsers[3], newUsers[4], newUsers[5], newUsers[6]]
 
     var newDates = $(dateLabels).slice(0,6)
-
+    console.log(dateLabels)
     console.log("DATE LABELS ARRAY");
     console.log(newDates[0]);
     console.log("NEW USERS ARRAY");
@@ -23,8 +23,11 @@ export default function(dateLabels, newUsers, existingUsers) {
     // -----------------------------------
 
     var lineData = {
-        labels: ['Januaryyy', 'February', 'March', 'April', 'May', 'June', 'July'],
+
+        // labels: ['Januaryyy', 'February', 'March', 'April', 'May', 'June', 'July'],
         // labels: dateLabels,
+
+        labels:[dateLabels[0], dateLabels[1], dateLabels[2], dateLabels[3], dateLabels[4], dateLabels[5], dateLabels[6]],
         datasets: [{
             label: 'My First dataset',
             fillColor: 'rgba(114,102,186,0.2)',

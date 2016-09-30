@@ -64,32 +64,27 @@ class NewFans extends React.Component {
       // Create a reference to the new user data
       var refNewUserData = firebase.database().ref('bots/EAAXcAzXFvEQBAMYoH4M2kuZBGdeZC5UjZAUpTBOv7lNfhzCoR3FHnUFAIcBb1IYg0KTTe6szKV8zZCYFhaRMk67KsG2w6ZBMQec5TGsNQNP0535meIHY8D5pApjPMgvsdnJsuZB8Tq76efExJGEzfcVSZCmcGBGWAmjZC1dqKxzfWwZDZD/messages_received/date/');
 
+      var newUsers = [] 
+      var existing = [] 
+
       refNewUserData.once('value').then(function(snapshot) {
           //log the dates
-          var a = snapshot.val(); // spits out the whole branch as a dict
+          var dates = snapshot.val(); // spits out the whole branch as a dict
 
-          // We need to construct 3 arrays. 1 for dates, 1 for new users, and 1 for existing users.
-          // new users
-          // Using jQuery to iterate through key value pair: https://stackoverflow.com/questions/684672/how-do-i-loop-through-or-enumerate-a-javascript-object
-          $.each(a, function(key, value) {
-            newUsers.push(value.new_users);
-          });
 
-          // existing users
-          $.each(a, function(key, value) {
-            existingUsers.push(value.existing_users);
-          });
+              //get the dates
+          var dates_array = Object.keys(dates)
 
-          $.each(a, function(key, value) {
-            dateLabels.push(key);
-          });
+          for (var i =0; i<dates_array.length; i++) {
+              existing.push(dates[dates_array[i]]['existing_users']); 
+              newUsers.push(dates[dates_array[i]]['new_users']); 
 
-          that.setState( {
-                users_object: a,
-          });
+          }
+             ChartChartJSRun(dates_array, newUsers, existing);
+
       });
 
-      ChartChartJSRun(dateLabels, newUsers, existingUsers);
+     
     }
 
     render() {
