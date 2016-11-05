@@ -13,6 +13,7 @@ class Sidebar extends React.Component {
             userBlockCollapse: false,
             collapse: {
                 singleview: this.routeActive(['singleview']),
+                targeted_message = this.routeActive(['target']),
                 fans: this.routeActive(['fans']),
                 newFans: this.routeActive(['newFans']),
                 topUsers: this.routeActive(['topUsers']),
@@ -97,6 +98,15 @@ class Sidebar extends React.Component {
                                 <span data-localize="sidebar.nav.SINGLEVIEW">Bot Status</span>
                                 </Link>
                             </li>
+
+                            <li className={ this.routeActive('target') ? 'active' : '' }>
+                                <Link to="target" title="Targeted Messaging">
+                                <em className="icon-grid"></em>
+                                <span data-localize="sidebar.nav.TARGET">Targeted Message</span>
+                                </Link>
+                            </li>
+
+
 
                             <li className={ this.routeActive('fans') ? 'active' : '' }>
                                 <Link to="fans" title="Fans">
