@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
             userBlockCollapse: false,
             collapse: {
                 singleview: this.routeActive(['singleview']),
-                targeted_message = this.routeActive(['target']),
+                targeted_message: this.routeActive(['target']),
                 fans: this.routeActive(['fans']),
                 newFans: this.routeActive(['newFans']),
                 topUsers: this.routeActive(['topUsers']),
