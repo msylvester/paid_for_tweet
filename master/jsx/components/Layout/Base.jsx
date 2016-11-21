@@ -6,23 +6,31 @@ import Sidebar from './Sidebar'
 import Offsidebar from './Offsidebar'
 import Footer from './Footer'
 import Login from '../Login/Login'
+import Targeted from '../Targeted/Targeted'
+//import Firebase from 'firebase';
+
+
+
+
 
 class Base extends React.Component {
 
-    constructor() { 
+    constructor() {
         super();
-      
-        this.state = { 
 
-            login:false 
+        this.state = {
+
+            login:false,
+            registered:false,
+            email:''
 
         }
-
+        this.page_array_id = []
         console.log("is it here")
         this.checkLoginState = this.checkLoginState.bind(this);
     }
 
-    componentWillMount() { 
+    componentWillMount() {
         var that = this;
 
         FB.getLoginStatus(function(response) {
@@ -30,12 +38,62 @@ class Base extends React.Component {
             // the user is logged in and has authenticated your
             // app, and response.authResponse supplies
             // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
+            // request, and the time the access token
             // and signed request each expire
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
+            const a = that
+            var localEmail = ""
 
+            FB.api('/' + uid, {fields: 'email'},function(response1) {
+              if (response1 && !response1.error) {
+                /* handle the result */
+                console.log("handling")
+
+                console.log(response1)
+                const over_state = a
+                var starCountRef = firebase.database().ref('FBmess/');
+
+                starCountRef.once('value').then(function(snapshot) {
+
+                      console.log("*dfdfdf awer3 authoriazedd pringting")
+                      console.log(snapshot.val())
+
+                      var keys_array = Object.keys(snapshot.val())
+                      var auth_users = []
+                      keys_array.forEach(bot => {
+                          console.log(snapshot.val()[bot]['user'])
+                          //console.log(snapshot.val().bot.user)
+                          auth_users.push(snapshot.val()[bot]['user'])
+
+                      })
+
+                    if (auth_users.find(x=> x === response1.email) != undefined) {
+
+
+                          over_state.setState( {
+                            email: response1.email,
+                            registered:true
+                          })
+
+                    }
+                    else {
+
+                        over_state.setState( {
+                          email: response1.email,
+                          registered:false
+                        })
+                    }
+              })
+
+
+              }
+             });
+
+            console.log(response.authResponse)
             console.log('connected' + uid)
+            //check firebase
+
 
 
             that.setState(  {
@@ -46,11 +104,11 @@ class Base extends React.Component {
             })
 
           } else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook, 
+            // the user is logged in to Facebook,
             // but has not authenticated your app
             that.setState(  {
 
-              login: false 
+              login: false
 
 
             })
@@ -70,15 +128,15 @@ class Base extends React.Component {
              console.log('not logged on' + uid)
 
           }
-         });  
+         });
 
     }
 
 
-  componentDidMount(){ 
-    //events 
+  componentDidMount(){
+    //events
        console.log("hoaz ")
-   FB.Event.subscribe('auth.authResponseChange', this.checkLoginState);
+       FB.Event.subscribe('auth.authResponseChange', this.checkLoginState);
 
 
 
@@ -87,7 +145,7 @@ class Base extends React.Component {
  checkLoginState(event) {
      console.log("made it to event")
      console.log(event)
-           
+
     var current_state = this.state.login;
     if (event.authResponse!=null) {
       // User is signed-in Facebook.
@@ -99,12 +157,12 @@ class Base extends React.Component {
         console.log("in this block")
         console.log(firebaseUser)
 
-        //see if the user is logged 
+        //see if the user is logged
         var check = false;
 
         if (firebaseUser) {
              var providerData = firebaseUser.providerData;
-      
+
           for (var i = 0; i < providerData.length; i++) {
             if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID &&
                 providerData[i].uid === event.authResponse.userID) {
@@ -125,45 +183,58 @@ class Base extends React.Component {
                 var credential = firebase.auth.FacebookAuthProvider.credential(
                     event.authResponse.accessToken);
                 // Sign in with the credential from the Facebook user.
- 
+
                     FB.api('/me/accounts', function(response) {
 
                       var pages = [];
                       var page_names = {};
+                      var page_names_to_id = {};
+
+                      console.log(response.data)
                       for (var i =0; i<response.data.length; i++) {
-                          var a = { 
+                          var a = {
                               page_name:response.data[i].name,
                               page_token:response.data[i].access_token
 
                           }
+                      //    this.page_array_id.push(response.data[i].id)
                           page_names[response.data[i].name] = response.data[i].access_token;
-                         
+                          page_names_to_id[response.data[i].name] = response.data[i].id;
                           pages.push(a);
                       }
 
 
-                      firebase.database().ref('users/' + event.authResponse.userID).set({
+                      var user_email = ""
 
+                      if (over_state.state.email != null) {
+
+                          user_email = over_state.state.email
+
+
+                      }
+
+                      firebase.database().ref('users/' + event.authResponse.userID).set({
+                          email: user_email,
                           uid:event.authResponse.userID,
                           bot_connected:false,
                           credential:event.authResponse.accessToken,
                           pages:  page_names,
+                          page_name_to_id: page_names_to_id,
                           messenger_token: ""
 
 
-                          
                     })
 
 
 
 
                     })
-            
-                
+
+
 
 
                 firebase.auth().signInWithCredential(credential).catch(function(error) {
-                  
+
 
 
                   // Handle Errors here.
@@ -177,54 +248,66 @@ class Base extends React.Component {
                   // ...
                 });
 
-                that.setState( { 
+                that.setState( {
 
                     login: true
                 })
 
               } else {
                 console.log("gere i a me in the this shit");
-                 
+                    const over_state = that
                     FB.api('/me/accounts', function(response) {
                       console.log("about to log response");
                       console.log(response);
                       var pages = [];
                       var page_names = {};
+                      var page_names_to_id = {};
                       for (var i =0; i<response.data.length; i++) {
-                          var a = { 
+                          var a = {
                               page_name:response.data[i].name,
                               page_token:response.data[i].access_token
 
                           }
                           page_names[response.data[i].name] = response.data[i].access_token;
-                         
+                          page_names_to_id[response.data[i].name] = response.data[i].id;
                           pages.push(a);
                       }
 
                       console.log("about to log push");
                       console.log("da fuq");
-                      firebase.database().ref('users/' + event.authResponse.userID).set({
 
+                      var user_email = ""
+
+                      if (over_state.state.email != null) {
+
+                          user_email = over_state.state.email
+
+
+                      }
+
+                      firebase.database().ref('users/' + event.authResponse.userID).set({
+                          email:user_email,
                           uid:event.authResponse.userID,
                           bot_connected:false,
                           credential:event.authResponse.accessToken,
-                          pages:  page_names 
-
-                          
-                    })
-
-
+                          pages:  page_names,
+                          page_name_to_id: page_names_to_id,
 
 
                     })
-                   //browserHistory.push('/singleview');
-                  that.setState( { 
 
-                        login: true
-                    })
+                  })
+
+
+
+
+                  }
+
+
+
                 // User is already signed-in Firebase with the correct user.
-              }
-            });
+              })
+
     } else {
       // User is signed-out of Facebook.
       console.log("loggin user out");
@@ -232,7 +315,7 @@ class Base extends React.Component {
 
 
 
-        this.setState( { 
+        this.setState( {
 
             login: false
         })
@@ -252,10 +335,10 @@ class Base extends React.Component {
 
 
   componentWillUnMount() {
-    //cancel subsription 
+    //cancel subsription
        console.log("ir gere ")
     FB.Event.unsubscribe(event, checkLoginState)
-      
+
 
     //'auth.authResponseChange', checkLoginState
 
@@ -279,6 +362,26 @@ class Base extends React.Component {
         //      'rag-zoomBackDown'
 
         const animationName = 'rag-fadeIn'
+        var render_email = ''
+
+        var email_matches = false
+        //get the current user email
+        var user = firebase.auth().currentUser;
+        console.log(user)
+
+        var getAuthorizedList = firebase.database().ref('Authorized/')
+
+
+        // if (user!=null) {
+        // var starCountRef = firebase.database().ref('Authorized/');
+        // starCountRef.once('value').then(function(snapshot) {
+        //
+        //       console.log("*dfdfdf awer3 authoriazedd pringting")
+        //       console.log(snapshot.val())
+        //
+        //
+        //   })
+
 
 var  a =                 <div className="wrapper">
                     <Header />
@@ -304,12 +407,26 @@ var  a =                 <div className="wrapper">
 
 var b =         <Login/>
 
-var use = <Header/> 
-
-            if (this.state.login) { 
-
-                use = a 
+var use = <Header/>
+            if (email_matches) {
+              console.log("yes it does match ")
             }
+
+            if (!email_matches) {
+
+              console.log("no it doesnt match")
+            }
+//three cases, either they have a bot and are login
+//or they login but they are not authroized
+//for authorizd code it is, get authorized list, then compare to current user email
+            console.log(this.state.login)
+            console.log(this.state.registered)
+            if (this.state.login && this.state.registered) {
+
+                use = a
+            }
+
+
 
             else  {
 

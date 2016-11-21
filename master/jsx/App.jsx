@@ -22,6 +22,7 @@ import BaseHorizontal from './components/Layout/BaseHorizontal';
 
 import Login from './components/Login/Login';
 import SingleView from './components/SingleView/SingleView';
+import Targeted from './components/Targeted/Targeted';
 import SubMenu from './components/SubMenu/SubMenu';
 import Fans from './components/Fans/Fans';
 import TopUsers from './components/TopUsers/TopUsers';
@@ -54,7 +55,8 @@ ReactDOM.render(
             <IndexRoute component={SingleView} />
               <Route path="login"  component={Login} />
             <Route path="singleview" component={SingleView}/>
-            <Route path="submenu" component={SubMenu}/>
+            <Route path="targeted" component={Targeted}/>
+
             <Route path="fans" component={Fans}/>
             <Route path="newFans" component={NewFans}/>
             <Route path="topUsers" component={TopUsers}/>

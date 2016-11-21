@@ -13,12 +13,11 @@ class Sidebar extends React.Component {
             userBlockCollapse: false,
             collapse: {
                 singleview: this.routeActive(['singleview']),
-                targeted_message: this.routeActive(['target']),
+                targeted: this.routeActive(['target']),
                 fans: this.routeActive(['fans']),
                 newFans: this.routeActive(['newFans']),
                 topUsers: this.routeActive(['topUsers']),
-                logout: this.routeActive(['logout']),
-                submenu: this.routeActive(['submenu'])
+                logout: this.routeActive(['login'])
             }
         };
         this.pubsub_token = pubsub.subscribe('toggleUserblock', () => {
@@ -99,8 +98,8 @@ class Sidebar extends React.Component {
                                 </Link>
                             </li>
 
-                            <li className={ this.routeActive('target') ? 'active' : '' }>
-                                <Link to="target" title="Targeted Messaging">
+                            <li className={ this.routeActive('targeted') ? 'active' : '' }>
+                                <Link to="targeted" title="Targeted Messaging">
                                 <em className="icon-grid"></em>
                                 <span data-localize="sidebar.nav.TARGET">Targeted Message</span>
                                 </Link>
@@ -129,33 +128,14 @@ class Sidebar extends React.Component {
                                 </Link>
                             </li>
 
-                            <li className={ this.routeActive('logout') ? 'active' : '' }>
-                                <Link to="logout" title="Logout">
+                            <li className={ this.routeActive('login') ? 'active' : '' }>
+                                <Link to="login" title="Logout">
                                 <em className="icon-grid"></em>
                                 <span data-localize="sidebar.nav.LOGOUT">Logout</span>
                                 </Link>
                             </li>
 
 
-
-
-                            <li className={ this.routeActive(['submenu']) ? 'active' : '' }>
-                                <div className="nav-item" onClick={ this.toggleItemCollapse.bind(this, 'submenu') }>
-                                    <div className="pull-right label label-info">1</div>
-                                    <em className="icon-speedometer"></em>
-                                    <span data-localize="sidebar.nav.MENU">Menu</span>
-                                </div>
-                                <Collapse in={ this.state.collapse.submenu } timeout={ 100 }>
-                                    <ul id="submenu" className="nav sidebar-subnav">
-                                        <li className="sidebar-subnav-header">Submenu</li>
-                                        <li className={ this.routeActive('submenu') ? 'active' : '' }>
-                                            <Link to="submenu" title="Submenu">
-                                            <span data-localize="sidebar.nav.SUBMENU">Submenu</span>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </Collapse>
-                            </li>
 
                         </ul>
                         { /* END sidebar nav */ }

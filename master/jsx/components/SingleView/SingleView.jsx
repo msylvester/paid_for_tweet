@@ -19,11 +19,13 @@ const firebase = Firebase.initializeApp(firebaseConfig);
 
 class SingleView extends React.Component {
 
-  constructor() {
+  constructor(props) {
 
-    super();
+    super(props);
+    console.log("in the constructor for single")
+    console.log(this.props)
     this.state = {connected: '', pages:{}, select: ""}
-
+    this.names = {hey:"uop"}
     this.generateKey = this.generateKey.bind(this);
     this.getSelected = this.getSelected.bind(this);
     this.disconnect = this.disconnect.bind(this);
@@ -36,22 +38,26 @@ class SingleView extends React.Component {
 
       var user = firebase.auth().currentUser;
       console.log(user)
-
+      const that = this
       if (user != null) {
-  
-            var that = this;
+
+
             var starCountRef = firebase.database().ref('users/' +   user.providerData[0].uid);
             starCountRef.once('value').then(function(snapshot) {
-                         console.log(snapshot.val());
-                  console.log(snapshot.val().bot_connected);
-                   console.log(snapshot.val().pages);
-                that.setState ( {
-                  connected:snapshot.val().bot_connected,
-                  pages:snapshot.val().pages,
-                  select:""
+                            console.log(snapshot.val());
+                            console.log(snapshot.val().bot_connected);
+                            console.log(snapshot.val().pages);
+                            console.log("*(* about to )")
+                            console.log(snapshot.val().page_name_to_id);
 
-
-                })
+                            that.setState ( {
+                            connected:snapshot.val().bot_connected,
+                            pages:snapshot.val().pages,
+                            select:""
+                            })
+                            console.log(that.names)
+                            that.names = snapshot.val().page_name_to_id
+                            console.log(that.names)
 
             });
 
@@ -156,6 +162,19 @@ class SingleView extends React.Component {
 
   generateKey() {
 
+
+    // const appPageRef = firebase.database().ref('/users/' + user_id);
+    // appPageRef.once('value').then(function(snapshot) {
+    //
+    //       console.log("*dfdfdf awer3 authoriazedd pringting")
+    //       console.log(snapshot.val())
+    //       var updates = {}
+    //       token_and_page_id
+    //       () => this.
+    //       updates['/FBMess/hans_venue/page_array'] = token_and_page_id;
+    //   })
+
+
     console.log("in key bitch ");
 
     console.log(this.state.pages[this.state.select]);
@@ -165,39 +184,50 @@ class SingleView extends React.Component {
     xhttp.open("POST", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
     xhttp.send();
 
-var user_id = firebase.auth().currentUser.providerData[0].uid;
-console.log(user_id)
+    var user_id = firebase.auth().currentUser.providerData[0].uid;
+    console.log(user_id)
     //firebase
-     // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
-  var postData = true;
-  var postData_two = this.state.pages[this.state.select];
-  var postData_three = {
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    var postData = true;
+    var postData_two = this.state.pages[this.state.select];
+    var postData_three = {
 
       bot_connected: true,
       messenger_token: this.state.pages[this.state.select]
 
-  }
+    }
+  //  console.log
+    console.log("ASREREW awer")
+    console.log(this.names[this.state.select])
 
-  var postData_four = this.state.select;
+    var token_and_page_id = {
+        a : this.state.pages[this.state.select],
+        b : this.names[this.state.select]
+
+    }
+      var postData_four = this.state.select;
 
 
-       updates['/users/' + user_id + '/bot_connected']= postData;
+      updates['/users/' + user_id + '/bot_connected']= postData;
       updates['/users/' + user_id + '/messenger_token']= postData_two;
 
       updates['/users/' + user_id + '/bot_connected_name']= postData_four;
 
-        updates['/bot/messenger_token'] = postData_three;
+      updates['/bot/messenger_token'] = postData_three;
+
+      updates['/FBmess/hans_venue/page_array'] = token_and_page_id;
+
       firebase.database().ref().update(updates);
 
 
 
 
- var that = this;
+      var that = this;
 
-  firebase.database().ref().update(updates);
+      //firebase.database().ref().update(updates);
 
-    this.setState ( {
+      this.setState ( {
                         connected:true,
                   pages:that.state.pages,
                   select:""
@@ -206,7 +236,7 @@ console.log(user_id)
 
 
 
-  }
+      }
 
 
 
@@ -257,7 +287,7 @@ console.log(user_id)
 
                         <Dropdown id = {"base"}>
                             <Dropdown.Toggle>
-                                  Choose a Page
+                            Select a page
 
                             </Dropdown.Toggle>
                             <Dropdown.Menu className="animated fadeInUpShort">

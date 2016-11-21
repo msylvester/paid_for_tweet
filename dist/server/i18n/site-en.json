@@ -13,13 +13,23 @@
       "HEADER": "Main Navigation"
     },
     "nav": {
-      "SINGLEVIEW": "Bot Setup",
+      "SINGLEVIEW": "Home",
       "FANS": "Fans",
       "NEWFANS": "New Fans",
       "TOPUSERS": "Top Users",
       "menu": {
-        "MENU": "Menu",
-        "SUBMENU": "Sub Menu"
+        "MENU": "Broadcast",
+        "SUBMENU": "Compose",
+        "SUBMENU_ONE": "Campaigns"
+      },
+      "menu_two": {
+        "MENU_TWO": "Audience",
+        "MENU_TWO_ITEM_ONE": "Segmentations"
+      },
+      "settings": {
+        "SETTINGS":"Settings"
+
+
       }
     }
   }

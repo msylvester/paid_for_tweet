@@ -1,10 +1,10 @@
 {
   "dashboard": {
-    "WELCOME": "Bienvenido a Angle"
+    "WELCOME": "Bienvenido a Hans"
   },
   "topbar": {
     "search": {
-      "PLACEHOLDER": "Tipea y pulsa enter.."
+      "PLACEHOLDER": "Tipea y pulsa enter."
     }
   },
   "sidebar": {
@@ -13,10 +13,22 @@
       "HEADER": "Navegacion principal"
     },
     "nav": {
-      "SINGLEVIEW": "Vista simple",
+      "SINGLEVIEW": "Casa",
+      "FANS": "Personas",
+      "NEWFANS": "Nuevas Personas",
+      "TOPUSERS": "Personas Mejores",
       "menu": {
-        "MENU": "Menu",
-        "SUBMENU": "Sub Menu"
+        "MENU": "Televisiont",
+        "SUBMENU": "Prepara",
+        "SUBMENU_ONE": "DAME LOS"
+      },
+      "menu_two": {
+        "MENU_TWO": "Todo Personas",
+        "MENU_TWO_SUBMENU_ONE": "Parte de las"
+      },
+      "settings": {
+        "SETTINGS":"Como"
+
       }
     }
   }
