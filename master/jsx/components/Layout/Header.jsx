@@ -63,7 +63,7 @@ class Header extends React.Component {
                                 </a>
                             </li>
                             { /* START User avatar toggle */ }
-        
+
                             { /* END User avatar toggle */ }
                         </ul>
                         { /* END Left navbar */ }
@@ -75,18 +75,20 @@ class Header extends React.Component {
 
                             { /* END Alert menu */ }
                             { /* START Offsidebar button */ }
+                            {/*
                             <li>
                                 <a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
                                     <em className="icon-notebook"></em>
                                 </a>
                             </li>
+                            */}
                             { /* END Offsidebar menu */ }
                         </ul>
                         { /* END Right Navbar */ }
                     </div>
                     { /* END Nav wrapper */ }
                     { /* START Search form */ }
-              
+
                     <form role="search" action="search.html" className="navbar-form">
                         <div className="form-group has-feedback">
                             <input type="text" placeholder="Type and hit enter ..." className="form-control" />

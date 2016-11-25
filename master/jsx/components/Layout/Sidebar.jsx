@@ -17,7 +17,7 @@ class Sidebar extends React.Component {
                 fans: this.routeActive(['fans']),
                 newFans: this.routeActive(['newFans']),
                 topUsers: this.routeActive(['topUsers']),
-                logout: this.routeActive(['login'])
+                logout: this.routeActive(['logout'])
             }
         };
         this.pubsub_token = pubsub.subscribe('toggleUserblock', () => {
@@ -128,8 +128,8 @@ class Sidebar extends React.Component {
                                 </Link>
                             </li>
 
-                            <li className={ this.routeActive('login') ? 'active' : '' }>
-                                <Link to="login" title="Logout">
+                            <li className={ this.routeActive('logout') ? 'active' : '' }>
+                                <Link to="logout" title="Logout">
                                 <em className="icon-grid"></em>
                                 <span data-localize="sidebar.nav.LOGOUT">Logout</span>
                                 </Link>

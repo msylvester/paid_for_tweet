@@ -7,6 +7,8 @@ import Offsidebar from './Offsidebar'
 import Footer from './Footer'
 import Login from '../Login/Login'
 import Targeted from '../Targeted/Targeted'
+
+import ContentWrapper from './ContentWrapper';
 //import Firebase from 'firebase';
 
 
@@ -25,10 +27,52 @@ class Base extends React.Component {
             email:''
 
         }
+
         this.page_array_id = []
         console.log("is it here")
         this.checkLoginState = this.checkLoginState.bind(this);
     }
+
+
+
+
+
+    // //componentDidUpdate(prevProps, prevState) {
+    //       if (this.state.login === true && this.state.registered === true) {
+    //             //make a call to Firebase and get the user
+    //
+    //             console.log("made it herer")
+    //             var k = Object.keys(this.state.user)
+    //
+    //
+    //
+    //                 var firebase_user = firebase.auth().currentUser;
+    //
+    //
+    //                 var userRef = firebase.database().ref('users/' + firebase_user.providerData[0].uid);
+    //
+    //                 var that = this
+    //
+    //                 console.log("hello  i hit this ")
+    //                 console.log(firebase_user.providerData[0].uid)
+    //                 userRef.on('value', function(snapshot) {
+    //                   //updateStarCount(postElement, snapshot.val());
+    //                     console.log("about to be in this shit sat")
+    //                     console.log(snapshot.val())
+    //                     if (snapshot.val() != null) {
+    //                           that.setState = ( {
+    //
+    //                               user: snapshot.val()
+    //
+    //                           })
+    //                     }
+    //                 });
+    //           }
+    //
+    //
+    //
+    // }
+
 
     componentWillMount() {
         var that = this;
@@ -68,7 +112,7 @@ class Base extends React.Component {
 
                       })
 
-                    if (auth_users.find(x=> x === response1.email) != undefined) {
+                    if (auth_users.find(x => x === response1.email) != undefined) {
 
 
                           over_state.setState( {
@@ -133,7 +177,7 @@ class Base extends React.Component {
     }
 
 
-  componentDidMount(){
+    componentDidMount(){
     //events
        console.log("hoaz ")
        FB.Event.subscribe('auth.authResponseChange', this.checkLoginState);
@@ -151,8 +195,10 @@ class Base extends React.Component {
       // User is signed-in Facebook.
 
       var that = this;
+
       var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
         unsubscribe();
+
         // Check if we are already signed-in Firebase with the correct user.
         console.log("in this block")
         console.log(firebaseUser)
@@ -176,13 +222,15 @@ class Base extends React.Component {
 
 
               if (!check) {
-                // Build Firebase credential with the Facebook auth token.
+
 
                 console.log("this shoudl be a hit")
 
-                var credential = firebase.auth.FacebookAuthProvider.credential(
-                    event.authResponse.accessToken);
-                // Sign in with the credential from the Facebook user.
+                // Build Firebase credential with the Facebook auth token.
+                var credential = firebase.auth.FacebookAuthProvider.credential(event.authResponse.accessToken);
+
+
+
 
                     FB.api('/me/accounts', function(response) {
 
@@ -232,13 +280,12 @@ class Base extends React.Component {
 
 
 
-
+                // Sign in with the credential from the Facebook user.
                 firebase.auth().signInWithCredential(credential).catch(function(error) {
-
-
-
                   // Handle Errors here.
                   var errorCode = error.code;
+                  console.log("There was an error creating a credenial")
+                  console.log(errorCode)
                   var errorMessage = error.message;
                   console.log(errorMessage)
                   // The email of the user's account used.
@@ -255,88 +302,47 @@ class Base extends React.Component {
 
               } else {
                 console.log("gere i a me in the this shit");
-                    const over_state = that
-                    FB.api('/me/accounts', function(response) {
-                      console.log("about to log response");
-                      console.log(response);
-                      var pages = [];
-                      var page_names = {};
-                      var page_names_to_id = {};
-                      for (var i =0; i<response.data.length; i++) {
-                          var a = {
-                              page_name:response.data[i].name,
-                              page_token:response.data[i].access_token
+                console.log("")
 
-                          }
-                          page_names[response.data[i].name] = response.data[i].access_token;
-                          page_names_to_id[response.data[i].name] = response.data[i].id;
-                          pages.push(a);
-                      }
+                that.setState( {
 
-                      console.log("about to log push");
-                      console.log("da fuq");
-
-                      var user_email = ""
-
-                      if (over_state.state.email != null) {
-
-                          user_email = over_state.state.email
-
-
-                      }
-
-                      firebase.database().ref('users/' + event.authResponse.userID).set({
-                          email:user_email,
-                          uid:event.authResponse.userID,
-                          bot_connected:false,
-                          credential:event.authResponse.accessToken,
-                          pages:  page_names,
-                          page_name_to_id: page_names_to_id,
-
-
-                    })
-
-                  })
-
-
-
+                    login: true
+                })
 
                   }
 
 
 
-                // User is already signed-in Firebase with the correct user.
-              })
-
-    } else {
-      // User is signed-out of Facebook.
-      console.log("loggin user out");
-      firebase.auth().signOut();
-
-
-
-        this.setState( {
-
-            login: false
-        })
-
-
-
-    }
-
-
+    })
 
   }
 
 
+  else {
+   // User is signed-out of Facebook.
+   console.log("loggin user out");
+   firebase.auth().signOut();
 
+
+
+     this.setState( {
+
+         login: false
+     })
+
+
+
+ }
+
+ }
 
 
 
 
   componentWillUnMount() {
     //cancel subsription
-       console.log("ir gere ")
+
+    console.log("ir gere ")
     FB.Event.unsubscribe(event, checkLoginState)
 
 
@@ -350,18 +356,22 @@ class Base extends React.Component {
     render() {
 
         // Animations supported
-        //      'rag-fadeIn'
-        //      'rag-fadeInUp'
-        //      'rag-fadeInDown'
-        //      'rag-fadeInRight'
-        //      'rag-fadeInLeft'
-        //      'rag-fadeInUpBig'
-        //      'rag-fadeInDownBig'
-        //      'rag-fadeInRightBig'
-        //      'rag-fadeInLeftBig'
-        //      'rag-zoomBackDown'
+        const items = [
+             'rag-fadeIn',
+             'rag-fadeInUp',
+             'rag-fadeInDown',
+             'rag-fadeInRight',
+             'rag-fadeInLeft',
+             'rag-fadeInUpBig',
+             'rag-fadeInDownBig',
+             'rag-fadeInRightBig',
+             'rag-fadeInLeftBig',
+             'rag-zoomBackDown'
+           ]
 
-        const animationName = 'rag-fadeIn'
+      //  const animationName = 'rag-fadeIn'
+        var animationName = items[Math.floor(Math.random()*items.length)];
+
         var render_email = ''
 
         var email_matches = false
@@ -369,18 +379,7 @@ class Base extends React.Component {
         var user = firebase.auth().currentUser;
         console.log(user)
 
-        var getAuthorizedList = firebase.database().ref('Authorized/')
-
-
-        // if (user!=null) {
-        // var starCountRef = firebase.database().ref('Authorized/');
-        // starCountRef.once('value').then(function(snapshot) {
-        //
-        //       console.log("*dfdfdf awer3 authoriazedd pringting")
-        //       console.log(snapshot.val())
-        //
-        //
-        //   })
+      //  var getAuthorizedList = firebase.database().ref('Authorized/')
 
 
 var  a =                 <div className="wrapper">
@@ -407,15 +406,18 @@ var  a =                 <div className="wrapper">
 
 var b =         <Login/>
 
-var use = <Header/>
-            if (email_matches) {
-              console.log("yes it does match ")
-            }
 
-            if (!email_matches) {
+var c =  <ContentWrapper>
+        <p>
 
-              console.log("no it doesnt match")
-            }
+        You do not have a bot registered with Brainitch. Please email msylvest55@gmail.com to solve.
+        </p>
+
+        </ContentWrapper>
+
+var use =   <Header/>
+
+
 //three cases, either they have a bot and are login
 //or they login but they are not authroized
 //for authorizd code it is, get authorized list, then compare to current user email
@@ -426,7 +428,11 @@ var use = <Header/>
                 use = a
             }
 
+            else if (this.state.login && !this.state.registered) {
 
+              use = c
+
+            }
 
             else  {
 
@@ -439,9 +445,11 @@ var use = <Header/>
 
 
 
-}
+          }
 
 
 }
+
+
 
 export default Base;

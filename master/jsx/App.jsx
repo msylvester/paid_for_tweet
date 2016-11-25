@@ -27,7 +27,7 @@ import SubMenu from './components/SubMenu/SubMenu';
 import Fans from './components/Fans/Fans';
 import TopUsers from './components/TopUsers/TopUsers';
 import NewFans from './components/NewFans/NewFans';
-
+import LoginOne from './components/Pages/LoginOne';
 import Logout from './components/Logout/Logout';
 
 import ChartChartJS from './components/Charts/ChartChartJS';
@@ -35,9 +35,9 @@ import ChartChartJS from './components/Charts/ChartChartJS';
 // Init translation system
 initTranslation();
 // Init css loader (for themes)
-
-
 initLoadCss();
+
+
 window.fbAsyncInit = function() {
   FB.init({
    appId: '1754356628111030',
@@ -49,11 +49,20 @@ window.fbAsyncInit = function() {
 ReactDOM.render(
     <Router history={browserHistory}>
 
+
+
+
+                <Route path="/" component={BasePage}>
+                  {/* Default route*/}
+                  <IndexRoute component={LoginOne} />
+                    <Route path="login" component={LoginOne}/>
+                  </Route>
+
+
         <Route path="/" component={Base}>
 
-            {/* Default route*/}
-            <IndexRoute component={SingleView} />
-              <Route path="login"  component={Login} />
+
+             <Route path="logina"  component={Login} />
             <Route path="singleview" component={SingleView}/>
             <Route path="targeted" component={Targeted}/>
 
@@ -62,9 +71,8 @@ ReactDOM.render(
             <Route path="topUsers" component={TopUsers}/>
             <Route path="logout"  component={Logout} />
             <Route path="chart-chartjs" component={ChartChartJS}/>
-
           </Route>
-
+          {/*Pages*/}
 
         {/* Not found handler */}
         {/*<Route path="*" component={NotFound}/>*/}
