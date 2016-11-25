@@ -36,7 +36,7 @@ class LoginOne extends React.Component {
                             <button type="submit" className="btn btn-block btn-primary mt-lg">Login</button>
                         </form>
                         <p className="pt-lg text-center">Need to Signup?</p><a href="register" className="btn btn-block btn-default">Register Now</a>
-                         <p><Link to="/singleview">About</Link></p>
+                         <p><Link to="/">About</Link></p>
                   </div>
                 </div>
                 { /* END panel */ }

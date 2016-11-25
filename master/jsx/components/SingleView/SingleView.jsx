@@ -68,14 +68,17 @@ class SingleView extends React.Component {
 
               that.setState = ( {
 
-                  connected: snapshot.val().bot_connected,
-                  pages: snapshot.val().pages
+                  // connected: snapshot.val().bot_connected,
+                  // pages: snapshot.val().pages
+                  connected: false,
+                  pages: {Abstract: "hello", Beer: "tt"}
+
 
               },     function () {
       console.log("this state was elegtledy set ")
-  
-    })
 
+    })
+              console.log(that)
               console.log(that.state)
 
         }

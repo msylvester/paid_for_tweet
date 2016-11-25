@@ -396,7 +396,8 @@ var  a =                 <div className="wrapper">
                       transitionLeaveTimeout={500}
                     >
                       {React.cloneElement(this.props.children, {
-                        key: Math.random()
+                        key: Math.random(),
+                        beer: 'g'
                       })}
                     </ReactCSSTransitionGroup>
 
@@ -436,7 +437,9 @@ var use =   <Header/>
 
             else  {
 
-                use = b
+              const path = `/login`
+              this.context.router.push(path)
+                //browserHistory.push(path)
 
             }
 
@@ -450,6 +453,8 @@ var use =   <Header/>
 
 }
 
-
+Base.contextTypes = {
+    router: React.PropTypes.func.isRequired
+};
 
 export default Base;
