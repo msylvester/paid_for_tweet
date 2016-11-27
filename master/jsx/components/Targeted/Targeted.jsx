@@ -2,7 +2,7 @@ import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Dropdown, MenuItem, Button, FormGroup, ControlLabel } from 'react-bootstrap';
 import Firebase from 'firebase';
-
+import Past from './Past'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -13,10 +13,14 @@ import moment from 'moment';
 
 class Targeted extends React.Component {
 
-  constructor() {
+  constructor(props) {
 
-    super();
-    this.state = {past_posts:'', closeDate:'',date:'', send_now:'', close:'', connected: '', first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
+    super(props);
+    console.log('Targeted')
+    console.log(this.props.user.bot_connected)
+    console.log(props)
+
+    this.state = {past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
     this.send_message = this.send_message.bind(this)
     this.old_segment = this.old_segment.bind(this)
     this.new_segment = this.new_segment.bind(this)
@@ -49,27 +53,27 @@ class Targeted extends React.Component {
   componentWillMount() {
 
 
-      var user = firebase.auth().currentUser;
-      console.log(user)
+      // var user = firebase.auth().currentUser;
+      // console.log(user)
 
-      if (user != null) {
-
-            var that = this;
-            var starCountRef = firebase.database().ref('users/' +   user.providerData[0].uid);
-            starCountRef.once('value').then(function(snapshot) {
-                         console.log(snapshot.val());
-                  console.log(snapshot.val().bot_connected);
-                   console.log(snapshot.val().pages);
-                that.setState ( {
-                  connected:snapshot.val().bot_connected
-
-
-                })
-
-            });
-
-
-            }
+      // if (user != null) {
+      //
+      //       var that = this;
+      //       var starCountRef = firebase.database().ref('users/' +   user.providerData[0].uid);
+      //       starCountRef.once('value').then(function(snapshot) {
+      //                    console.log(snapshot.val());
+      //             console.log(snapshot.val().bot_connected);
+      //              console.log(snapshot.val().pages);
+      //           that.setState ( {
+      //             connected:snapshot.val().bot_connected
+      //
+      //
+      //           })
+      //
+      //       });
+      //
+      //
+      //       }
 }
 
 
@@ -362,7 +366,7 @@ clearState() {
   }
 
   send_message() {
-
+    console.log("clicked here")
     this.setState(  {
 
       first:true
@@ -409,14 +413,14 @@ select_past() {
         const func_send_later = this.send_later
         let varied_a = <ContentWrapper><p>"Nothing"</p></ContentWrapper>
         let that = this
-
         const func_past_posts = this.past
-        if (this.state.past_posts===true) {
-//make table
-          return(<ContentWrapper>
-            <p>You havent made any posts and do not have any pending </p>
 
-          </ContentWrapper>)
+if (this.props.user.bot_connected) {
+        if (this.state.past_posts===true) {
+
+
+          return (<Past message = {this.props.user.struct_messages}> </Past>)
+
         }
 
         //once they hit the big one
@@ -766,13 +770,10 @@ select_past() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="animated fadeInUpShort">
 
-                  {
-                  past.map(function(key, i) {
-
-                    return (<MenuItem key={key.id} eventKey={key} data-set-lang="en" onSelect={func_select_past}>{key}</MenuItem>);
-
-                  })
-                  }
+                  <ContentWrapper>
+                    <Past user= {this.props.user.struct_message}>
+                    </Past>
+                  </ContentWrapper>
 
                 </Dropdown.Menu>
 
@@ -801,9 +802,9 @@ select_past() {
       Choose your Age
                  </p>
                  <select value={this.state.value} onChange={this.handleChange}>
-                        <option value="M">16</option>
-                        <option value="F">17</option>
-                         <option value="B">18</option>
+                        <option value="M">0-30</option>
+                        <option value="F">30+</option>
+
                       </select>
 
 
@@ -811,9 +812,9 @@ select_past() {
                       Choose Your GeoGraphic location
                       </p>
                       <select value={this.state.value} onChange={this.handleChange}>
-                             <option value="M">WestUS</option>
-                             <option value="F">CentralUS</option>
-                              <option value="B">NorthEastUS</option>
+                             <option value="M">West</option>
+                             <option value="F">Central</option>
+                              <option value="B">East</option>
                            </select>
 
 
@@ -837,6 +838,17 @@ select_past() {
               </ContentWrapper>
         );
     }
+
+    return (
+        <ContentWrapper>
+
+
+
+            <p>you need to connect a bot</p>
+          </ContentWrapper>
+    );
+
+  }
 }
 
 export default Targeted;

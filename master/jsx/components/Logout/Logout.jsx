@@ -8,8 +8,8 @@ import { Router, Route, Link, hashHistory, browserHistory, IndexRoute } from 're
 
 class Logout extends React.Component {
 
-    constructor() {
-    super();
+    constructor(props) {
+    super(props);
     this.disconnect = this.disconnect.bind(this);
 
 
@@ -18,10 +18,14 @@ class Logout extends React.Component {
 
 
   disconnect() {
-  FB.logout(function(response) {
-        browserHistory.push('/');
+        FB.logout((response) => {
 
-  });
+              const path = {
+                  pathname: '/login',
+                  state: { logged_out: true }
+                }
+               this.context.router.push(path)
+        });
 }
 
 
@@ -32,11 +36,18 @@ class Logout extends React.Component {
 
         <ContentWrapper>
                 <Button bsStyle="primary" bsSize="large" onClick={disc}>Logout</Button>
-</ContentWrapper>
+          </ContentWrapper>
 
 
         );
     }
 }
+
+
+Logout.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
+
 
 export default Logout;

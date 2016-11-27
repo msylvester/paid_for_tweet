@@ -26,7 +26,7 @@ componentDidMount() {
 
         return (
 
-				<ContentWrapper>
+
 				<div
 					 className="fb-login-button"
 					 data-max-rows="1"
@@ -36,7 +36,7 @@ componentDidMount() {
 					 data-auto-logout-link="true"
 					 >
 				</div>
-	</ContentWrapper>
+
 
         );
     }

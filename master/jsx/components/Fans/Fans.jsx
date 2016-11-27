@@ -6,16 +6,16 @@ import Firebase from 'firebase';
 
 class Fans extends React.Component {
 
-    constructor() {
+    constructor(props) {
 
-      super();
+      super(props);
 
       console.log("made it to fans dot jsx constructor");
 
       this.state =   {
 
-                users_object:{},
-                user_has_bot:false
+                users_object:this.props.user,
+                user_has_bot:this.props.connected
 
       }
 
@@ -24,63 +24,63 @@ class Fans extends React.Component {
 
     componentWillMount() {
     //   //get users
-      console.log("made it to component will mount.");
-
-      var user = firebase.auth().currentUser;
-      var user_id = user.providerData[0].uid;
+      // console.log("made it to component will mount.");
+      //
+      // var user = firebase.auth().currentUser;
+      // var user_id = user.providerData[0].uid;
 
       //see if user has bot
-      var current_user_ref = firebase.database().ref('/users/'+ user_id);
-
-
-      var that = this;
-
-      var get_connected_status = false
-      var user_connected_bot_token = ''
-      //firebase cal lback to get a snapsot of the entity
-      if (user!=null) {
-
-          current_user_ref.once('value').then(function(snapshot) {
-              //log the users
-              console.log("printing object within fireavse callback")
-              console.log(snapshot.val());
-
-
-              var a = snapshot.val();
-              var bot_connected = snapshot.val()['bot_connected']
-
-              user_connected_bot_token = snapshot.val()['messenger_token']
-              get_connected_status = bot_connected
-
-          });
-
-
-          let user_connected_token_ref  = firebase.database().ref('/bot/'+ user_connected_bot_token + '/users/');
-
-
-          user_connected_token_ref.once('value').then(function(snapshot) {
-
-              //var local_bot_connected = snapshot.val().bot_connected;
-              //get the user
-              var a = snapshot.val()
-
-              //all user tokens
-              //let users = Object.keys(a)
-
-              that.setState(  {
-
-                users_object:a,
-                user_has_bot: get_connected_status
-
-
-              })
-
-          });
-
-
-
-
-        }
+      // var current_user_ref = firebase.database().ref('/users/'+ user_id);
+      //
+      //
+      // var that = this;
+      //
+      // var get_connected_status = false
+      // var user_connected_bot_token = ''
+      // //firebase cal lback to get a snapsot of the entity
+      // if (user!=null) {
+      //
+      //     current_user_ref.once('value').then(function(snapshot) {
+      //         //log the users
+      //         console.log("printing object within fireavse callback")
+      //         console.log(snapshot.val());
+      //
+      //
+      //         var a = snapshot.val();
+      //         var bot_connected = snapshot.val()['bot_connected']
+      //
+      //         user_connected_bot_token = snapshot.val()['messenger_token']
+      //         get_connected_status = bot_connected
+      //
+      //     });
+      //
+      //
+      //     let user_connected_token_ref  = firebase.database().ref('/bot/'+ user_connected_bot_token + '/users/');
+      //
+      //
+      //     user_connected_token_ref.once('value').then(function(snapshot) {
+      //
+      //         //var local_bot_connected = snapshot.val().bot_connected;
+      //         //get the user
+      //         var a = snapshot.val()
+      //
+      //         //all user tokens
+      //         //let users = Object.keys(a)
+      //
+      //         that.setState(  {
+      //
+      //           users_object:a,
+      //           user_has_bot: get_connected_status
+      //
+      //
+      //         })
+      //
+      //     });
+      //
+      //
+      //
+      //
+      //   }
 
     }
 

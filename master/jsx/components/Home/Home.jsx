@@ -14,7 +14,7 @@ class Home extends React.Component {
     render() {
         return (
             <ContentWrapper>
-              <p>Welcome Home</p>
+              <p>Welcome Home {this.props.user.email}</p>
             </ContentWrapper>
             );
     }

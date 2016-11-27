@@ -3,7 +3,8 @@ import { Router, Route, Link, History } from 'react-router';
 import pubsub from 'pubsub-js';
 import { Collapse } from 'react-bootstrap';
 import SidebarRun from './Sidebar.run';
-
+import FormWizard from '../Forms/FormWizard'
+import Logout from '../Logout/Logout'
 class Sidebar extends React.Component {
 
     constructor(props, context) {
@@ -134,7 +135,6 @@ class Sidebar extends React.Component {
                                 <span data-localize="sidebar.nav.LOGOUT">Logout</span>
                                 </Link>
                             </li>
-
 
 
                         </ul>

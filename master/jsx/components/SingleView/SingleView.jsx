@@ -3,7 +3,7 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Dropdown, MenuItem, Button } from 'react-bootstrap';
 import Firebase from 'firebase';
 import Spinner from 'react-spinkit';
-
+import NotFound from '../Pages/NotFound'
 
 //connect with Firbase
 
@@ -20,72 +20,21 @@ const firebase = Firebase.initializeApp(firebaseConfig);
 
 class SingleView extends React.Component {
 
-  constructor() {
+  constructor(props) {
 
-    super()
-    this.state = {connected: false, pages:{}, select: ""}
-    this.names = {hey:"uop"}
-    this.listeners = []
+    super(props)
+    console.log(this)
+
+    this.state = {connected: this.props.user.bot_connected, pages:this.props.user.pages, select: ""}
+    console.log("SFDFF")
+    //console.log(this.props.location.state.user.page_name_to_id)
+    this.names = this.props.user.page_name_to_id
+    //this.listeners = []
     this.generateKey = this.generateKey.bind(this);
     this.getSelected = this.getSelected.bind(this);
     this.disconnect = this.disconnect.bind(this);
 
 }
-
-
-  componentWillUnMount()   {
-
-    //remove litener
-
-    if (this.listeners.length > 0) {
-        this.listeners.forEach(function(ref) {
-          ref.off();
-        });
-    }
-
-
-  }
-  componentWillMount() {
-
-    const firebase_user = firebase.auth().currentUser;
-    const userRef = firebase.database().ref('users/' + firebase_user.providerData[0].uid);
-    const that = this
-
-    userRef.once('value').then(function(snapshot) {
-
-  //      that.listeners.push(userRef)
-
-        console.log("about to be in this shit sat")
-        console.log(snapshot.val())
-
-        if (snapshot.val() != null) {
-              console.log(" here we are ")
-              that.names = snapshot.val().page_name_to_id
-
-              console.log(that.names)
-              console.log(snapshot.val().bot_connected)
-              console.log(snapshot.val().pages)
-
-              that.setState = ( {
-
-                  // connected: snapshot.val().bot_connected,
-                  // pages: snapshot.val().pages
-                  connected: false,
-                  pages: {Abstract: "hello", Beer: "tt"}
-
-
-              },     function () {
-      console.log("this state was elegtledy set ")
-
-    })
-              console.log(that)
-              console.log(that.state)
-
-        }
-      })
-    }
-
-
 
 
 
@@ -94,8 +43,7 @@ class SingleView extends React.Component {
     var that = this.state;
 
     this.setState( {
-      connected:that.connected,
-      pages:that.pages,
+
       select:a
 
     });
@@ -103,92 +51,113 @@ class SingleView extends React.Component {
   }
 
   disconnect() {
-    //delete request to fb
-    //bot connected == false
-    //udpate state?
 
-
-    //make sure still logged in
-
-
-    const that = this;
     const user_id = firebase.auth().currentUser.providerData[0].uid;
-
-    var userRef = firebase.database().ref('users/' +   user_id);
-
-    userRef.once('value').then(function(snapshot) {
-
-              if (snapshot.val() != null) {
-
-                  const page_one = snapshot.val().pages;
-                  const messenger_token = snapshot.val().messenger_token
-                  const h = that;
-                  const url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+ messenger_token
-
-                  const postData = false ;
-                  const postData_two = "";
-                  const postData_three = "";
-
-                  var updates = {};
+    const url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+ this.props.user.messenger_token
 
 
-                  updates['/users/' + user_id + '/bot_connected']= postData;
-                  updates['/users/' + user_id + '/messenger_token']= postData_two;
+    fetch(url_delete, {
+    	method: 'DELETE'
+    }).then((response) => {
+    	 console.log('status: ', response.status);
+       if (response.ok) {
 
-                  updates['/users/' + user_id + '/bot_connected_name']= postData_three;
-
-
-                  firebase.database().ref().update(updates);
-
-                  // url (required), options (optional)
-                  fetch(url_delete, {
-                  	method: 'DELETE'
-                  }).then(function(response) {
-                  	 console.log('status: ', response.status);
-                     if (response.ok) {
-
-                       console.log('delete went through')
-
-                       h.setState( {
-                         connected:false,
-                         pages:page_one,
-                         select:""
-                      });
-
-                     } else {
-
-                       console.log('delete failed')
-
-                     }
+         console.log('delete went through')
 
 
-                  }).catch(function(err) {
-                   console.log('There has been a problem with your fetch operation: ' + err.message);
-                  });
+         const postData = false ;
+         const postData_two = "";
+         const postData_three = "";
 
-                  //
-                  // $.ajax({
-                  //                         url: url_delete,
-                  //                         type: 'DELETE',
-                  //                         success: function(result) {
-                  //
-                  //                           console.log("shit was deleted")
-                  //
-                  //                                                     h.setState( {
-                  //                                                       connected:false,
-                  //                                                       pages:page_one,
-                  //                                                       select:""
-                  //
-                  //
-                  //                                               });
-                  //                             // Do something with the result
-                  //                         }
-                  //       });
+         var updates = {};
 
-                }
+         updates['/users/' + user_id + '/bot_connected']= postData;
+         updates['/users/' + user_id + '/messenger_token']= postData_two;
+
+         updates['/users/' + user_id + '/bot_connected_name']= postData_three;
 
 
-              });
+         firebase.database().ref().update(updates);
+
+         this.setState(  {
+
+              connected:false,
+              pages:this.props.user.pages,
+              select:""
+
+         })
+
+
+
+       } else {
+
+         console.log('delete failed')
+
+       }
+
+
+    }).catch(function(err) {
+     console.log('There has been a problem with your fetch operation: ' + err.message);
+    });
+
+
+
+
+    // userRef.once('value').then((snapshot)=> {
+    //
+    //           if (snapshot.val() != null) {
+    //
+    //               const page_one = snapshot.val().pages;
+    //               const messenger_token = snapshot.val().messenger_token
+    //               const h = that;
+    //               const url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+ messenger_token
+    //
+    //               const postData = false ;
+    //               const postData_two = "";
+    //               const postData_three = "";
+    //
+    //               var updates = {};
+    //
+    //
+    //               updates['/users/' + user_id + '/bot_connected']= postData;
+    //               updates['/users/' + user_id + '/messenger_token']= postData_two;
+    //
+    //               updates['/users/' + user_id + '/bot_connected_name']= postData_three;
+    //
+    //
+    //               firebase.database().ref().update(updates);
+    //
+    //               // url (required), options (optional)
+    //               fetch(url_delete, {
+    //               	method: 'DELETE'
+    //               }).then((response) => {
+    //               	 console.log('status: ', response.status);
+    //                  if (response.ok) {
+    //
+    //                    console.log('delete went through')
+    //
+    //                    h.setState( {
+    //                      connected:false,
+    //                      pages:page_one,
+    //                      select:""
+    //                   });
+    //
+    //                  } else {
+    //
+    //                    console.log('delete failed')
+    //
+    //                  }
+    //
+    //
+    //               }).catch(function(err) {
+    //                console.log('There has been a problem with your fetch operation: ' + err.message);
+    //               });
+    //
+    //
+    //             }
+    //
+    //
+    //           });
 
 
 
@@ -197,17 +166,14 @@ class SingleView extends React.Component {
 
   generateKey() {
 
-    console.log("in key bitch ");
-
-    console.log(this.state.pages[this.state.select]);
-    console.log(this.state.pages[this.state.select]);
     //make a get request
     // var xhttp = new window.XMLHttpRequest();
-    // xhttp.open("POST", "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
+    // xhttp.open("POST", "https://graph.facebook.com/v2.8/me/subscribed_apps?access_token="+this.state.pages[this.state.select], true);
     // xhttp.send();
 
-    // url (required), options (optional)
-    const url_post = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+this.state.pages[this.state.select]
+
+    const url_post = "https://graph.facebook.com/v2.8/me/subscribed_apps?access_token="+this.state.pages[this.state.select]
+
     fetch(url_post, {
       method: 'POST'
     }).then(function(response) {
@@ -228,21 +194,13 @@ class SingleView extends React.Component {
     });
 
 
-
     var user_id = firebase.auth().currentUser.providerData[0].uid;
     console.log(user_id)
-    //firebase
-    // Write the new post's data simultaneously in the posts list and the user's post list.
+
     var updates = {};
     var postData = true;
     var postData_two = this.state.pages[this.state.select];
-    // var postData_three = {
-    //
-    //   bot_connected: true,
-    //   messenger_token: this.state.pages[this.state.select]
-    //
-    // }
-  //  console.log
+
     console.log("ASREREW awer")
     console.log(this.names[this.state.select])
 
@@ -251,69 +209,75 @@ class SingleView extends React.Component {
         b : this.names[this.state.select]
 
     }
-      var postData_four = this.state.select;
 
-      //second
-      var use_this_name = 'unknown'
+    var postData_four = this.state.select;
 
-      try {
+    //second
+    var use_this_name = 'unknown'
+    var names_keys =[]
+    try {
 
-        names_keys = Object.keys(this.names)
-      }
+       names_keys = Object.keys(this.names)
+    }
 
-      catch(e) {
-        console.log('error getting keys')
+    catch(e) {
+      console.log('error getting keys')
 
-      }
+    }
 
-      names_keys.forEach(function(name) {
+    names_keys.forEach(function(name) {
+      console.log(name)
 
-          if (this.names[this.state.select] === this.names[name]) {
+        // if (this.names[this.state.select] === this.names[name]) {
+        //
+        //   use_this_name = name
+        // }
+    })
 
-            use_this_name = name
-          }
-      })
+    var key = this.state.pages[this.state.select];
 
-      var key = this.state.pages[this.state.select];
+    var postData_new_bot = {page_id:this.names[this.state.select], page_name:use_this_name};
 
-      var postData_new_bot = {page_id:this.names[this.state.select], page_name:use_this_name};
+    //add bots to both places
 
-      //add bots to both places
+    updates['/users/' + user_id + '/' + this.state.pages[this.state.select]]  = postData_new_bot
+    updates['/bot/' + this.state.pages[this.state.select]] = postData_new_bot;
+    firebase.database().ref().update(updates);
 
-      updates['/users/' + user_id + '/' + this.state.pages[this.state.select]]  = postData_new_bot
-      updates['/bot/' + this.state.pages[this.state.select]] = postData_new_bot;
-      firebase.database().ref().update(updates);
+    var updates_two = {}
+    updates_two['/FBmess/hans_venue/page_array'] = token_and_page_id;
+    firebase.database().ref().update(updates_two);
 
-      var updates_two = {}
-      updates_two['/FBmess/hans_venue/page_array'] = token_and_page_id;
-      firebase.database().ref().update(updates_two);
-
-      var updates_three = {}
-      updates_three['/users/' + user_id + '/bot_connected']= postData;
-      firebase.database().ref().update(updates_three);
-
-
-      // postData_new_bot['messenger_token'] =  this.state.pages[this.state.select]
-      //
-
-      var updates_four = {}
-      updates_four['/users/' + user_id + '/messenger_token']= postData_two;
-      firebase.database().ref().update(updates_four);
-
-      var updates_five = {}
-      updates_five['/users/' + user_id + '/bot_connected_name']= postData_four;
-      firebase.database().ref().update(updates_five);
+    var updates_three = {}
+    updates_three['/users/' + user_id + '/bot_connected']= postData;
+    firebase.database().ref().update(updates_three);
 
 
-      var updates_six = {}
-      updates_six['/users/' + user_id + '/bot_connected']= true;
-      firebase.database().ref().update(updates_six);
+    // postData_new_bot['messenger_token'] =  this.state.pages[this.state.select]
+    //
+
+    var updates_four = {}
+    updates_four['/users/' + user_id + '/messenger_token']= postData_two;
+    firebase.database().ref().update(updates_four);
+
+    var updates_five = {}
+    updates_five['/users/' + user_id + '/bot_connected_name']= postData_four;
+    firebase.database().ref().update(updates_five);
 
 
-      }
+    var updates_six = {}
+    updates_six['/users/' + user_id + '/bot_connected']= true;
+    firebase.database().ref().update(updates_six);
 
+    console.log("here")
+    this.setState = (   {
 
+        connected: true
 
+    })
+    console.log("set state")
+
+  }
 
     render() {
         console.log("about to log singleview state")
