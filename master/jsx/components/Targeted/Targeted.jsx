@@ -135,16 +135,16 @@ message_types_function(event, second) {
   //check to see which one they grabbed
   const object_type = {"Text Based Message":"one", "Image":"two", "Gif":"three", "Video":"four", "Button":"five"}
 
+console.log(event)
 
-
-
+console.log(second)
   this.setState(  {
     one:false,
     two:false,
     third:false,
     four:false,
     five:false,
-    type:object_type[second]
+    type:object_type[event]
 
   }
   )}
@@ -710,7 +710,7 @@ if (this.props.user.bot_connected) {
 
         if (this.state.type == "one")  {
 
-          return(<ContentWrapper><FormStandard/> </ContentWrapper>)
+          return(<ContentWrapper><FormStandard ></FormStandard> </ContentWrapper>)
 
         }
         if (this.state.type == "two")  {
