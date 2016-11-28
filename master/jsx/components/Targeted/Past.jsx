@@ -13,17 +13,16 @@ class Past extends React.Component {
 
 
     render() {
-
+      var user_message = Object.keys(this.props.message)
       return (
 
             <ContentWrapper>
-                <div className="content-heading">Users</div>
+                <div className="content-heading">Past Messages</div>
                 <Panel header="Past Messages">
                     <Table id="datatable1" responsive striped hover>
                         <thead>
                             <tr>
-                                <th className="wd-md">Users</th>
-                                <th>Name</th>
+                                <th className="wd-md">Name</th>
                                 <th>Date Made</th>
                                 <th>Date Sent</th>
 
@@ -32,19 +31,17 @@ class Past extends React.Component {
                         <tbody>
 
                           {
-                          var user_message = Object.keys(this.props.message)
-                          user_message.map(function(message, index) {
-                            {
-                              console.log(message)
-                            }
+
+                          user_message.map((message, index) =>{
+
                           return (<tr>
                               <td>{message}
                               </td>
 
-                              <td>{message.date_made}
+                              <td>{this.props.message[message].date_made}
                               </td>
 
-                              <td>{message.date_sent}
+                              <td>{this.props.message[message].date_sent}
                               </td>
 
                           </tr>

@@ -12,15 +12,15 @@ class LoginOne extends React.Component {
       super(props)
 
       this.checkLoginState = this.checkLoginState.bind(this);
-      this.isInDb = this.isInDb.bind(this)
 
-      if (this.props.location.state != null) {
+
+      if (this.props.location.state != null)   {
         console.log(this.props.location.state.user.logged_out)
 
         this.state = {
-          loading: true,
-          login: false,
-          registered: false,
+          loading: '',
+          login: '',
+          registered: '',
           email: '',
           users: {}
 
@@ -30,9 +30,9 @@ class LoginOne extends React.Component {
       else {
 
       this.state = {
-        loading: true,
-        login: false,
-        registered: false,
+        loading: '',
+        login: '',
+        registered: '',
         email: '',
         users: {}
 
@@ -148,92 +148,15 @@ componentDidMount() {
 
     }
 
-    isInDb(id, firebaseRef, inputData) {
-
-      console.log("Therer aewr er ")
-      var lclID = id
-      var lclInput = inputData
-      var dddd = this
-      console.log("WERER @#E")
-      firebaseRef.once('value').then((snapshot) => {
-      //updateStarCount(postElement, snapshot.val());
-        var keys = snapshot.val()
-        var inDB = false
-
-        keys.forEach((key) => {
-            if (key === lclID) {
-              inDb = true
-            }
+    componentWillMount() {
+        this.setState({
+              loading: true
 
         })
 
-        if (inDB) {
-          //update
-          const postData_three = "";
-
-          var updates = {};
-console.log("WERER @#E eererr")
-
-          updates['/users/' + lclID + '/pages/']=  lclInput.pages;
-          updates['/users/' + lclID + '/page_name_to_id/']=  lclInput.page_name_to_id;
-
-
-          firebase.database().ref().update(updates).then((finish) => {
-
-            this.setState( {
-              login: true,
-              users: lclInput
-            })
-
-          } );
-        }
-        else  {
-          //set
-
-          console.log("WERER @#E erAER")
-          firebase.database().ref('users/' + event.authResponse.userID).set({
-              email: lclInput.email,
-              uid:lclInput.uid,
-              bot_connected:false,
-              credential:lclInput.credential,
-              pages:  lclInput.pages,
-              page_name_to_id: lclInput.page_name_to_id,
-              messenger_token: lclInput.messenger_token,
-              struct_message:  {
-                     first:  {
-                         date_made:"",
-                         date_sent:""
-
-                     }
-             },
-             segments:  {
-                 first:  {
-                   gender: 'B',
-                   location:'ALL',
-                   age:'ALL'
-
-                 }
-               }
-             }).then((finish) => {
-             dddd.setState (  {
-
-               login: true,
-               users: lclInput
-             })
-
-            })
-
-
-
-
-
-        }
-
-    })
-
-
-    return ''
     }
+
+
 
     componentWillUnmount() {
       console.log("ir gere ")
@@ -823,6 +746,23 @@ console.log("WERER @#E eererr")
 
       }
 
+      if (this.state.login === true && this.state.registered === false) {
+
+        var  a = Object.keys(this.state.users)
+
+
+          if(a.length > 0) {
+
+                  const path = {
+                      pathname: '/notfound'
+                    }
+          this.context.router.push(path)
+        }
+
+
+
+      }
+
     }
 
     render() {
@@ -851,9 +791,10 @@ console.log("WERER @#E eererr")
       //
       // }
 
-
+  if (!this.state.loading) {
         return (
 
+//
           <div className="block-center mt-xl wd-xl">
                { /* START panel */ }
                <div className="panel panel-dark panel-flat">
@@ -864,40 +805,37 @@ console.log("WERER @#E eererr")
                    </div>
                    <div className="panel-body">
                        <p className="text-center pv">SIGN IN TO CONTINUE.</p>
-                       <form role="form" data-parsley-validate="" noValidate className="mb-lg">
-                           <div className="form-group has-feedback">
-                               <input id="exampleInputEmail1" type="email" placeholder="Enter email" autoComplete="off" required="required" className="form-control" />
-                               <span className="fa fa-envelope form-control-feedback text-muted"></span>
-                           </div>
-                           <div className="form-group has-feedback">
-                               <input id="exampleInputPassword1" type="password" placeholder="Password" required="required" className="form-control" />
-                               <span className="fa fa-lock form-control-feedback text-muted"></span>
-                           </div>
-                           <div className="clearfix">
-                               <div className="checkbox c-checkbox pull-left mt0">
-                                   <label>
-                                       <input type="checkbox" value="" name="remember" />
-                                       <em className="fa fa-check"></em>Remember Me</label>
-                               </div>
-                               <div className="pull-right"><a href="/recover" className="text-muted">Forgot your password?</a>
-                               </div>
-                           </div>
-                           <button type="submit" className="btn btn-block btn-primary mt-lg">Login</button>
-                       </form>
-                       <p className="pt-lg text-center">Need to Signup?</p><a href="register" className="btn btn-block btn-default">Register Now</a>
+                       <Login/>
 
+                       <p className="pt-lg text-center">Need to Bot?</p><a href="www.brainitch.com" className="btn btn-block btn-default">Go Get One!</a>
 
-                    <p><Link to="/home">About</Link></p>
                  </div>
                </div>
-               <div>
-                <Login/>
-               </div>
+
                { /* END panel */ }
            </div>
 
 
             );
+          }
+
+          return(          <div className="block-center mt-xl wd-xl">
+                         { /* START panel */ }
+                         <div className="panel panel-dark panel-flat">
+                             <div className="panel-heading text-center">
+                                 <a href="#">
+                                     <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
+                                 </a>
+                             </div>
+                             <div className="panel-body">
+
+                                         <Spinner spinnerName='double-bounce' />
+                           </div>
+                         </div>
+
+                         { /* END panel */ }
+                     </div>)
+
     }
 
 }

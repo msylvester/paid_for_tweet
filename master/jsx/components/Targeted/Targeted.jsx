@@ -1,11 +1,12 @@
 import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
-import { Grid, Row, Col, Dropdown, MenuItem, Button, FormGroup, ControlLabel } from 'react-bootstrap';
+import { Checkbox, Form, FormControl, Grid, Row, Col, Dropdown, MenuItem, Button, FormGroup, ControlLabel } from 'react-bootstrap';
 import Firebase from 'firebase';
 import Past from './Past'
+import Segments from './Segments'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-
+import FormStandard from './FormStandard'
 
 
 
@@ -19,7 +20,7 @@ class Targeted extends React.Component {
     console.log('Targeted')
     console.log(this.props.user.bot_connected)
     console.log(props)
-
+    this._send_only_message = ""
     this.state = {past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
     this.send_message = this.send_message.bind(this)
     this.old_segment = this.old_segment.bind(this)
@@ -47,36 +48,40 @@ class Targeted extends React.Component {
     this.send_now = this.send_now.bind(this)
     this.send_later = this.send_later.bind(this)
     this.past = this.past.bind(this)
+    this.handleTargetMessageButtonClick = this.handleTargetMessageButtonClick.bind(this)
+  this.handleChangeForMessage = this.handleChangeForMessage.bind(this)
+
+
     }
 
 
   componentWillMount() {
 
-
-      // var user = firebase.auth().currentUser;
-      // console.log(user)
-
-      // if (user != null) {
-      //
-      //       var that = this;
-      //       var starCountRef = firebase.database().ref('users/' +   user.providerData[0].uid);
-      //       starCountRef.once('value').then(function(snapshot) {
-      //                    console.log(snapshot.val());
-      //             console.log(snapshot.val().bot_connected);
-      //              console.log(snapshot.val().pages);
-      //           that.setState ( {
-      //             connected:snapshot.val().bot_connected
-      //
-      //
-      //           })
-      //
-      //       });
-      //
-      //
-      //       }
 }
 
 
+handleTargetMessageButtonClick() {
+  //udate state
+  //get the row
+//   console.log("Aboiut to bpre vent e log ")
+//   console.log(e)
+//   console.log(row_selected)
+//   try {
+//   e.preventDefault()
+// }
+// catch (err)  {
+//
+//   console.log(err.message)
+// }
+//   console.log("This is hit s  ")
+//   console.log(row_selected)
+  this.setState({
+    second:false,
+    five:true
+      }
+  )
+
+}
 past() {
 
   this.setState( {
@@ -129,22 +134,26 @@ message_types_function(event, second) {
 
   //check to see which one they grabbed
   const object_type = {"Text Based Message":"one", "Image":"two", "Gif":"three", "Video":"four", "Button":"five"}
+
+
+
+
   this.setState(  {
     one:false,
     two:false,
-    three:false,
+    third:false,
     four:false,
     five:false,
     type:object_type[second]
 
-}
+  }
   )}
 
 handleDateSubmitButton() {
   this.setState(  {
     one:false,
     two:false,
-    three:false,
+    third:false,
     four:false,
     five:false,
     calender: false,
@@ -162,10 +171,65 @@ handleDateSubmitButton() {
   })
 }
 
+
+//design for image based, enter text
+handleChangeForMessage(event) {
+
+            try{
+              console.log(event)
+            }
+            catch (ex) {
+              console.log("hery ae")
+            }
+
+            try{
+
+
+            }
+            catch (ex) {
+              console.log("hery erer")
+            }
+
+            try{
+
+              this.setState({value: event.target.value});
+            }
+            catch (ex) {
+              console.log("hery mes ")
+            }
+
+
+  }
+
+
 //design for image based, enter text
 handleChange(event) {
-  this.setState({value: event.target.value});
-}
+
+            try{
+              console.log(event)
+            }
+            catch (ex) {
+              console.log("hery ae")
+            }
+
+            try{
+
+
+            }
+            catch (ex) {
+              console.log("hery erer")
+            }
+
+            try{
+
+              this.setState({value: event.target.value});
+            }
+            catch (ex) {
+              console.log("hery mes ")
+            }
+
+
+  }
 
 handleChangeButtons(event) {
   this.setState({value_buttons: event.target.value});
@@ -204,7 +268,13 @@ handleChangeButtonThreeURL(event) {
 this.setState({button_three_url: event.target.value});
 }
 
-handleSubmit(event) {
+handleSubmit() {
+  //get the info from the text box
+  //
+  //e.preventDefault()
+  console.log("heree")
+  console.log(this._send_only_message)
+
   this.setState(  {
     one:false,
     two:false,
@@ -213,6 +283,8 @@ handleSubmit(event) {
     five:true
 
   })
+
+
 }
 
 handleSubmitButton(event) {
@@ -283,27 +355,31 @@ let postData = {
 
 }
 }
+
 handleSubmitButton_cheap(event)   {this.clearState()}
+
+
+
 send_later() {
-this.setState( {
-  one:false,
-  two:false,
-  third:false,
-  four:false,
-  five:false,
-  show_now:false,
-  calender: true,
-  close:false,
-  type:'',
-  buttons:'',
-  value:'',
-  button_one_url:'',
-  button_one_title:'',
-  button_two_title:'',
-  button_two_url:'',
-  button_three_url:'',
-  button_three_title:''
-})
+      this.setState( {
+        one:false,
+        two:false,
+        third:false,
+        four:false,
+        five:false,
+        show_now:false,
+        calender: true,
+        close:false,
+        type:'',
+        buttons:'',
+        value:'',
+        button_one_url:'',
+        button_one_title:'',
+        button_two_title:'',
+        button_two_url:'',
+        button_three_url:'',
+        button_three_title:''
+      })
 }
 
 
@@ -400,7 +476,7 @@ select_past() {
 }
 
     render() {
-        const func_disc = this.send_message
+      //  const Use an = this.send_message
         const func_use_old  = this.old_segment
         const func_use_new = this.new_segment
         const message_types = ["Text Based Message", "Image", "Gif", "Video", "Button"]
@@ -411,15 +487,26 @@ select_past() {
         const past = ["10/10/15", "09/13/15"]
         const func_send_now = this.send_now
         const func_send_later = this.send_later
+        const func_disc = this.send_message
+
+
         let varied_a = <ContentWrapper><p>"Nothing"</p></ContentWrapper>
         let that = this
         const func_past_posts = this.past
 
+
+
+//make sure they have a bot connected
+
 if (this.props.user.bot_connected) {
+
+
+
+        //see if user clicked past posts
         if (this.state.past_posts===true) {
 
 
-          return (<Past message = {this.props.user.struct_messages}> </Past>)
+          return (<Past message = {this.props.user.struct_message}> </Past>)
 
         }
 
@@ -544,7 +631,7 @@ if (this.props.user.bot_connected) {
 
 
 
-                <Button onClick={this.handleSubmitButton_cheap}>
+                <Button onClick={this.this.state.typeButton_cheap}>
                     Submit
                   </Button>
                 </div>
@@ -623,18 +710,7 @@ if (this.props.user.bot_connected) {
 
         if (this.state.type == "one")  {
 
-          return(<ContentWrapper>
-           <div>
-                  <input
-                  type="text"
-                 value={"Enter Text To send"}
-                 onChange={this.handleChange}
-                  />
-                  <Button onClick={this.handleSubmit}>
-                    Submit
-                  </Button>
-                </div>
-</ContentWrapper>)
+          return(<ContentWrapper><FormStandard/> </ContentWrapper>)
 
         }
         if (this.state.type == "two")  {
@@ -705,7 +781,7 @@ if (this.props.user.bot_connected) {
                           {
                           buttons.map(function(key, i) {
 
-                            return (<MenuItem key={key.id} eventKey={key} data-set-lang="en" onSelect={func_select_buttons}>{key}</MenuItem>);
+                            return (<MenuItem key={Math.random()} eventKey={key} data-set-lang="en" onSelect={func_select_buttons}>{key}</MenuItem>);
 
                           })
                           }
@@ -732,7 +808,7 @@ if (this.props.user.bot_connected) {
               {
               message_types.map(function(key, i) {
 
-                return (<MenuItem key={key.id} eventKey={key} data-set-lang="en" onSelect={func_select}>{key}</MenuItem>);
+                return (<MenuItem key={Math.random()} eventKey={key} data-set-lang="en" onSelect={func_select}>{key}</MenuItem>);
 
               })
               }
@@ -764,23 +840,13 @@ if (this.props.user.bot_connected) {
         if (this.state.second === true) {
           //use old
           return(
-        <Dropdown id = {"use new"}>
-                <Dropdown.Toggle>
-                    Select A Segment
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="animated fadeInUpShort">
+              <ContentWrapper>
 
-                  <ContentWrapper>
-                    <Past user= {this.props.user.struct_message}>
-                    </Past>
+                    <Segments segments= {this.props.user.segments} handleTargetMessageButtonClick = {()=>this.handleTargetMessageButtonClick}  >
+                    </Segments>
                   </ContentWrapper>
 
-                </Dropdown.Menu>
-
-              </Dropdown>)
-
-
-
+                )
         }
 
         if (this.state.third === true) {

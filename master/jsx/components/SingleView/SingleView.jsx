@@ -17,8 +17,9 @@ const firebaseConfig = {
 const firebase = Firebase.initializeApp(firebaseConfig);
 
 
-
 class SingleView extends React.Component {
+
+
 
   constructor(props) {
 

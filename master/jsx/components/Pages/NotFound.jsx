@@ -8,9 +8,9 @@ class NotFound extends React.Component {
         return (
             <div className="abs-center wd-xl">
                 <div className="text-center mb-xl">
-                    <div className="text-lg mb-lg">You a bot from Brainitch to use this page</div>
+                    <div className="text-lg mb-lg">You need a bot from Brainitch to use this web app</div>
                     <p className="lead m0">Email msylvest55@gmail.com</p>
-                    <p>TWe will get you hooked up .</p>
+                    <p>We will get you hooked up .</p>
                 </div>
                 <div className="input-group mb-xl">
                     <input type="text" placeholder="Try with a search" className="form-control" />
