@@ -57,7 +57,7 @@ class CalenderForm extends React.Component {
     //then iam going toc al that
     //get a date a time
     //function get the current time in unix
-      var a, b,c = this.getTimeInfo()
+      var a, b,c = this. getTimeInfo()
       this.props.func_time(a, b, c)
 
 

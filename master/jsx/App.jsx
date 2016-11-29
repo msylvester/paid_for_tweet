@@ -33,7 +33,7 @@ import Home from './components/Home/Home';
 import Logout from './components/Logout/Logout';
 import Preview from './components/Targeted/Preview';
 import ChartChartJS from './components/Charts/ChartChartJS';
-
+import Subscribed from './components/Subscribed/Subscribed';
 // Init translation system
 initTranslation();
 // Init css loader (for themes)
@@ -69,17 +69,20 @@ ReactDOM.render(
             <Route path="targeted" component={Targeted}/>
 
             <Route path="fans" component={Fans}/>
-            <Route path="newFans" component={NewFans}/>
+            <Route path="subscribed" component={Subscribed}/>
             <Route path="topUsers" component={TopUsers}/>
             <Route path="logout"  component={Logout} />
-            <Route path="chart-chartjs" component={ChartChartJS}/>
-    <Route path="preview" component={Preview}/>
-          </Route>
+
+            <Route path="preview" component={Preview}/>
+
+
+
+    </Route>
 
 
 
         {/* Not found handler */}
-        {/*<Route path="*" component={NotFound}/>*/}
+        <Route path="*" component={NotFound}/>
 
     </Router>,
     document.getElementById('app')

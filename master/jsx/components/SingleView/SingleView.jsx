@@ -81,8 +81,9 @@ class SingleView extends React.Component {
          firebase.database().ref().update(updates);
 
          var updates_Two = {}
-          updates['/bot/bot_connected']= false;
-   firebase.database().ref().update(updates_Two);
+
+        updates['/bot/bot_connected']= false;
+        firebase.database().ref().update(updates_Two);
 
          this.setState(  {
 

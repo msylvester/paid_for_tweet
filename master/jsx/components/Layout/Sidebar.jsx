@@ -3,7 +3,7 @@ import { Router, Route, Link, History } from 'react-router';
 import pubsub from 'pubsub-js';
 import { Collapse } from 'react-bootstrap';
 import SidebarRun from './Sidebar.run';
-import FormWizard from '../Forms/FormWizard'
+
 import Logout from '../Logout/Logout'
 class Sidebar extends React.Component {
 
@@ -13,10 +13,11 @@ class Sidebar extends React.Component {
         this.state = {
             userBlockCollapse: false,
             collapse: {
+                home: this.routeActive(['home']),
                 singleview: this.routeActive(['singleview']),
                 targeted: this.routeActive(['target']),
                 fans: this.routeActive(['fans']),
-                newFans: this.routeActive(['newFans']),
+                subscribed:this.routeActive(['subscribed']),
                 topUsers: this.routeActive(['topUsers']),
                 logout: this.routeActive(['logout'])
             }
@@ -92,6 +93,13 @@ class Sidebar extends React.Component {
                                 <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                             </li>
 
+                            <li className={ this.routeActive('home') ? 'active' : '' }>
+                                <Link to="home" title="Home">
+                                <em className="icon-grid"></em>
+                                <span data-localize="sidebar.nav.HOME">Home</span>
+                                </Link>
+                            </li>
+
                             <li className={ this.routeActive('singleview') ? 'active' : '' }>
                                 <Link to="singleview" title="Single View">
                                 <em className="icon-grid"></em>
@@ -115,10 +123,10 @@ class Sidebar extends React.Component {
                                 </Link>
                             </li>
 
-                            <li className={ this.routeActive('newFans') ? 'active' : '' }>
-                                <Link to="newFans" title="New Fans">
+                            <li className={ this.routeActive('subscribed') ? 'active' : '' }>
+                                <Link to="subscribed" title="Subscribed">
                                 <em className="icon-grid"></em>
-                                <span data-localize="sidebar.nav.NEWFANS">New Fans</span>
+                                <span data-localize="sidebar.nav.FANS">Subscribed</span>
                                 </Link>
                             </li>
 

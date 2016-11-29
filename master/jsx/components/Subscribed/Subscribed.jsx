@@ -1,11 +1,10 @@
 import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
-import TableTest from '../TableTest/TableTest';
 import { Grid, Row, Col, Panel, Button, Table, ProgressBar } from 'react-bootstrap';
 import Firebase from 'firebase';
 
 
-class Fans extends React.Component {
+class Subscribed extends React.Component {
 
     constructor(props) {
 
@@ -15,50 +14,38 @@ class Fans extends React.Component {
     }
 
 componentDidMount() {
-
-  console.log(this)
-  console.log("**ERR #E!@#R !@E R@~@ #")
-  console.log(this.props)
   if (this.props.user.bot_connected === true) {
-    console.log("I think it is failing there")
+
    const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
-   console.log("gonna log shit ")
-   console.log(usersRef)
+
   usersRef.once('value').then((snapshot) => {
-    console.log("******")
-                console.log(snapshot.val())
+    console.log(snapshot.val())
               const user_array = Object.keys(snapshot.val())
               let user_dict = {}
               user_array.forEach(key=> {
-
+                    if(snapshot.val()[key]['subscribed'] === true) {
                         user_dict[key] = snapshot.val()[key]
 
-
+                    }
 
               })
-              conosle.log(user_dict)
+
               this.setState({
-                  user_dict:snapshot.val(),
+                  user_dict:user_dict,
                   loading:false
 
               })
         })
   }
 
-    else {
+  else {
 
-      this.setState({
-        loading:false
-      })
-    }
-
+    this.setState({
+      loading:false
+    })
   }
-componentDidUpdate(prevProp, prevState)  {
 
-  console.log("about to log stte for this sfasns  ")
-  console.log(this.state)
 }
-
     render() {
       //get the users who are connected
 
@@ -72,13 +59,13 @@ componentDidUpdate(prevProp, prevState)  {
                 if(this.props.user.bot_connected === true) {
                     if(Object.keys(this.state.user_dict).length === undefined || Object.keys(this.state.user_dict).length < 1) {
 
-                      return(<ContentWrapper><p>You do not have any  users</p></ContentWrapper>)
+                      return(<ContentWrapper><p>You do not have any subscribed users</p></ContentWrapper>)
                     }
 
                     else {
 
 
-                        return(<ContentWrapper><TableTest users={this.state.users_dict}></TableTest></ContentWrapper>)
+                        return(<ContentWrapper><TableTest users={this.state.user_dict}></TableTest></ContentWrapper>)
 
                     }
                 }
@@ -89,4 +76,4 @@ componentDidUpdate(prevProp, prevState)  {
               }
             }
 }
-export default Fans
+export default Subscribed

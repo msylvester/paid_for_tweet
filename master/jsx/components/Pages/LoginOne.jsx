@@ -72,7 +72,7 @@ componentDidMount() {
                         console.log(snapshot.val())
 
                         var keys_array = Object.keys(snapshot.val())
-                        var auth_users = []
+                            var auth_users = []
                         keys_array.forEach(bot => {
                           console.log("T in teh key sarray ")
                             console.log(snapshot.val()[bot]['user'])
