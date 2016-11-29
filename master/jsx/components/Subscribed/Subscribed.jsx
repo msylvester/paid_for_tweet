@@ -1,79 +1,103 @@
-import React from 'react';
-import ContentWrapper from '../Layout/ContentWrapper';
-import { Grid, Row, Col, Panel, Button, Table, ProgressBar } from 'react-bootstrap';
-import Firebase from 'firebase';
+  import React from 'react';
+  import ContentWrapper from '../Layout/ContentWrapper';
+  import TableTest from '../TableTest/TableTest';
+  import { Grid, Row, Col, Panel, Button, Table, ProgressBar } from 'react-bootstrap';
+  import Firebase from 'firebase';
 
 
-class Subscribed extends React.Component {
+  class Subscribed extends React.Component {
 
-    constructor(props) {
+      constructor(props) {
 
-      super(props);
-      this.state = {loading:true, user_dict:{}}
+        super(props);
+        this.state = {loading:true, user_dict:{}}
+        this.loading_bar = 10
+
+
+
+      }
+
+  componentDidMount() {
+
+    console.log(this)
+    console.log("**ERR #E!@#R !@E R@~@ #")
+    console.log(this.props)
+
+    if (this.props.user.bot_connected === true) {
+
+
+         const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
+
+        usersRef.once('value').then((snapshot) => {
+          console.log(snapshot.val())
+                    const user_array = Object.keys(snapshot.val())
+                    let user_dict = {}
+                    user_array.forEach(key=> {
+                          if(snapshot.val()[key]['subscribed'] === true) {
+                              user_dict[key] = snapshot.val()[key]
+
+                          }
+
+                    })
+
+                    this.setState({
+                        user_dict:user_dict,
+                        loading:false
+
+                    })
+              })
+
+
+            }
+
+      else {
+        this.loading_bar = 100
+        this.setState({
+          loading:false
+        })
+      }
 
     }
+  componentWillUpdate(nextProp, nextState)  {
 
-componentDidMount() {
-  if (this.props.user.bot_connected === true) {
+    if (this.loading_bar + 20 < 100) {
+      this.loading_bar = this.loading_bar + 20
+    }
 
-   const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
-
-  usersRef.once('value').then((snapshot) => {
-    console.log(snapshot.val())
-              const user_array = Object.keys(snapshot.val())
-              let user_dict = {}
-              user_array.forEach(key=> {
-                    if(snapshot.val()[key]['subscribed'] === true) {
-                        user_dict[key] = snapshot.val()[key]
-
-                    }
-
-              })
-
-              this.setState({
-                  user_dict:user_dict,
-                  loading:false
-
-              })
-        })
+    console.log("about to log stte for this sfasns")
+    console.log(this.state)
+    console.log(nextState)
   }
 
-  else {
+      render() {
+        //get the users who are connected
+         const is_user_loaded = Object.keys(this.state.user_dict) ? true:false
 
-    this.setState({
-      loading:false
-    })
-  }
+                if(this.state.loading) {
+                    return(<ContentWrapper>  <ProgressBar label={`${this.loading_bar}%`} active now={this.loading_bar} /> </ContentWrapper>)
 
-}
-    render() {
-      //get the users who are connected
-
-
-              if(this.state.loading) {
-                  return(<ContentWrapper>  <ProgressBar active now={45} /> </ContentWrapper>)
-
-              }
-              else {
-
-                if(this.props.user.bot_connected === true) {
-                    if(Object.keys(this.state.user_dict).length === undefined || Object.keys(this.state.user_dict).length < 1) {
-
-                      return(<ContentWrapper><p>You do not have any subscribed users</p></ContentWrapper>)
-                    }
-
-                    else {
-
-
-                        return(<ContentWrapper><TableTest users={this.state.user_dict}></TableTest></ContentWrapper>)
-
-                    }
                 }
                 else {
 
-                  return(<ContentWrapper><p>No bot connect, click on bot status to connect a bot</p></ContentWrapper>)
+                  if(this.props.user.bot_connected === true) {
+                      if(!is_user_loaded) {
+
+                        return(<ContentWrapper><p>You do not have any  users</p></ContentWrapper>)
+                      }
+
+                      else {
+                          console.log("frustrated")
+                          console.log(this.state.user_dict)
+
+                          return(<ContentWrapper><TableTest users={this.state.user_dict}></TableTest></ContentWrapper>)
+
+                      }
+                  }
+                  else {
+
+                    return(<ContentWrapper><p>No bot connect, click on bot status to connect a bot</p></ContentWrapper>)
+                  }
                 }
               }
-            }
-}
-export default Subscribed
+  }
+  export default Subscribed

@@ -5,12 +5,16 @@ import { Grid, Row, Col, Panel, Button, Table, ProgressBar } from 'react-bootstr
 import Firebase from 'firebase';
 
 
+
 class Fans extends React.Component {
 
     constructor(props) {
 
       super(props);
       this.state = {loading:true, user_dict:{}}
+      this.loading_bar = 10
+
+
 
     }
 
@@ -36,8 +40,11 @@ componentDidMount() {
 
 
               })
-              conosle.log(user_dict)
+              console.log(user_dict)
+              this.loading_bar = 100
+              console.log(this)
               this.setState({
+
                   user_dict:snapshot.val(),
                   loading:false
 
@@ -46,39 +53,45 @@ componentDidMount() {
   }
 
     else {
-
+      this.loading_bar = 100
       this.setState({
         loading:false
       })
     }
 
   }
-componentDidUpdate(prevProp, prevState)  {
+componentWillUpdate(nextProp, nextState)  {
 
-  console.log("about to log stte for this sfasns  ")
+  if (this.loading_bar + 20 < 100) {
+    this.loading_bar = this.loading_bar + 20
+  }
+
+  console.log("about to log stte for this sfasns")
   console.log(this.state)
+  console.log(nextState)
 }
 
     render() {
       //get the users who are connected
-
+       const is_user_loaded = Object.keys(this.state.user_dict) ? true:false
 
               if(this.state.loading) {
-                  return(<ContentWrapper>  <ProgressBar active now={45} /> </ContentWrapper>)
+                  return(<ContentWrapper>  <ProgressBar label={`${this.loading_bar}%`} active now={this.loading_bar} /> </ContentWrapper>)
 
               }
               else {
 
                 if(this.props.user.bot_connected === true) {
-                    if(Object.keys(this.state.user_dict).length === undefined || Object.keys(this.state.user_dict).length < 1) {
+                    if(!is_user_loaded) {
 
                       return(<ContentWrapper><p>You do not have any  users</p></ContentWrapper>)
                     }
 
                     else {
+                        console.log("frustrated")
+                        console.log(this.state.user_dict)
 
-
-                        return(<ContentWrapper><TableTest users={this.state.users_dict}></TableTest></ContentWrapper>)
+                        return(<ContentWrapper><TableTest users={this.state.user_dict}></TableTest></ContentWrapper>)
 
                     }
                 }
