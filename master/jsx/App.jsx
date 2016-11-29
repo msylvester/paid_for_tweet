@@ -31,7 +31,7 @@ import LoginOne from './components/Pages/LoginOne';
 import NotFound from './components/Pages/NotFound';
 import Home from './components/Home/Home';
 import Logout from './components/Logout/Logout';
-
+import Preview from './components/Targeted/Preview';
 import ChartChartJS from './components/Charts/ChartChartJS';
 
 // Init translation system
@@ -73,7 +73,7 @@ ReactDOM.render(
             <Route path="topUsers" component={TopUsers}/>
             <Route path="logout"  component={Logout} />
             <Route path="chart-chartjs" component={ChartChartJS}/>
-
+    <Route path="preview" component={Preview}/>
           </Route>
 
 

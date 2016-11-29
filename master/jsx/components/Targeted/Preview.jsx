@@ -14,18 +14,22 @@ class Preview extends React.Component {
 
     render() {
       //get the name
-      var name = this.props.name ? this.props.name:'change'
-      var sub_name = this.props.sub_name ? this.props.sub_name:'change'
-      var image_url =  this.props.image_url ? this.props.image_url:"img/logo.png"
-      var button_one_title =  this.props.button_one_title ? this.props.button_one_title:'change'
-      var button_two_title =  this.props.button_two_title ? this.props.button_two_title:'change'
-      var button_three_title =  this.props.button_thre_title ? this.props.button_three_title:'change'
+      console.log(this.props)
 
-      var button_one_url =  this.props.button_one_url ? this.props.button_one_url:'change'
-      var button_two_url =  this.props.button_two_url ? this.props.button_two_url:'change'
-      var button_three_url =  this.props.button_three_url ? this.props.button_three_url:'change'
 
-      if (this.props.buttons === '1') {
+           var name = this.props.message.title ? this.props.message.title:'change'
+           var sub_name = this.props.message.sub ? this.props.message.sub:'change'
+           var image_url = this.props.message.image ? this.props.message.image:'img/logo.png'
+           var button_one_title =  this.props.message.btnOne ? this.props.message.btnOne:'change'
+           var button_two_title =  this.props.message.btnTwoTitle ? this.props.message.btnTwoTitle:'change'
+           var button_three_title =  this.props.message.btnThreeTitle ?  this.props.message.btnThreeTitle :'change'
+
+           var button_one_url =  this.props.message.btnOneUrl ? this.props.message.btnOneUrl:'change'
+           var button_two_url =  this.props.message.btnTwoUrl ? this.props.message.btnTwoUrl :'change'
+           var button_three_url =   this.props.message.btnThreeUrl ? this.props.message.btnThreeUrl :'change'
+
+
+      if (this.props.numberOfButtons === '1') {
 
         return(<ContentWrapper>
         <Grid>
@@ -41,13 +45,18 @@ class Preview extends React.Component {
 
           </Thumbnail>
         </Col>
+
+        <Col xs={10} md={10}>
+          <Button onClick={this.props.func_close}>Close</Button>
+        </Col>
+
         </Row>
         </Grid>
         </ContentWrapper>)
 
 
       }
-       if (this.props.buttons === '2') {
+       if (this.props.numberOfButtons === '2') {
 
 
          return(<ContentWrapper>
@@ -66,6 +75,10 @@ class Preview extends React.Component {
 
            </Thumbnail>
          </Col>
+         <Col xs={10} md={10}>
+           <Button  onClick={this.props.func_close}>Close</Button>
+         </Col>
+
          </Row>
          </Grid>
          </ContentWrapper>)
@@ -73,7 +86,7 @@ class Preview extends React.Component {
 
       }
 
-     if (this.props.buttons === '3') {
+     if (this.props.numberOfButtons=== '3') {
        return(<ContentWrapper>
        <Grid>
        <Row>
@@ -91,6 +104,10 @@ class Preview extends React.Component {
                      <Button bsStyle="primary" onClick={this.goToThree}>{button_three_title}</Button>
 
          </Thumbnail>
+       </Col>
+
+       <Col xs={10} md={10}>
+         <Button  onClick={this.props.func_close}>Close</Button>
        </Col>
        </Row>
        </Grid>

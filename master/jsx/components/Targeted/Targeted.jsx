@@ -7,8 +7,8 @@ import Segments from './Segments'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import FormStandard from './FormStandard'
-
-
+import Preview from './Preview'
+import CalenderForm from './CalenderForm'
 
 
 
@@ -21,7 +21,7 @@ class Targeted extends React.Component {
     console.log(this.props.user.bot_connected)
     console.log(props)
     this._send_only_message = ""
-    this.state = {past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
+    this.state = {message_preview: '', preview: -1, past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
     this.send_message = this.send_message.bind(this)
     this.old_segment = this.old_segment.bind(this)
     this.new_segment = this.new_segment.bind(this)
@@ -50,10 +50,35 @@ class Targeted extends React.Component {
     this.past = this.past.bind(this)
     this.handleTargetMessageButtonClick = this.handleTargetMessageButtonClick.bind(this)
   this.handleChangeForMessage = this.handleChangeForMessage.bind(this)
-
+  this.handleFromButtons = this.handleFromButtons.bind(this)
+  this.func_close = this.func_close.bind(this)
+  this.closeTime = this.closeTime.bind(this)
 
     }
+closeTime() {
 
+
+  this.setState( {
+    one:false,
+    two:false,
+    third:false,
+    four:false,
+    five:false,
+    show_now:false,
+    calender: false,
+    close:true,
+    type:'',
+    buttons:'',
+    value:'',
+    button_one_url:'',
+    button_one_title:'',
+    button_two_title:'',
+    button_two_url:'',
+    button_three_url:'',
+    button_three_title:''
+  })
+
+}
 
   componentWillMount() {
 
@@ -91,6 +116,68 @@ past() {
   })
 
 }
+
+handleFromButtons(message) {
+  console.log("that worked")
+  console.log(message)
+  if(message.numberOfButtons === '1') {
+
+
+    this.setState({
+
+      preview:1,
+      message_preview:message
+
+    })
+  }
+
+  else if (message.numberOfButtons === '2') {
+
+    this.setState({
+
+      preview:1,
+      message_preview:message
+
+    })
+
+  }
+
+  else if (message.numberOfButtons === '3') {
+
+    this.setState({
+
+      preview:1,
+      message_preview:message
+
+    })
+
+  }
+else {
+
+  this.setState({
+
+    preview:1,
+    message_preview:message
+
+  })
+}
+
+
+
+}
+
+func_close() {
+  console.log(this)
+
+  this.setState({
+    preview:0,
+    five:false,
+    type:'',
+    show_now:true
+
+  })
+}
+
 
 handle_date_change(date) {
 
@@ -361,30 +448,46 @@ handleSubmitButton_cheap(event)   {this.clearState()}
 
 
 send_later() {
+
+  //sow date time picker
+  //also a form
+
       this.setState( {
-        one:false,
-        two:false,
-        third:false,
-        four:false,
-        five:false,
+
         show_now:false,
         calender: true,
         close:false,
-        type:'',
-        buttons:'',
-        value:'',
-        button_one_url:'',
-        button_one_title:'',
-        button_two_title:'',
-        button_two_url:'',
-        button_three_url:'',
-        button_three_title:''
+
       })
 }
 
 
 
 send_now() {
+
+// //make a fetch and send message
+//
+// const url_post = "https://graph.facebook.com/v2.8/me/subscribed_apps?access_token="+this.state.pages[this.state.select]
+//
+// fetch(url_post, {
+//   method: 'POST'
+// }).then(function(response) {
+//    console.log('status: ', response.status);
+//    if (response.ok) {
+//
+//      console.log('post went through')
+//
+//    } else {
+//
+//      console.log('post failed')
+//
+//    }
+//
+//
+// }).catch(function(err) {
+//  console.log('There has been a problem with your fetch operation: ' + err.message);
+// });
+
 this.setState( {
   one:false,
   two:false,
@@ -549,17 +652,7 @@ if (this.props.user.bot_connected) {
             //show calender
 
             return (
-              <ContentWrapper>
-              <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handle_date_change} >
-
-            </DatePicker>
-                  <Button onClick={this.handleDateSubmitButton}>
-                        Submit
-                      </Button>
-
-                  </ContentWrapper>)
+            <CalenderForm func_time={this.closeTime}></CalenderForm>)
         }
 
         if (this.state.buttons=="One") {
@@ -709,9 +802,16 @@ if (this.props.user.bot_connected) {
         }
 
         if (this.state.type == "one")  {
+          if (this.state.preview === 1)  {
+            return(<Preview numberOfButtons={this.state.message_preview.numberOfButtons} message={this.state.message_preview} func_close={this.func_close}>  </Preview>)
+          }
+          if (this.state.preview === 0)  {
+            return(<Preview numberOfButtons={this.state.message_preview.numberOfButtons} message={this.state.message_preview} func_close={this.func_close}>  </Preview>)
+          }
 
-          return(<ContentWrapper><FormStandard ></FormStandard> </ContentWrapper>)
-
+          else {
+           return(<ContentWrapper><FormStandard funct={this.handleFromButtons} ></FormStandard> </ContentWrapper>)
+          }
         }
         if (this.state.type == "two")  {
 
