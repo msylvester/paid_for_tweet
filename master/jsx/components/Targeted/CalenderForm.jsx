@@ -14,12 +14,53 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock'
 
 class CalenderForm extends React.Component {
   constructor(props) {
+    super(props)
     this.getValidationState = this.getValidationState.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSelectA = this.handleSelectA.bind(this)
-    this.state=  {select_value:'12', select_value_am:'am'}
+    this.func_time = this.func_time.bind(this)
+    this.state=  {select_value:'12', select_value_am:'AM'}
   }
 
+  //returns day, month, year, hours and am/pm
+
+  getTimeInfo() {
+    //handleselectA gets you the number
+
+  var dict_times = {}
+  dict_times['1'] = 13
+  dict_times['2'] = 14
+  dict_times['3'] = 15
+  dict_times['4'] = 16
+  dict_times['5'] = 17
+  dict_times['6'] = 18
+  dict_times['7'] = 19
+  dict_times['8'] = 20
+  dict_times['9'] = 21
+  dict_times['10'] = 22
+  dict_times['11'] = 23
+  dict_times['12'] = 00
+
+    var accurateTime = this.state.select_value
+    if(this.state.select_value_am !== 'AM')  {
+          accurateTime = dict_times[this.state.select_value]
+
+    }
+
+    return ("jan", "12", 10000022)
+
+
+  }
+
+  func_time() {
+    //then iam going toc al that
+    //get a date a time
+    //function get the current time in unix
+      var a, b,c = getTimeInfo()
+      this.props.func_time(a, b, c)
+
+
+  }
   getValidationState() {
 
   }
@@ -68,7 +109,7 @@ class CalenderForm extends React.Component {
                 <option value="AM">AM</option>
               </FormControl>
           </FormGroup>
-          <Button onClick={this.props.func_time}>Choose</Button>
+          <Button onClick={this.func_time}>Choose</Button>
 
 
   </FormGroup>

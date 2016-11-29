@@ -21,7 +21,7 @@ class Targeted extends React.Component {
     console.log(this.props.user.bot_connected)
     console.log(props)
     this._send_only_message = ""
-    this.state = {message_preview: '', preview: -1, past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
+    this.state = {time:'', message_preview: '', preview: -1, past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
     this.send_message = this.send_message.bind(this)
     this.old_segment = this.old_segment.bind(this)
     this.new_segment = this.new_segment.bind(this)
@@ -42,20 +42,78 @@ class Targeted extends React.Component {
     this.handleChangeButtonThreeURL = this.handleChangeButtonThreeURL.bind(this)
 
     this.handleChangeButtonTitle = this.handleChangeButtonTitle.bind(this)
-  this.handleSubmitButton_cheap = this.handleSubmitButton_cheap.bind(this)
+    this.handleSubmitButton_cheap = this.handleSubmitButton_cheap.bind(this)
     this.handleSubmitButton = this.handleSubmitButton.bind(this)
-      this.handleDateSubmitButton = this.handleDateSubmitButton.bind(this)
+    this.handleDateSubmitButton = this.handleDateSubmitButton.bind(this)
     this.send_now = this.send_now.bind(this)
     this.send_later = this.send_later.bind(this)
     this.past = this.past.bind(this)
     this.handleTargetMessageButtonClick = this.handleTargetMessageButtonClick.bind(this)
-  this.handleChangeForMessage = this.handleChangeForMessage.bind(this)
-  this.handleFromButtons = this.handleFromButtons.bind(this)
-  this.func_close = this.func_close.bind(this)
-  this.closeTime = this.closeTime.bind(this)
+    this.handleChangeForMessage = this.handleChangeForMessage.bind(this)
+    this.handleFromButtons = this.handleFromButtons.bind(this)
+    this.func_close = this.func_close.bind(this)
+    this.closeTime = this.closeTime.bind(this)
+    this.func_close_target = this.func_close_target.bind(this)
 
     }
+
+func_close_target(audience)  {
+
+        try {
+            const gender = audience.gender
+            const age = audience.age
+            const region = audience.region
+        }
+
+      catch(e) {
+
+            console.log("eror extracting form audience")
+}
+
+    try {
+      const lclAudience = {
+          gender:gender,
+          age:age,
+          region:region
+      }
+    }
+
+    catch(e) {
+      console.log("error setting the locla audeince")
+    }
+
+    try {
+    this.setState = ( {
+        third:false,
+        audience:lclAudience,
+        type:'one'
+
+    })
+  }
+  catch(error) {
+
+    console.log("error setting state for new audience")
+  }
+
+}
+
+func_time(month, day, unix) {
+
+    var time = {}
+    time['month'] = montht
+    time['day'] = day
+    time['unix'] = unix
+
+    this.setState({
+      calender:false,
+      closeDate:true,
+      timee:time
+
+    })
+}
+
 closeTime() {
+  //write the message to firebase
 
 
   this.setState( {
@@ -66,7 +124,7 @@ closeTime() {
     five:false,
     show_now:false,
     calender: false,
-    close:true,
+    closeDate:true,
     type:'',
     buttons:'',
     value:'',
@@ -80,33 +138,19 @@ closeTime() {
 
 }
 
-  componentWillMount() {
 
-}
-
-
+//get audience
 handleTargetMessageButtonClick() {
-  //udate state
-  //get the row
-//   console.log("Aboiut to bpre vent e log ")
-//   console.log(e)
-//   console.log(row_selected)
-//   try {
-//   e.preventDefault()
-// }
-// catch (err)  {
-//
-//   console.log(err.message)
-// }
-//   console.log("This is hit s  ")
-//   console.log(row_selected)
+
   this.setState({
     second:false,
-    five:true
+    type:"one"
       }
   )
 
 }
+
+
 past() {
 
   this.setState( {
@@ -152,15 +196,15 @@ handleFromButtons(message) {
     })
 
   }
-else {
+  else {
 
-  this.setState({
+    this.setState({
 
-    preview:1,
-    message_preview:message
+      preview:1,
+      message_preview:message
 
-  })
-}
+    })
+  }
 
 
 
@@ -187,11 +231,10 @@ handle_date_change(date) {
 })
 }
 select_buttons(event, num_of_buttons) {
-  console.log("Here in selec tbuttons")
-  console.log(num_of_buttons)
+
   const buttons = ["One":1, "Two":2, "Three":3]
 
-  this.setState(  {
+  this.setState({
     show_now:false,
     one:false,
     two:false,
@@ -210,31 +253,26 @@ select_buttons(event, num_of_buttons) {
     button_three_title:'',
     buttons:num_of_buttons
 
-}
-  )
+    })
 
-console.log(num_of_buttons)
-console.log(this.state.buttons)
-}
+  }
 
 message_types_function(event, second) {
 
   //check to see which one they grabbed
   const object_type = {"Text Based Message":"one", "Image":"two", "Gif":"three", "Video":"four", "Button":"five"}
 
-console.log(event)
 
-console.log(second)
   this.setState(  {
-    one:false,
-    two:false,
-    third:false,
-    four:false,
-    five:false,
-    type:object_type[event]
+      one:false,
+      two:false,
+      third:false,
+      four:false,
+      five:false,
+      type:object_type[event]
 
+    })
   }
-  )}
 
 handleDateSubmitButton() {
   this.setState(  {
@@ -262,28 +300,28 @@ handleDateSubmitButton() {
 //design for image based, enter text
 handleChangeForMessage(event) {
 
-            try{
-              console.log(event)
-            }
-            catch (ex) {
-              console.log("hery ae")
-            }
+        try{
+          console.log(event)
+        }
+        catch (ex) {
+          console.log("hery ae")
+        }
 
-            try{
+        try{
 
 
-            }
-            catch (ex) {
-              console.log("hery erer")
-            }
+        }
+        catch (ex) {
+          console.log("hery erer")
+        }
 
-            try{
+        try{
 
-              this.setState({value: event.target.value});
-            }
-            catch (ex) {
-              console.log("hery mes ")
-            }
+          this.setState({value: event.target.value});
+        }
+        catch (ex) {
+          console.log("hery mes ")
+        }
 
 
   }
@@ -292,28 +330,28 @@ handleChangeForMessage(event) {
 //design for image based, enter text
 handleChange(event) {
 
-            try{
-              console.log(event)
-            }
-            catch (ex) {
-              console.log("hery ae")
-            }
+      try{
+        console.log(event)
+      }
+      catch (ex) {
+        console.log("hery ae")
+      }
 
-            try{
+      try{
 
 
-            }
-            catch (ex) {
-              console.log("hery erer")
-            }
+      }
+      catch (ex) {
+        console.log("hery erer")
+      }
 
-            try{
+      try{
 
-              this.setState({value: event.target.value});
-            }
-            catch (ex) {
-              console.log("hery mes ")
-            }
+        this.setState({value: event.target.value});
+      }
+      catch (ex) {
+        console.log("hery mes ")
+      }
 
 
   }
@@ -374,84 +412,79 @@ handleSubmit() {
 
 }
 
-handleSubmitButton(event) {
-
-//check to see how many buttons there are
-var user = firebase.auth().currentUser;
- let uid = user.providerData[0].uid;
+handleSubmitButton(event) { //check to see how many buttons there are
+  var user = firebase.auth().currentUser;
+  let uid = user.providerData[0].uid;
 
   const newPostKey = firebase.database().ref().child('struct_message').push().key;
   // Write the new post's data simultaneously in the posts list and the user's post list.
-if (this.state.buttons == "One") {
-  let  postData = {
-      button: 1,
-      button_one_title:this.state.button_one_title,
-      button_one_url:this.state.button_one_url,
-      button_title: this.state.button_title
+  if (this.state.buttons == "One") {
+        let  postData = {
+            button: 1,
+            button_one_title:this.state.button_one_title,
+            button_one_url:this.state.button_one_url,
+            button_title: this.state.button_title
+
+          }
+        let updates = {};
+        updates['/posts/' + newPostKey] = postData;
+        updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+        firebase.database().ref().update(updates);
+
+        this.clearState()
+      }
+
+
+    if (this.state.buttons == "Two") {
+
+
+        let postData = {
+          buttons: 2,
+          button_one_title:this.state.button_one_title,
+          button_one_url:this.state.button_one_url,
+          button_two_title: this.state.button_two_title,
+          button_two_url:this.state.button_two_url,
+          button_title: this.state.button_title
+
+        }
+        var updates = {};
+        updates['/posts/' + newPostKey] = postData;
+        updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+        firebase.database().ref().update(updates);
+        this.clearState()
 
     }
-      let updates = {};
-       updates['/posts/' + newPostKey] = postData;
-       updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
-       firebase.database().ref().update(updates);
-
-  this.clearState()
-}
-
-
-if (this.state.buttons == "Two") {
-
-
-  let postData = {
-    buttons: 2,
-    button_one_title:this.state.button_one_title,
-    button_one_url:this.state.button_one_url,
-    button_two_title: this.state.button_two_title,
-    button_two_url:this.state.button_two_url,
-    button_title: this.state.button_title
-
-  }
-  var updates = {};
-  updates['/posts/' + newPostKey] = postData;
-  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-
-  firebase.database().ref().update(updates);
-  this.clearState()
-
-}
-if (this.state.buttons == "Three") {
-let postData = {
-  buttons : 3,
-  button_one_title: this.state.button_one_title,
-  button_one_url : this.state.button_one_url,
-  button_two_title : this.state.button_two_title,
-  button_two_url : this.state.button_two_url,
-  button_three_title : this.state.button_three_title,
-  button_three_url : this.state.button_three_url,
-  button_title :this.state.button_title
-}
+  if (this.state.buttons == "Three") {
+      let postData = {
+        buttons : 3,
+        button_one_title: this.state.button_one_title,
+        button_one_url : this.state.button_one_url,
+        button_two_title : this.state.button_two_title,
+        button_two_url : this.state.button_two_url,
+        button_three_title : this.state.button_three_title,
+        button_three_url : this.state.button_three_url,
+        button_title :this.state.button_title
+      }
 
 
-   var updates = {};
-   updates['/posts/' + newPostKey] = postData;
-   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+         var updates = {};
+         updates['/posts/' + newPostKey] = postData;
+         updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
-   firebase.database().ref().update(updates);
-   this.clearState()
+         firebase.database().ref().update(updates);
+         this.clearState()
 
-}
-}
+      }}
+
+
+
 
 handleSubmitButton_cheap(event)   {this.clearState()}
 
-
-
 send_later() {
-
-  //sow date time picker
-  //also a form
-
       this.setState( {
 
         show_now:false,
@@ -461,56 +494,30 @@ send_later() {
       })
 }
 
-
-
 send_now() {
 
-// //make a fetch and send message
-//
-// const url_post = "https://graph.facebook.com/v2.8/me/subscribed_apps?access_token="+this.state.pages[this.state.select]
-//
-// fetch(url_post, {
-//   method: 'POST'
-// }).then(function(response) {
-//    console.log('status: ', response.status);
-//    if (response.ok) {
-//
-//      console.log('post went through')
-//
-//    } else {
-//
-//      console.log('post failed')
-//
-//    }
-//
-//
-// }).catch(function(err) {
-//  console.log('There has been a problem with your fetch operation: ' + err.message);
-// });
-
-this.setState( {
-  one:false,
-  two:false,
-  third:false,
-  four:false,
-  five:false,
-  show_now:false,
-  calender: false,
-  close:true,
-  type:'',
-  buttons:'',
-  value:'',
-  button_one_url:'',
-  button_one_title:'',
-  button_two_title:'',
-  button_two_url:'',
-  button_three_url:'',
-  button_three_title:''
-})
+  this.setState( {
+    one:false,
+    two:false,
+    third:false,
+    four:false,
+    five:false,
+    show_now:false,
+    calender: false,
+    close:true,
+    type:'',
+    buttons:'',
+    value:'',
+    button_one_url:'',
+    button_one_title:'',
+    button_two_title:'',
+    button_two_url:'',
+    button_three_url:'',
+    button_three_title:''
+  })
 }
 
-clearState() {
-
+  clearState() {
 
   this.setState(  {
     one:false,
@@ -533,6 +540,7 @@ clearState() {
   })
 
 }
+
   getValidationState() {
     const length = this.state.value.length;
     if (length > 10) return 'success';
@@ -573,10 +581,8 @@ clearState() {
     })
   }
 
-select_past() {
+  select_past() {}
 
-
-}
 
     render() {
       //  const Use an = this.send_message
@@ -623,10 +629,15 @@ if (this.props.user.bot_connected) {
         }
         if (this.state.closeDate===true) {
           return(<ContentWrapper>
-          <p>your message will be sent on </p>
+          <p>your message will be sent on {this.state.time}</p>
 
           </ContentWrapper>)
 
+
+        }
+
+        if (this.state.third === true) {
+              return (<ContentWrapper><ChooseTarget func_close_target = {this.func_close_target}></ChooseTarget></ContentWrapper>)
 
         }
 
@@ -655,151 +666,7 @@ if (this.props.user.bot_connected) {
             <CalenderForm func_time={this.closeTime}></CalenderForm>)
         }
 
-        if (this.state.buttons=="One") {
 
-          //make one text field
-
-
-                    return(<ContentWrapper>
-                     <div>
-                            <input
-                            type="text"
-                           value={"enter title for button"}
-                           onChange={this.handleChangeButtonOneTitle}
-                            />
-                            <input
-                            type="text"
-                           value={"enter url that button links to"}
-                           onChange={this.handleChangeButtonOneURL}
-                            />
-
-                            <input
-                            type="text"
-                           value={"enter title of structured message"}
-                           onChange={this.handleChangeButtonTitle}
-                            />
-
-                          <Button onClick={this.handleSubmitButton_cheap}>
-                              Submit
-                            </Button>
-                          </div>
-          </ContentWrapper>)
-
-        }
-
-        if (this.state.buttons=="Two") {
-
-          return(<ContentWrapper>
-           <div>
-                  <input
-                  type="text"
-                 value={"enter title for button"}
-                 onChange={this.handleChangeButtonOneTitle}
-                  />
-                  <input
-                  type="text"
-                 value={"enter url that button links to"}
-                 onChange={this.handleChangeButtonOneURL}
-                  />
-                  <input
-                  type="text"
-                 value={"enter title for button two"}
-                 onChange={this.handleChangeButtonTwoTitle}
-                  />
-                  <input
-                  type="text"
-                 value={"enter url that button two links to"}
-                 onChange={this.handleChangeButtonTwoURL}
-                  />
-
-
-
-                  <input
-                  type="text"
-                 value={"enter title of strcutured message"}
-                 onChange={this.handleChangeButtonTitle}
-                  />
-
-
-
-
-
-                <Button onClick={this.this.state.typeButton_cheap}>
-                    Submit
-                  </Button>
-                </div>
-        </ContentWrapper>)
-
-        }
-
-        if (this.state.buttons=="Three")  {
-
-
-
-          return(<ContentWrapper>
-           <div>
-                  <input
-                  type="text"
-                 value={"enter title for button"}
-                 onChange={this.handleChangeButtonOneTitle}
-                  />
-                <p></p>
-                  <input
-                  type="text"
-                 value={"enter url that button links to"}
-                 onChange={this.handleChangeButtonOneURL}
-                  />
-
-              <p></p>
-                  <input
-                  type="text"
-                 value={"enter title for button two"}
-                 onChange={this.handleChangeButtonTwoTitle}
-                  />
-                <p></p>
-                  <input
-                  type="text"
-                 value={"enter url that button two links to"}
-                 onChange={this.handleChangeButtonTwoURL}
-                  />
-
-<p></p>
-                  <input
-                  type="text"
-                 value={"enter title for button three"}
-                 onChange={this.handleChangeButtonThreeTitle}
-                  />
-                <p></p>
-                  <input
-                  type="text"
-                 value={"enter url that button three links to"}
-                 onChange={this.handleChangeButtonThreeURL}
-                  />
-
-
-                  <input
-                  type="text"
-                 value={"enter title of strcutured message"}
-                 onChange={this.handleChangeButtonTitle}
-                  />
-
-
-
-
-
-                <Button onClick={this.handleSubmitButton_cheap}>
-                    Submit
-                  </Button>
-                </div>
-        </ContentWrapper>)
-
-
-
-
-
-
-
-        }
 
         if (this.state.type == "one")  {
           if (this.state.preview === 1)  {
@@ -867,38 +734,12 @@ if (this.props.user.bot_connected) {
         }
 
 
-        if (this.state.type == "five")  {
 
-          return(<ContentWrapper>
-           <div>
 
-                <Dropdown id = {"tree"}>
-                        <Dropdown.Toggle>
-                              How Many buttons would you like
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className="animated fadeInUpShort">
-
-                          {
-                          buttons.map(function(key, i) {
-
-                            return (<MenuItem key={Math.random()} eventKey={key} data-set-lang="en" onSelect={func_select_buttons}>{key}</MenuItem>);
-
-                          })
-                          }
-
-                        </Dropdown.Menu>
-
-                      </Dropdown>
-
-                  <Button onClick={this.handleSubmit}>
-                    Submit
-                  </Button>
-                </div>
-</ContentWrapper>)
-
-        }
 
         if (this.state.five == true)   {
+
+/*
       return( <Dropdown id = {"base"}>
             <Dropdown.Toggle>
                   Choose what to send
@@ -916,7 +757,7 @@ if (this.props.user.bot_connected) {
             </Dropdown.Menu>
 
           </Dropdown>)
-
+*/
 
 
 
@@ -949,48 +790,8 @@ if (this.props.user.bot_connected) {
                 )
         }
 
-        if (this.state.third === true) {
-          //use new
-          return (
-          <ContentWrapper>
 
 
-          <div>
-            <p>
-              Please select your audience
-            </p>
-            <select value={this.state.value} onChange={this.handleChange}>
-                   <option value="M">Male</option>
-                   <option value="F">Female</option>
-                    <option value="B">Both</option>
-                 </select>
-                 <p>
-      Choose your Age
-                 </p>
-                 <select value={this.state.value} onChange={this.handleChange}>
-                        <option value="M">0-30</option>
-                        <option value="F">30+</option>
-
-                      </select>
-
-
-                      <p>
-                      Choose Your GeoGraphic location
-                      </p>
-                      <select value={this.state.value} onChange={this.handleChange}>
-                             <option value="M">West</option>
-                             <option value="F">Central</option>
-                              <option value="B">East</option>
-                           </select>
-
-
-            <Button onClick={this.handleSubmit}>
-              Submit
-            </Button>
-          </div>
-          </ContentWrapper>)
-
-        }
 
 
         return (

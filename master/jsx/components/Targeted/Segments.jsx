@@ -10,9 +10,17 @@ class Segments extends React.Component {
         super(props)
         console.log("In sgemgget")
         console.log(this.props)
+        this.use = this.use.bind(this)
 
 
     }
+
+    use(e) {
+      console.log(e)
+      this.props.handleTargetMessageButtonClick()
+
+    }
+
 
 
     render() {
@@ -49,7 +57,7 @@ class Segments extends React.Component {
                               </td>
 
                               <td>
-                                <Button bsStyle="info" bsSize="xsmall" onClick= {this.props.handleTargetMessageButtonClick()}>Use</Button>
+                                <Button bsStyle="info" bsSize="xsmall" onClick= {this.use}>Use</Button>
 
                               </td>
 
