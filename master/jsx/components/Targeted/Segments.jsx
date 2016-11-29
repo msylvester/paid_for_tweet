@@ -10,14 +10,35 @@ class Segments extends React.Component {
         super(props)
         console.log("In sgemgget")
         console.log(this.props)
-        this.use = this.use.bind(this)
+        //this.use = this.use.bind(this)
 
 
     }
 
     use(e) {
       console.log(e)
-      this.props.handleTargetMessageButtonClick()
+
+        var user_segments = Object.keys(this.props.segments)
+
+console.log(user_segments)
+        var n = user_segments[e]
+
+        console.log(n)
+      //  var gender = this.props.segments[n].gender
+        console.log(this.props.segments[n])
+        var gender = this.props.segments[n]['gender']
+        var age = this.props.segments[n]['age']
+      var region = this.props.segments[n]['location']
+
+      var a = {
+          age,
+          region,
+          gender
+
+      }
+console.log(a)
+
+      this.props.handleTargetMessageButtonClick(a)
 
     }
 
@@ -57,7 +78,7 @@ class Segments extends React.Component {
                               </td>
 
                               <td>
-                                <Button bsStyle="info" bsSize="xsmall" onClick= {this.use}>Use</Button>
+                                <Button key={index} eventKey={"hello"} bsStyle="info" bsSize="xsmall" onClick= {()=>this.use(index)}>Use</Button>
 
                               </td>
 

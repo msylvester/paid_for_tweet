@@ -16,10 +16,12 @@ class ChooseTarget extends React.Component {
   constructor(props) {
     super(props)
     this.getValidationState = this.getValidationState.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
-    this.handleSelectA = this.handleSelectA.bind(this)
-    this.close = this.close.bind(this)
-    this.state=  {gender:'A', age:'A':, region:'A'}
+    this.handleSelectRegion = this.handleSelectRegion.bind(this)
+    this.handleSelectGender = this.handleSelectGender.bind(this)
+
+    this.handleSelectAge = this.handleSelectAge.bind(this)
+    this.closeTarget = this.closeTarget.bind(this)
+    this.state=  {close:'', gender:'A', age:'A', region:'A'}
   }
 
 
@@ -43,19 +45,29 @@ getValidationState() {
     this.setState({ gender: e.target.value });
   }
 
-  close() {
+  closeTarget() {
       let audience = {
 
-          age:this.stage.age
+          age:this.state.age,
           gender:this.state.gender,
           region:this.state.region
 
       }
       this.props.func_close_target(audience)
+      console.log("back")
+      this.setState({close:true})
+
   }
 
   render() {
+
+    if(this.state.close===true) {
+
+      return null   
+    }
+
     return (
+
       <form>
         <FormGroup
           controlId="formBasicText"
@@ -66,7 +78,7 @@ getValidationState() {
 
           <FormGroup controlId="formControlsSelect">
               <ControlLabel>What gender?</ControlLabel>
-              <FormControl componentClass="select" placeholder="What gender?" value={this.state.gender} onChange={this.handleSelect}>
+              <FormControl componentClass="select" placeholder="What gender?" value={this.state.gender} onChange={this.handleSelectGender}>
                 <option value="M">Male</option>
                 <option value="F">Female</option>
                 <option value="A">All Genders</option>
@@ -76,9 +88,9 @@ getValidationState() {
 
 
               <ControlLabel>What Age Range?</ControlLabel>
-              <FormControl componentClass="select" placeholder="What Age Range?" value={this.state.age} onChange={this.handleSelect}>
-                <option value="lessThanThirty">Male</option>
-                <option value="greaterThanThirty">Female</option>
+              <FormControl componentClass="select" placeholder="What Age Range?" value={this.state.age} onChange={this.handleSelectAge}>
+                <option value="lessThanThirty">Under Thirty Only</option>
+                <option value="greaterThanThirty">Over Thirty Only</option>
                 <option value="A">All Ages</option>
 
 
@@ -86,7 +98,7 @@ getValidationState() {
 
 
               <ControlLabel>What Region?</ControlLabel>
-              <FormControl componentClass="select" placeholder="What region?" value={this.state.range} onChange={this.handleSelectA}>
+              <FormControl componentClass="select" placeholder="What region?" value={this.state.range} onChange={this.handleSelectRegion}>
                 <option value="W">West</option>
                 <option value="C">Central</option>
                   <option value="E">East</option>
@@ -94,7 +106,7 @@ getValidationState() {
               </FormControl>
           </FormGroup>
 
-          <Button onClick={ths.close}>Use</Button>
+          <Button onClick={this.closeTarget}>Use</Button>
 
 
   </FormGroup>
@@ -103,7 +115,7 @@ getValidationState() {
       </form>
     );
   }
-})
+}
 
 
 export default ChooseTarget;

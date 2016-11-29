@@ -19,6 +19,7 @@ class CalenderForm extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSelectA = this.handleSelectA.bind(this)
     this.func_time = this.func_time.bind(this)
+    this.getTimeInfo = this.getTimeInfo.bind(this)
     this.state=  {select_value:'12', select_value_am:'AM'}
   }
 
@@ -39,7 +40,7 @@ class CalenderForm extends React.Component {
   dict_times['9'] = 21
   dict_times['10'] = 22
   dict_times['11'] = 23
-  dict_times['12'] = 00
+  dict_times['12'] = 0
 
     var accurateTime = this.state.select_value
     if(this.state.select_value_am !== 'AM')  {
@@ -56,7 +57,7 @@ class CalenderForm extends React.Component {
     //then iam going toc al that
     //get a date a time
     //function get the current time in unix
-      var a, b,c = getTimeInfo()
+      var a, b,c = this.getTimeInfo()
       this.props.func_time(a, b, c)
 
 
@@ -118,7 +119,7 @@ class CalenderForm extends React.Component {
       </form>
     );
   }
-})
+}
 
 
 export default CalenderForm;

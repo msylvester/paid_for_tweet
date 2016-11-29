@@ -1,10 +1,11 @@
 import React from 'react';
-import { Grid, Row, Col, Panel, Button } from 'react-bootstrap';
+import { Grid, Row, Col, Panel, Button, ProgressBar } from 'react-bootstrap';
 import {Link} from 'react-router';
 import Login from '../Login/Login'
 import Firebase from 'firebase';
 import Spinner from 'react-spinkit';
 import NotFound from './NotFound';
+
 class LoginOne extends React.Component {
 
 
@@ -829,7 +830,9 @@ componentDidMount() {
                              </div>
                              <div className="panel-body">
 
-                                         <Spinner spinnerName='double-bounce' />
+
+
+                                         <ProgressBar active now={45} />
                            </div>
                          </div>
 

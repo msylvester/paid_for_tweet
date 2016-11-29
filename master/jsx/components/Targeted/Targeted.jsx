@@ -9,7 +9,7 @@ import moment from 'moment';
 import FormStandard from './FormStandard'
 import Preview from './Preview'
 import CalenderForm from './CalenderForm'
-
+import ChooseTarget from './ChooseTarget'
 
 
 class Targeted extends React.Component {
@@ -21,11 +21,11 @@ class Targeted extends React.Component {
     console.log(this.props.user.bot_connected)
     console.log(props)
     this._send_only_message = ""
-    this.state = {time:'', message_preview: '', preview: -1, past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
+    this.state = {audience:'', time:'', message_preview: '', preview: -1, past_posts:'',closeDate:'',date:'', send_now:'', close:'', connected: this.props.user.bot_connected, first:'', second:'', third:'', four:'', five:'', type: '', buttons:'',value:'M', value_buttons:'', button_card_title:'', button_one_title:'', button_one_url:'', button_two_url:'', button_two_title:'', button_three_url:'', button_three_title:'', calender:'', startDate:moment()}
     this.send_message = this.send_message.bind(this)
     this.old_segment = this.old_segment.bind(this)
     this.new_segment = this.new_segment.bind(this)
-    this.getValidationState = this.getValidationState.bind(this)
+
     this.handle_date_change = this.handle_date_change.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.message_types_function = this.message_types_function.bind(this)
@@ -57,43 +57,43 @@ class Targeted extends React.Component {
 
     }
 
-func_close_target(audience)  {
+componentWillUpdate(nextProps, nextState) {
 
-        try {
-            const gender = audience.gender
-            const age = audience.age
-            const region = audience.region
-        }
-
-      catch(e) {
-
-            console.log("eror extracting form audience")
 }
 
-    try {
-      const lclAudience = {
+
+func_close_target(audience)  {
+
+          console.log(audience['age'])
+            console.log(audience['gender'])
+                console.log(audience['region'])
+            var gender = audience['gender']
+            var age = audience['age']
+            var region = audience['region']
+
+
+
+
+
+
+        console.log('d')
+      console.log(gender)
+    var lclAudience = {
           gender:gender,
           age:age,
           region:region
       }
-    }
 
-    catch(e) {
-      console.log("error setting the locla audeince")
-    }
+console.log(lclAudience)
+console.log(this)
 
-    try {
-    this.setState = ( {
+    this.setState( {
         third:false,
-        audience:lclAudience,
-        type:'one'
+        type:"one",
+        audience
 
     })
-  }
-  catch(error) {
-
-    console.log("error setting state for new audience")
-  }
+console.log(this.state)
 
 }
 
@@ -114,7 +114,7 @@ func_time(month, day, unix) {
 
 closeTime() {
   //write the message to firebase
-
+console.log(this.state)
 
   this.setState( {
     one:false,
@@ -140,11 +140,27 @@ closeTime() {
 
 
 //get audience
-handleTargetMessageButtonClick() {
+handleTargetMessageButtonClick(audience) {
+  console.log(audience['age'])
+    console.log(audience['gender'])
+        console.log(audience['region'])
+    var gender = audience['gender']
+    var age = audience['age']
+    var region = audience['region']
+
+  console.log(audience)
+  console.log('d')
+console.log(gender)
+var lclAudience = {
+    gender:gender,
+    age:age,
+    region:region
+}
 
   this.setState({
     second:false,
-    type:"one"
+    type:"one",
+    audience:audience
       }
   )
 
@@ -295,7 +311,10 @@ handleDateSubmitButton() {
 
   })
 }
+componentWillUpdate(nextProp, n) {
+console.log("I am updating")
 
+}
 
 //design for image based, enter text
 handleChangeForMessage(event) {
@@ -495,7 +514,7 @@ send_later() {
 }
 
 send_now() {
-
+console.log(this.state)
   this.setState( {
     one:false,
     two:false,
@@ -541,12 +560,7 @@ send_now() {
 
 }
 
-  getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-  }
+
 
   handleChange(e) {
     this.setState({ value: e.target.value });
@@ -783,7 +797,7 @@ if (this.props.user.bot_connected) {
           return(
               <ContentWrapper>
 
-                    <Segments segments= {this.props.user.segments} handleTargetMessageButtonClick = {()=>this.handleTargetMessageButtonClick}  >
+                    <Segments segments= {this.props.user.segments} handleTargetMessageButtonClick = {this.handleTargetMessageButtonClick}  >
                     </Segments>
                   </ContentWrapper>
 

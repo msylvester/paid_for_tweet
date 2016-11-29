@@ -45,7 +45,7 @@ class SingleView extends React.Component {
 
     this.setState( {
 
-      select:a
+      select:eventKey
 
     });
 
@@ -79,6 +79,10 @@ class SingleView extends React.Component {
 
 
          firebase.database().ref().update(updates);
+
+         var updates_Two = {}
+          updates['/bot/bot_connected']= false;
+   firebase.database().ref().update(updates_Two);
 
          this.setState(  {
 
@@ -204,10 +208,11 @@ class SingleView extends React.Component {
 
     console.log("ASREREW awer")
     console.log(this.names[this.state.select])
-
+    const d = this.props.user.pages[this.state.select] ? this.props.user.pages[this.state.select]:''
+    const e = this.names[this.state.select]
     var token_and_page_id = {
-        a : this.state.pages[this.state.select],
-        b : this.names[this.state.select]
+        a : d,
+        b : e
 
     }
 
@@ -239,18 +244,20 @@ class SingleView extends React.Component {
 
     var postData_new_bot = {page_id:this.names[this.state.select], page_name:use_this_name};
 
+
     //add bots to both places
 
-    updates['/users/' + user_id + '/' + this.state.pages[this.state.select]]  = postData_new_bot
-    updates['/bot/' + this.state.pages[this.state.select]] = postData_new_bot;
-    firebase.database().ref().update(updates);
+
+
 
     var updates_two = {}
     updates_two['/FBmess/hans_venue/page_array'] = token_and_page_id;
+
     firebase.database().ref().update(updates_two);
 
     var updates_three = {}
     updates_three['/users/' + user_id + '/bot_connected']= postData;
+    updates_three['/bot/bot_connected'] = true;
     firebase.database().ref().update(updates_three);
 
 
@@ -362,7 +369,7 @@ class SingleView extends React.Component {
 
         return (
             <ContentWrapper>
-            <p>You have a bot connected </p>
+            <p>You have a bot connected on page {this.props.user.bot_connected_name}</p>
 
 
 
