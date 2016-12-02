@@ -10,6 +10,7 @@ class Fans extends React.Component {
 
     constructor(props) {
 
+
       super(props);
       this.state = {loading:true, user_dict:{}}
       this.loading_bar = 10
@@ -24,15 +25,33 @@ componentDidMount() {
   console.log("**ERR #E!@#R !@E R@~@ #")
   console.log(this.props)
   if (this.props.user.bot_connected === true) {
-    console.log("I think it is failing there")
-   const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
-   console.log("gonna log shit ")
-   console.log(usersRef)
+  console.log("I think it is failing there")
+  const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
+  console.log("gonna log shit ")
+ console.log(usersRef)
+
   usersRef.once('value').then((snapshot) => {
-    console.log("******")
-                console.log(snapshot.val())
-              const user_array = Object.keys(snapshot.val())
-              let user_dict = {}
+        console.log("******")
+        console.log(snapshot.val())
+        const array_temp = []
+
+        if(snapshot.val()!== null && snapshot.val()!== "undefined" ) {
+
+
+              var user_dict = {}
+              var user_array = []
+
+              var user_array_truth = Object.keys(snapshot.val()).length>0 ? true:false
+              if(!user_array_truth) {
+
+                this.setState({
+
+
+                    loading:false
+
+                })
+                return
+              }
               user_array.forEach(key=> {
 
                         user_dict[key] = snapshot.val()[key]
@@ -49,6 +68,17 @@ componentDidMount() {
                   loading:false
 
               })
+            }
+          else {
+            this.setState({
+
+
+                loading:false
+
+            })
+          }
+
+
         })
   }
 
@@ -73,7 +103,7 @@ componentWillUpdate(nextProp, nextState)  {
 
     render() {
       //get the users who are connected
-       const is_user_loaded = Object.keys(this.state.user_dict) ? true:false
+       const is_user_loaded = Object.keys(this.state.user_dict).length>0 ? true:false
 
               if(this.state.loading) {
                   return(<ContentWrapper>  <ProgressBar label={`${this.loading_bar}%`} active now={this.loading_bar} /> </ContentWrapper>)

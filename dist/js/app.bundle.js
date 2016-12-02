@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "375a4df27941eff9e9bc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "36df566aa865d35d391f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -16400,7 +16400,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -16438,33 +16438,30 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Login = function (_React$Component) {
-		_inherits(Login, _React$Component);
+	  _inherits(Login, _React$Component);
 
-		function Login() {
-			_classCallCheck(this, Login);
+	  function Login() {
+	    _classCallCheck(this, Login);
 
-			return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
-		}
+	    return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
+	  }
 
-		_createClass(Login, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {}
-		}, {
-			key: 'render',
-			value: function render() {
+	  _createClass(Login, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
 
-				return _react2.default.createElement('div', {
-					className: 'fb-login-button',
-					'data-max-rows': '1',
-					'data-size': 'xlarge',
-					'data-show-faces': 'false',
-					scope: 'public_profile,email, manage_pages, publish_pages',
-					'data-auto-logout-link': 'true'
-				});
-			}
-		}]);
+	      return _react2.default.createElement(
+	        _ContentWrapper2.default,
+	        null,
+	        _react2.default.createElement('div', { 'class': 'fb-login-button', 'data-max-rows': '1', 'data-size': 'medium', 'data-show-faces': 'false', 'data-auto-logout-link': 'false' })
+	      );
+	    }
+	  }]);
 
-		return Login;
+	  return Login;
 	}(_react2.default.Component);
 
 	exports.default = Login;
@@ -16588,7 +16585,7 @@
 	                                            _react2.default.createElement(
 	                                                'a',
 	                                                { href: '', className: 'mr-sm label label-success' },
-	                                                'this.props.users[user][\'messages_sent\']'
+	                                                _this2.props.users[user].messages_sent
 	                                            )
 	                                        )
 	                                    );
@@ -34636,6 +34633,7 @@
 	    key: 'componentWillUpdate',
 	    value: function componentWillUpdate(nextProp, n) {
 	      console.log("I am updating");
+	      console.log(n);
 	    }
 
 	    //design for image based, enter text
@@ -34827,6 +34825,34 @@
 	  }, {
 	    key: 'send_now',
 	    value: function send_now() {
+
+	      var newPostKey = firebase.database().ref("users/" + this.props.user.uid + "/struct_message").push().key;
+	      var newPostKeyTwo = firebase.database().ref("users/" + this.props.user.uid + "/segments").push().key;
+	      var postData = {
+	        date_made: +new Date(),
+	        date_sent: '',
+	        message: this.state.message_preview
+
+	      };
+
+	      var postDataTwo = {
+
+	        age: this.state.audience.age,
+	        gender: this.state.audience.gender,
+	        region: this.state.audience.region
+
+	      };
+
+	      var update = {};
+	      update['users/' + this.props.user.uid + "/struct_message/" + newPostKey] = postData;
+	      update['struct_message/' + newPostKey] = postData;
+	      firebase.database().ref().update(update);
+
+	      var update_two = {};
+	      update_two['users/' + this.props.user.uid + "/segments/" + newPostKeyTwo] = postDataTwo;
+	      update_two['segments/' + newPostKeyTwo] = postDataTwo;
+	      firebase.database().ref().update(update_two);
+
 	      console.log(this.state);
 	      this.setState({
 	        one: false,
@@ -34962,7 +34988,7 @@
 	            _react2.default.createElement(
 	              'p',
 	              null,
-	              'your message has been sent'
+	              'your message will be sent in the next ten minutes'
 	            )
 	          );
 	        }
@@ -34999,6 +35025,11 @@
 	              'Send Now'
 	            ),
 	            _react2.default.createElement(
+	              'p',
+	              null,
+	              ' '
+	            ),
+	            _react2.default.createElement(
 	              _reactBootstrap.Button,
 	              { bsStyle: 'primary', bsSize: 'large', onClick: func_send_later },
 	              'Send Later'
@@ -35008,8 +35039,22 @@
 
 	        if (this.state.calender === true) {
 	          //show calender
-
-	          return _react2.default.createElement(_CalenderForm2.default, { func_time: this.closeTime });
+	          return _react2.default.createElement(
+	            _ContentWrapper2.default,
+	            null,
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Send Later is currently under developmet 😂.  Do you want to send now?'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { bsStyle: 'primary', bsSize: 'large', onClick: func_send_now },
+	              'Send Now'
+	            )
+	          );
+	          // return (
+	          // <CalenderForm func_time={this.closeTime}></CalenderForm>)
 	        }
 
 	        if (this.state.type == "one") {
@@ -51510,7 +51555,7 @@
 	    cookie: true,
 	    status: true,
 	    xfbml: true,
-	    version: 'v2.7'
+	    version: 'v2.6'
 	  });
 	  _reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -51533,19 +51578,16 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: 'topUsers', component: _TopUsers2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'logout', component: _Logout2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'preview', component: _Preview2.default })
-	    ),
-	    _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
+	    )
 	  ), document.getElementById('app'));
 	};
 
 	(function (d, s, id) {
 	  var js,
 	      fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) {
-	    return;
-	  }
+	  if (d.getElementById(id)) return;
 	  js = d.createElement(s);js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js";
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1754356628111030";
 	  fjs.parentNode.insertBefore(js, fjs);
 	})(document, 'script', 'facebook-jssdk');
 
@@ -52497,24 +52539,47 @@
 	        var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
 	        console.log("gonna log shit ");
 	        console.log(usersRef);
+
 	        usersRef.once('value').then(function (snapshot) {
 	          console.log("******");
 	          console.log(snapshot.val());
-	          var user_array = Object.keys(snapshot.val());
-	          var user_dict = {};
-	          user_array.forEach(function (key) {
+	          var array_temp = [];
 
-	            user_dict[key] = snapshot.val()[key];
-	          });
-	          console.log(user_dict);
-	          _this2.loading_bar = 100;
-	          console.log(_this2);
-	          _this2.setState({
+	          if (snapshot.val() !== null && snapshot.val() !== "undefined") {
 
-	            user_dict: snapshot.val(),
-	            loading: false
+	            var user_dict = {};
+	            var user_array = [];
 
-	          });
+	            var user_array_truth = Object.keys(snapshot.val()).length > 0 ? true : false;
+	            if (!user_array_truth) {
+
+	              _this2.setState({
+
+	                loading: false
+
+	              });
+	              return;
+	            }
+	            user_array.forEach(function (key) {
+
+	              user_dict[key] = snapshot.val()[key];
+	            });
+	            console.log(user_dict);
+	            _this2.loading_bar = 100;
+	            console.log(_this2);
+	            _this2.setState({
+
+	              user_dict: snapshot.val(),
+	              loading: false
+
+	            });
+	          } else {
+	            _this2.setState({
+
+	              loading: false
+
+	            });
+	          }
 	        });
 	      } else {
 	        this.loading_bar = 100;
@@ -52539,7 +52604,7 @@
 	    key: 'render',
 	    value: function render() {
 	      //get the users who are connected
-	      var is_user_loaded = Object.keys(this.state.user_dict) ? true : false;
+	      var is_user_loaded = Object.keys(this.state.user_dict).length > 0 ? true : false;
 
 	      if (this.state.loading) {
 	        return _react2.default.createElement(
@@ -53848,7 +53913,7 @@
 	                                    _react2.default.createElement('em', { className: 'icon-grid' }),
 	                                    _react2.default.createElement(
 	                                        'span',
-	                                        { 'data-localize': 'sidebar.nav.FANS' },
+	                                        { 'data-localize': 'sidebar.nav.SUBSCRIBED' },
 	                                        'Subscribed'
 	                                    )
 	                                )
@@ -54603,7 +54668,8 @@
 	    var _this = _possibleConstructorReturn(this, (LoginOne.__proto__ || Object.getPrototypeOf(LoginOne)).call(this, props));
 
 	    _this.checkLoginState = _this.checkLoginState.bind(_this);
-
+	    _this.fbLogin = _this.fbLogin.bind(_this);
+	    _this.login_button_text = "login";
 	    if (_this.props.location.state != null) {
 	      console.log(_this.props.location.state.user.logged_out);
 
@@ -54612,7 +54678,8 @@
 	        login: '',
 	        registered: '',
 	        email: '',
-	        users: {}
+	        users: {},
+	        loginButton: true
 
 	      };
 	    } else {
@@ -54711,7 +54778,8 @@
 
 	            that.setState({
 
-	              login: true
+	              login: true,
+	              loading: false
 
 	            });
 	          })();
@@ -54720,7 +54788,8 @@
 	          // but has not authenticated your app
 	          that.setState({
 
-	            login: false
+	            login: false,
+	            loading: false
 
 	          });
 	          console.log('connected but not authorized' + uid);
@@ -54728,7 +54797,8 @@
 	          // the user isn't logged in to Facebook.
 	          that.setState({
 
-	            login: false
+	            login: false,
+	            loading: false
 	          });
 
 	          console.log('not logged on' + uid);
@@ -54852,9 +54922,6 @@
 	                var userRef = firebase.database().ref('users/' + event.authResponse.userID);
 	                ///check if new users
 	                try {
-	                  //  var wtf = this.isInDb(event.authResponse.userID, firebase.database().ref('users'), temp)
-
-
 	                  console.log("Therer aewr er ");
 	                  try {
 	                    var lclID = event.authResponse.userID;
@@ -54881,7 +54948,7 @@
 	                    //updateStarCount(postElement, snapshot.val());
 	                    var keys = Object.keys(snapshot.val());
 	                    var inDB = false;
-
+	                    var lclID = event.authResponse.userID;
 	                    keys.forEach(function (key) {
 	                      if (key === lclID) {
 	                        inDB = true;
@@ -54896,8 +54963,8 @@
 	                      console.log("WERER @#E eererr");
 	                      console.log(snapshot.val());
 	                      console.log(snapshot.val()[lclID]);
-	                      updates['/users/' + user_id + '/pages/'] = snapshot.val()[lclID]['pages'];
-	                      updates['/users/' + user_id + '/page_name_to_id/'] = snahpshot.val()[lclID]['page_name_to_id'];
+	                      updates['/users/' + lcl_id + '/pages/'] = snapshot.val()[lclID]['pages'];
+	                      updates['/users/' + lcl_id + '/page_name_to_id/'] = snahpshot.val()[lclID]['page_name_to_id'];
 
 	                      firebase.database().ref().update(updates).then(function (finish) {
 
@@ -54911,13 +54978,13 @@
 
 	                      console.log("WERER @#E erAER");
 	                      firebase.database().ref('users/' + event.authResponse.userID).set({
-	                        email: lclInput.email,
-	                        uid: lclInput.uid,
+	                        email: dddd.email,
+	                        uid: dddd.uid,
 	                        bot_connected: false,
-	                        credential: lclInput.credential,
-	                        pages: lclInput.pages,
-	                        page_name_to_id: lclInput.page_name_to_id,
-	                        messenger_token: lclInput.messenger_token,
+	                        credential: dddd.credential,
+	                        pages: dddd.pages,
+	                        page_name_to_id: dddd.page_name_to_id,
+	                        messenger_token: dddd.messenger_token,
 	                        struct_message: {
 	                          first: {
 	                            date_made: "",
@@ -54934,10 +55001,10 @@
 	                          }
 	                        }
 	                      }).then(function (finish) {
-	                        dddd.setState({
+	                        _this3.setState({
 
 	                          login: true,
-	                          users: lclInput
+	                          users: dddd
 	                        });
 	                      });
 	                    }
@@ -55021,158 +55088,146 @@
 	              console.log("hello  i hit this ");
 	              //  console.log(firebase_user.providerData[0].uid)
 
+
+	              //  var sdf = this.isInDb(event.authResponse.userID, firebase.database().ref('users'), temp)
+
+
+	              console.log("Therer aewr er ");
+	              console.log("Therer aewr er ");
 	              try {
-	                var userRef = firebase.database().ref('users/' + event.authResponse.userID);
-	                ///check if new users
-	                try {
-	                  var lclID;
-	                  var lclInput;
-	                  var dddd;
-
-	                  (function () {
-	                    //  var sdf = this.isInDb(event.authResponse.userID, firebase.database().ref('users'), temp)
-
-
-	                    console.log("Therer aewr er ");
-	                    console.log("Therer aewr er ");
-	                    try {
-	                      lclID = event.authResponse.userID;
-	                    } catch (error) {
-
-	                      console.log("Sfsaf aere r");
-	                    }
-
-	                    try {
-	                      lclInput = firebase.database().ref('users');
-	                    } catch (error) {
-	                      console.log("tere");
-	                    }
-
-	                    try {
-	                      dddd = temp;
-	                    } catch (error) {
-	                      console.log("terasefe e");
-	                    }
-	                    console.log("WERER @#E");
-
-	                    var local_this = _this3;
-	                    var local_pages = page_names;
-	                    var local_page_names = page_names_to_id;
-	                    var local_ID = lclID;
-
-	                    lclInput.once('value').then(function (snapshot) {
-	                      //updateStarCount(postElement, snapshot.val());
-	                      var keys = Object.keys(snapshot.val());
-	                      var inDB = false;
-
-	                      keys.forEach(function (key) {
-	                        if (key === local_ID) {
-	                          inDB = true;
-	                        }
-	                      });
-
-	                      if (inDB) {
-	                        //update pdnt know if this is the shit
-	                        //  const postData_three = "";
-
-	                        var updates = {};
-	                        console.log("WERER @#E eererr");
-	                        console.log(local_ID);
-	                        console.log(snapshot.val()[local_ID]);
-
-	                        try {
-	                          //  updates['/users/' + lclID + '/pages/'] = snapshot.val()[lclID]['pages'];
-	                          updates['/users/' + lclID + '/pages/'] = local_pages;
-	                        } catch (error) {
-	                          if (error.message) {
-	                            console.log("there was an error trying to catch this shit ser t4er" + error.message);
-	                          }
-	                        }
-
-	                        try {
-
-	                          //  updates['/users/' + lclID + '/page_name_to_id/'] =  snapshot.val()[lclID]['page_name_to_id'];
-
-	                          updates['/users/' + lclID + '/page_name_to_id/'] = local_page_names;
-	                        } catch (error) {
-	                          console.log("actually they erorry s qwed  ");
-	                        }
-	                        try {
-	                          firebase.database().ref().update(updates);
-	                        } catch (error) {
-	                          console.log("this is ane roror ");
-	                        }
-
-	                        //make users object
-
-	                        try {
-	                          var lcl_temp = { email: snapshot.val()[local_ID]['email'],
-	                            uid: snapshot.val()[local_ID]['uid'],
-	                            bot_connected: snapshot.val()[local_ID]['bot_connected'],
-	                            credential: snapshot.val()[local_ID]['credential'],
-	                            pages: local_pages,
-	                            page_name_to_id: local_page_names,
-	                            messenger_token: snapshot.val()[local_ID]['messenger_token']
-	                          };
-	                        } catch (error) {
-	                          console.log("error settinmg local temp");
-	                        }
-
-	                        try {
-	                          _this3.setState({
-	                            login: true,
-	                            users: lcl_temp
-	                          });
-	                        } catch (error) {
-	                          console.log(error.message);
-	                          console.log(_this3.state);
-	                          console.log("Tno sgi is actually ehre *()");
-	                        }
-	                      } else {
-	                        //set
-
-	                        console.log("WERER @#E erAER");
-	                        firebase.database().ref('users/' + event.authResponse.userID).set({
-	                          email: lclInput.email,
-	                          uid: lclInput.uid,
-	                          bot_connected: false,
-	                          credential: lclInput.credential,
-	                          pages: lclInput.pages,
-	                          page_name_to_id: lclInput.page_name_to_id,
-	                          messenger_token: lclInput.messenger_token,
-	                          struct_message: {
-	                            first: {
-	                              date_made: "",
-	                              date_sent: ""
-
-	                            }
-	                          },
-	                          segments: {
-	                            first: {
-	                              gender: 'B',
-	                              location: 'ALL',
-	                              age: 'ALL'
-
-	                            }
-	                          }
-	                        }).then(function (finish) {
-	                          dddd.setState({
-
-	                            login: true,
-	                            users: lclInput
-	                          });
-	                        });
-	                      }
-	                    });
-	                  })();
-	                } catch (error) {
-	                  console.log("there was tehr ewa fe");
-	                }
+	                var lclID = event.authResponse.userID;
 	              } catch (error) {
-	                console.log("There was an eror tryin to set user ref");
+
+	                console.log("Sfsaf aere r");
 	              }
+
+	              try {
+	                var lclInput = firebase.database().ref('users');
+	              } catch (error) {
+	                console.log("tere");
+	              }
+
+	              try {
+	                var dddd = temp;
+	              } catch (error) {
+	                console.log("terasefe e");
+	              }
+	              console.log("WERER @#E");
+
+	              var local_this = _this3;
+	              var local_pages = page_names;
+	              var local_page_names = page_names_to_id;
+	              var local_ID = lclID;
+
+	              lclInput.once('value').then(function (snapshot) {
+	                //updateStarCount(postElement, snapshot.val());
+	                var keys = Object.keys(snapshot.val());
+	                var inDB = false;
+
+	                keys.forEach(function (key) {
+	                  if (key === local_ID) {
+	                    inDB = true;
+	                  }
+	                });
+
+	                if (inDB) {
+	                  //update pdnt know if this is the shit
+	                  //  const postData_three = "";
+
+	                  var updates = {};
+	                  console.log("WERER @#E eererr");
+	                  console.log(local_ID);
+	                  console.log(snapshot.val()[local_ID]);
+
+	                  try {
+	                    //  updates['/users/' + lclID + '/pages/'] = snapshot.val()[lclID]['pages'];
+	                    updates['/users/' + lclID + '/pages/'] = local_pages;
+	                  } catch (error) {
+	                    if (error.message) {
+	                      console.log("there was an error trying to catch this shit ser t4er" + error.message);
+	                    }
+	                  }
+
+	                  try {
+
+	                    //  updates['/users/' + lclID + '/page_name_to_id/'] =  snapshot.val()[lclID]['page_name_to_id'];
+
+	                    updates['/users/' + lclID + '/page_name_to_id/'] = local_page_names;
+	                  } catch (error) {
+	                    console.log("actually they erorry s qwed  ");
+	                  }
+	                  try {
+	                    firebase.database().ref().update(updates);
+	                  } catch (error) {
+	                    console.log("this is ane roror ");
+	                  }
+
+	                  //make users object
+
+	                  try {
+	                    var lcl_temp = { email: snapshot.val()[local_ID]['email'],
+	                      uid: snapshot.val()[local_ID]['uid'],
+	                      bot_connected: snapshot.val()[local_ID]['bot_connected'],
+	                      credential: snapshot.val()[local_ID]['credential'],
+	                      pages: local_pages,
+	                      page_name_to_id: local_page_names,
+	                      messenger_token: snapshot.val()[local_ID]['messenger_token']
+	                    };
+	                  } catch (error) {
+	                    console.log("error settinmg local temp");
+	                  }
+
+	                  try {
+	                    _this3.setState({
+	                      login: true,
+	                      users: lcl_temp
+	                    });
+	                  } catch (error) {
+	                    console.log(error.message);
+	                    console.log(_this3.state);
+	                    console.log("Tno sgi is actually ehre *()");
+	                  }
+	                } else {
+	                  //set
+
+	                  console.log("WERER @#E erAER");
+	                  firebase.database().ref('users/' + event.authResponse.userID).set({
+	                    email: dddd.email,
+	                    uid: dddd.uid,
+	                    bot_connected: false,
+	                    credential: dddd.credential,
+	                    pages: dddd.pages,
+	                    page_name_to_id: dddd.page_name_to_id,
+	                    messenger_token: dddd.messenger_token,
+	                    struct_message: {
+	                      first: {
+	                        date_made: "",
+	                        date_sent: ""
+
+	                      }
+	                    },
+	                    segments: {
+	                      first: {
+	                        gender: 'B',
+	                        location: 'ALL',
+	                        age: 'ALL'
+
+	                      }
+	                    }
+	                  });
+	                  _this3.setState({
+
+	                    login: true,
+	                    users: dddd
+	                  });
+	                }
+	              });
+	              //close fb
 	            });
+	            //close if(!heck)
 	          }
+
+	          //close unsbuscebv
 	        });
 	      } else {
 	        // User is signed-out of Facebook.
@@ -55185,29 +55240,6 @@
 	        });
 	      }
 	    }
-
-	    //
-	    //                   var firebase_user = firebase.auth().currentUser;
-	    //
-	    //
-	    //                   var userRef = firebase.database().ref('users/' + firebase_user.providerData[0].uid);
-	    //
-	    //                   var that = this
-	    //
-	    //                   console.log("hello  i hit this ")
-	    //                   console.log(firebase_user.providerData[0].uid)
-	    //                   userRef.on('value', function(snapshot) {
-	    //                     //updateStarCount(postElement, snapshot.val());
-	    //                       console.log("about to be in this shit sat")
-	    //                       console.log(snapshot.val())
-	    //                       if (snapshot.val() != null) {
-	    //
-	    //                             this.setState ( { user: snapshot.val() } )
-	    //
-	    //
-	    //                       }
-	    //                   });
-
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps, prevState) {
@@ -55240,33 +55272,31 @@
 	      }
 	    }
 	  }, {
+	    key: 'fbLogin',
+	    value: function fbLogin() {
+	      var _this4 = this;
+
+	      FB.login(function (response) {
+	        _this4.state({
+	          loginButton: false
+
+	        });
+	        console.log("fb login shit");
+	      }, { scope: 'public_profile,email, manage_pages, publish_pages', return_scopes: true });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var cButton = _react2.default.createElement('p', null);
+	      if (this.state.loginButton) {
+	        cButton = _react2.default.createElement(
+	          _reactBootstrap.Button,
+	          { bsStyle: 'primary', bsSize: 'large', onClick: this.fbLogin },
+	          'Login'
+	        );
+	      }
 
-	      if (
-
-	      // if (this.state.loading) {
-	      //
-	      // }
-
-	      // if (this.state.login ===true && this.state.registered === true) {
-	      //
-	      //           var  a = Object.keys(this.state.users)
-	      //
-	      //
-	      //             if(a.length > 0) {
-	      //
-	      //                     const path = {
-	      //                         pathname: '/home',
-	      //                         state: { user: this.state.users }
-	      //                       }
-	      //             this.context.router.push(path)
-	      //           }
-	      //
-	      //
-	      //
-	      // }
-	      !this.state.loading) {
+	      if (!this.state.loading) {
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'block-center mt-xl wd-xl' },
@@ -55290,16 +55320,11 @@
 	                { className: 'text-center pv' },
 	                'SIGN IN TO CONTINUE.'
 	              ),
-	              _react2.default.createElement(_Login2.default, null),
+	              cButton,
 	              _react2.default.createElement(
 	                'p',
 	                { className: 'pt-lg text-center' },
-	                'Need to Bot?'
-	              ),
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'www.brainitch.com', className: 'btn btn-block btn-default' },
-	                'Go Get One!'
+	                '👍'
 	              )
 	            )
 	          )
@@ -55425,7 +55450,7 @@
 	        value: function getSelected(eventKey, a) {
 
 	            var that = this.state;
-
+	            console.log(eventKey);
 	            this.setState({
 
 	                select: eventKey
@@ -55438,7 +55463,7 @@
 	            var _this2 = this;
 
 	            var user_id = firebase.auth().currentUser.providerData[0].uid;
-	            var url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token=" + this.props.user.messenger_token;
+	            var url_delete = "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" + this.props.user.messenger_token;
 
 	            fetch(url_delete, {
 	                method: 'DELETE'
@@ -55548,7 +55573,7 @@
 	            // xhttp.send();
 
 
-	            var url_post = "https://graph.facebook.com/v2.8/me/subscribed_apps?access_token=" + this.state.pages[this.state.select];
+	            var url_post = "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" + this.state.pages[this.state.select];
 
 	            fetch(url_post, {
 	                method: 'POST'
@@ -55872,20 +55897,32 @@
 	        var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
 
 	        usersRef.once('value').then(function (snapshot) {
-	          console.log(snapshot.val());
-	          var user_array = Object.keys(snapshot.val());
-	          var user_dict = {};
-	          user_array.forEach(function (key) {
-	            if (snapshot.val()[key]['subscribed'] === true) {
-	              user_dict[key] = snapshot.val()[key];
-	            }
-	          });
 
-	          _this2.setState({
-	            user_dict: user_dict,
-	            loading: false
+	          if (snapshot.val() !== null && snapshot.val() !== "undefined") {
+	            (function () {
+	              console.log(snapshot.val());
+	              var array_temp = [];
+	              //const user_array = Object.keys(snapshot.val()) ? Object.keys(snapshot.val()):array_temp
+	              var user_dict = {};
+	              user_array.forEach(function (key) {
+	                if (snapshot.val()[key]['subscribed'] === true) {
+	                  user_dict[key] = snapshot.val()[key];
+	                }
+	              });
 
-	          });
+	              _this2.setState({
+	                user_dict: user_dict,
+	                loading: false
+
+	              });
+	            })();
+	          } else {
+
+	            _this2.setState({
+	              loading: false
+
+	            });
+	          }
 	        });
 	      } else {
 	        this.loading_bar = 100;
@@ -56083,6 +56120,21 @@
 	          b,
 	          c = this.getTimeInfo();
 	      this.props.func_time(a, b, c);
+
+	      if (this.state.value === "T") {
+	        //add 24 jhrs
+	        var currentDate = new Date();
+	        currentDate.setDate(currentDate.getDate() + 1);
+	        //  console.log(Math.floor(currentDate/1000))
+	        currentDate.setDate(currentDate.getDate() + 6);
+	        console.log(Math.floor(currentDate / 1000));
+	        currentDate.setDate(currentDate.getDate() + 24);
+	        console.log(Math.floor(currentDate / 1000));
+	      }
+
+	      if (this.state.value === "M") {}
+
+	      if (this.state.value === "W") {}
 	    }
 	  }, {
 	    key: 'getValidationState',
@@ -56113,7 +56165,7 @@
 	          _react2.default.createElement(
 	            _HelpBlock2.default,
 	            null,
-	            'Validation is based on string length.'
+	            'Messages are sent 8:00 am your time'
 	          ),
 	          _react2.default.createElement(
 	            _FormGroup2.default,
@@ -56128,82 +56180,18 @@
 	              { componentClass: 'select', placeholder: 'Choose A Time', value: this.state.select_value, onChange: this.handleSelect },
 	              _react2.default.createElement(
 	                'option',
-	                { value: '1' },
-	                '1:00'
+	                { value: 'T' },
+	                'Tomorrow'
 	              ),
 	              _react2.default.createElement(
 	                'option',
-	                { value: '2' },
-	                '2:00'
+	                { value: 'W' },
+	                'Next Week'
 	              ),
 	              _react2.default.createElement(
 	                'option',
-	                { value: '3' },
-	                '3:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '4' },
-	                '4:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '5' },
-	                '5:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '6' },
-	                '6:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '7' },
-	                '7:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '8' },
-	                '8:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '9' },
-	                '9:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '10' },
-	                '10:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '11' },
-	                '11:00'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '12' },
-	                '12:00'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _ControlLabel2.default,
-	              null,
-	              'AM/PM'
-	            ),
-	            _react2.default.createElement(
-	              _FormControl2.default,
-	              { componentClass: 'select', placeholder: 'Choose A Time', value: this.state.select_value, onChange: this.handleSelectA },
-	              _react2.default.createElement(
-	                'option',
-	                { value: 'PM' },
-	                'PM'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: 'AM' },
-	                'AM'
+	                { value: 'M' },
+	                'Next Month'
 	              )
 	            )
 	          ),
@@ -56535,7 +56523,7 @@
 	    var _this = _possibleConstructorReturn(this, (FormStandard.__proto__ || Object.getPrototypeOf(FormStandard)).call(this, props));
 
 	    console.log("in this short");
-	    _this.state = { preview: false, value: '', select_value: '', title_value: '', sub_value: '', image_value: '', button_one_title_value: '', button_one_url_value: '', button_two_title_value: '', button_two_url_value: '', button_three_title_value: '', button_three_url_value: '' };
+	    _this.state = { preview: false, value: '', select_value: '1', title_value: '', sub_value: '', image_value: '', button_one_title_value: '', button_one_url_value: '', button_two_title_value: '', button_two_url_value: '', button_three_title_value: '', button_three_url_value: '' };
 	    _this.getValidationState = _this.getValidationState.bind(_this);
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.handleSelect = _this.handleSelect.bind(_this);
@@ -57509,13 +57497,19 @@
 	        //   const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
 	        var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/").orderByChild('messages_sent');
 	        usersRef.once('value').then(function (snapshot) {
-	          console.log(snapshot.val());
+	          if (snapshot.val() !== null && snapshot.val() !== "undefined") {
 
-	          _this2.setState({
-	            user_dict: snapshot.val(),
-	            loading: false
+	            _this2.setState({
+	              user_dict: snapshot.val(),
+	              loading: false
 
-	          });
+	            });
+	          } else {
+
+	            _this2.setState({
+	              loading: false
+	            });
+	          }
 	        });
 	      } else {
 	        this.loading_bar = 100;
@@ -57540,6 +57534,7 @@
 	    key: 'render',
 	    value: function render() {
 	      //get the users who are connected
+
 	      var is_user_loaded = Object.keys(this.state.user_dict) ? true : false;
 
 	      if (this.state.loading) {
@@ -57571,7 +57566,7 @@
 	            return _react2.default.createElement(
 	              _ContentWrapper2.default,
 	              null,
-	              _react2.default.createElement(_TableTest2.default, { users: this.state.user_dict, titles: topFive })
+	              _react2.default.createElement(_TableTest2.default, { users: this.state.user_dict, top: true })
 	            );
 	          }
 	        } else {

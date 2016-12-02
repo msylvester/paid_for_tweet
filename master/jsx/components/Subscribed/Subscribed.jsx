@@ -29,8 +29,12 @@
          const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
 
         usersRef.once('value').then((snapshot) => {
+
+
+          if(snapshot.val()!== null && snapshot.val() !== "undefined") {
           console.log(snapshot.val())
-                    const user_array = Object.keys(snapshot.val())
+          const array_temp = []
+  //const user_array = Object.keys(snapshot.val()) ? Object.keys(snapshot.val()):array_temp
                     let user_dict = {}
                     user_array.forEach(key=> {
                           if(snapshot.val()[key]['subscribed'] === true) {
@@ -45,6 +49,16 @@
                         loading:false
 
                     })
+
+                  }
+                  else {
+
+                    this.setState({
+                      loading:false
+
+                    })
+                  }
+
               })
 
 

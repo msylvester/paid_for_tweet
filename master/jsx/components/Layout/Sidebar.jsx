@@ -126,7 +126,7 @@ class Sidebar extends React.Component {
                             <li className={ this.routeActive('subscribed') ? 'active' : '' }>
                                 <Link to="subscribed" title="Subscribed">
                                 <em className="icon-grid"></em>
-                                <span data-localize="sidebar.nav.FANS">Subscribed</span>
+                                <span data-localize="sidebar.nav.SUBSCRIBED">Subscribed</span>
                                 </Link>
                             </li>
 

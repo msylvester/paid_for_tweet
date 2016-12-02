@@ -1,0 +1,324 @@
+<!doctype html>  
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	
+	<title>HansWebAPP v1.0  - adding HansVenue FB Bot to FB Page</title>
+	
+	<meta name="description" content="he HansWeb App allows users to connect HansVenue FB Messenger App to FB pages the user is an admin of.  In addition, the user can send targeted messages from the view app and get information regarding users of the bot assigned to their FB page.">
+	<meta name="author" content="Abstract Software Design, LLC">
+	<meta name="copyright" content="Abstract Software Design, LLC">
+	<meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
+	<meta name="date" content="2016-12-01T00:00:00+01:00">
+	
+	<link rel="stylesheet" href="assets/css/documenter_style.css" media="all">
+	
+	
+	
+	<script src="assets/js/jquery.js"></script>
+	
+	<script src="assets/js/jquery.scrollTo.js"></script>
+	<script src="assets/js/jquery.easing.js"></script>
+	
+	<script>document.createElement('section');var duration='500',easing='swing';</script>
+	<script src="assets/js/script.js"></script>
+	
+	<style>
+		html{background-color:#EEEEEE;color:#383838;}
+		::-moz-selection{background:#333636;color:#00DFFC;}
+		::selection{background:#333636;color:#00DFFC;}
+		#documenter_sidebar #documenter_logo{background-image:url();}
+		a{color:#008C9E;}
+		.btn {
+			border-radius:3px;
+		}
+		.btn-primary {
+			  background-image: -moz-linear-gradient(top, #008C9E, #006673);
+			  background-image: -ms-linear-gradient(top, #008C9E, #006673);
+			  background-image: -webkit-gradient(linear, 0 0, 0 008C9E%, from(#343838), to(#006673));
+			  background-image: -webkit-linear-gradient(top, #008C9E, #006673);
+			  background-image: -o-linear-gradient(top, #008C9E, #006673);
+			  background-image: linear-gradient(top, #008C9E, #006673);
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#008C9E', endColorstr='#006673', GradientType=0);
+			  border-color: #006673 #006673 #bfbfbf;
+			  color:#FFFFFF;
+		}
+		.btn-primary:hover,
+		.btn-primary:active,
+		.btn-primary.active,
+		.btn-primary.disabled,
+		.btn-primary[disabled] {
+		  border-color: #008C9E #008C9E #bfbfbf;
+		  background-color: #006673;
+		}
+		hr{border-top:1px solid #D4D4D4;border-bottom:1px solid #FFFFFF;}
+		#documenter_sidebar, #documenter_sidebar ul a{background-color:#343838;color:#FFFFFF;}
+		#documenter_sidebar ul a{-webkit-text-shadow:1px 1px 0px #494F4F;-moz-text-shadow:1px 1px 0px #494F4F;text-shadow:1px 1px 0px #494F4F;}
+		#documenter_sidebar ul{border-top:1px solid #212424;}
+		#documenter_sidebar ul a{border-top:1px solid #494F4F;border-bottom:1px solid #212424;color:#FFFFFF;}
+		#documenter_sidebar ul a:hover{background:#333636;color:#00DFFC;border-top:1px solid #333636;}
+		#documenter_sidebar ul a.current{background:#333636;color:#00DFFC;border-top:1px solid #333636;}
+		#documenter_copyright{display:block !important;visibility:visible !important;}
+	</style>
+	
+</head>
+<body class="documenter-project-hanswebapp-v10-">
+	<div id="documenter_sidebar">
+		<a href="#documenter_cover" id="documenter_logo"></a>
+		<ul id="documenter_nav">
+			<li><a class="current" href="#documenter_cover">Start</a></li>
+				
+			<li><a href="#overview" title="Overview">Overview</a></li>
+			<li><a href="#structure" title="Structure">Structure</a></li>
+			<li><a href="#main_folders_explained" title="Main Folders Explained">Main Folders Explained</a></li>
+			<li><a href="#build" title="Build">Build</a></li>
+			<li><a href="#main_gulp_tasks" title="Main Gulp Tasks">Main Gulp Tasks</a></li>
+			<li><a href="#webpack_and_react_hot_loader" title="Webpack and React Hot Loader">Webpack and React Hot Loader</a></li>
+
+		</ul>
+		<div id="documenter_copyright">Copyright Abstract Software Design, LLC 2016<br>
+		made with the <a href="http://rxa.li/documenter">Documenter v2.0</a> 
+		</div>
+	</div>
+	<div id="documenter_content">
+	<section id="documenter_cover">
+	<h1>HansWebAPP v1.0 </h1>
+	<h2>adding HansVenue FB Bot to FB Page</h2>
+	<div id="documenter_buttons">
+		
+	</div>
+	<hr>
+	<ul>
+	<li>created: 12/1/2016</li>
+	<li>latest update: 12/01/2016</li>
+	<li>by: Abstract Software Design, LLC</li>
+	
+	<li>email: <a href="mailto:&#109;&#105;&#107;&#101;&#64;&#97;&#98;&#115;&#116;&#114;&#97;&#99;&#116;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">&#109;&#105;&#107;&#101;&#64;&#97;&#98;&#115;&#116;&#114;&#97;&#99;&#116;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;</a></li>
+	</ul>
+	<p></p>
+	</section>
+	
+	<section id="overview">
+	<div class="page-header"><h3>Overview</h3><hr class="notop"></div>
+<p>
+	Public URL:<span style="font-family: Helvetica;">&nbsp;</span><a href="https://hansweb-beac1.firebaseapp.com" style="font-family: Helvetica;">https://hansweb-beac1.firebaseapp.com</a></p>
+<p>
+	Firebase DB:&nbsp;<span style="background-color: rgb(245, 245, 245); color: rgba(0, 0, 0, 0.541176); font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif; font-size: 14px; letter-spacing: 0.07px; white-space: nowrap;">https://hansweb-beac1.firebaseio.com/</span></p>
+<p>
+	FB Messenger App ID:<span style="color: rgb(75, 79, 86); font-family: &quot;helvetica neue&quot;, helvetica, arial, &quot;lucida grande&quot;, sans-serif; font-size: 14px;">&nbsp;</span></p>
+<div class="_xd7" style="display: inline-block; position: relative;">
+	<span class="_3sgu" style="color: rgb(75, 79, 86); font-family: &quot;helvetica neue&quot;, helvetica, arial, &quot;lucida grande&quot;, sans-serif; font-size: 14px;"><a href="https://developers.facebook.com/apps/1754356628111030/messenger/#" id="u_0_j" role="button" style="color: rgb(75, 79, 86); cursor: pointer; text-decoration: none; line-height: 18px;"><span class="_xd6" data-hover="tooltip" data-pitloot-persistonclick="true" data-reactroot="" data-tooltip-content="Click to Copy" display="inline" id="js_h" label="1754356628111030" style="overflow: hidden; position: relative;" type="string" value="1754356628111030">1754356628111030</span></a></span></div>
+<p>
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+<style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}</style>
+<div>
+	&nbsp;</div>
+<div>
+	&nbsp;</div>
+</section>
+<section id="structure">
+	<div class="page-header"><h3>Structure</h3><hr class="notop"></div>
+<div class="page-header" style="padding-bottom: 9px; margin: 20px 0px 30px; border: 0px; color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	<h3 style="margin: 2em 0px 10px; font-family: inherit; line-height: 1.2em; text-rendering: optimizeLegibility; font-size: 2em; padding: 0px; clear: both;">
+		&nbsp;</h3>
+</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	+---dist</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	+---master</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; +---img</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; +---jsx</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; +---components</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Targeted</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Charts</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Common</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Fans</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Forms</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Home</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Layout</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Login</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Logout</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---NewFans</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Pages</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---SingleView</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---Subscribed</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; | &nbsp; +---TableTest</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +---TopUsers</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; +---App.jsx</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; |</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; +---sass</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; +---app</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; +---bootstrap</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; +---themes</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; +---server</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; | &nbsp; &nbsp;+---i18n</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	| &nbsp; +---index.html</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	|</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	+---bower_components</div>
+<div style="color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">
+	+---node_modules&lt;/pre&gt;</div>
+</section>
+<section id="main_folders_explained">
+	<div class="page-header"><h3>Main Folders Explained</h3><hr class="notop"></div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">dist/ folder</span></div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	This folder contains the compiled files.</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">master/ folder</span></div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	This folder contains the source files. You will find the following folders inside</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">sass</span>/ This folder contains the SCSS files for the core styles and bootstrap styles.</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">jsx</span>/ Here you will find JSX files for React components. All this files are concatenated into the file&nbsp;<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">app.bundle.js</span>.</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">img</span>/ Images used in the copy (only copied to dist folder)</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">server</span>/ Contains json files used to emulate server calls</div>
+</section>
+<section id="build">
+	<div class="page-header"><h3>Build</h3><hr class="notop"></div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">Node</span>.js is a platform built on Chrome&rsquo;s JavaScript runtime for easily building fast, scalable network applications.</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">Gulp&nbsp;</span>is a task manager, you can define different tasks to run certain commands. Those commands does the compilation job for JSX and SASS files</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">Bower&nbsp;</span>is a dependency manager, it works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you&rsquo;re looking for. Bower keeps track of these packages in a manifest file, bower.json.</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	The package includes under the master/ folder the file gulpfile.js, package.json and bower.json to install the required components to compile the source files.</div>
+<div>
+	&nbsp;</div>
+<p>
+	&gt;Installing tools</p>
+<div style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<ul style="padding-right: 0px; padding-left: 0px; margin: 18px 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; line-height: 1.5em; color: rgb(101, 101, 101);">
+	<li style="line-height: 20px; margin: 0px 0px 0px 36px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: square;">
+		To install node and npm, go to http://nodejs.org/</li>
+	<li style="line-height: 20px; margin: 0px 0px 0px 36px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: square;">
+		Run npm install -g bower to install bower to manage dependencies</li>
+	<li style="line-height: 20px; margin: 0px 0px 0px 36px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: square;">
+		Download and install GIT for your platform http://git-scm.com/downloads</li>
+</ul>
+<div style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<div style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">Once you have all tools installed</span></div>
+<div style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<ul style="padding-right: 0px; padding-left: 0px; margin: 18px 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; line-height: 1.5em; color: rgb(101, 101, 101);">
+	<li style="line-height: 20px; margin: 0px 0px 0px 36px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: square;">
+		Open a terminal, in the root folder, run the command&nbsp;<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">npm install</span>. This command will install gulp and all project dependencies.</li>
+	<li style="line-height: 20px; margin: 0px 0px 0px 36px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: square;">
+		Then, to install vendor dependencies, run&nbsp;<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">bower install</span></li>
+	<li style="line-height: 20px; margin: 0px 0px 0px 36px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: square;">
+		Finally run&nbsp;<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">gulp</span>&nbsp;to start the task manager (see below for more information)</li>
+</ul>
+<div style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	If everything goes fine, you should see the messages in the terminal telling you that most the task are done ok. The task will watch for files to compile them automatically all files when change</div>
+<section id="main_folders_explanation" style="margin-top: 300px; color: rgb(88, 88, 88); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px;">
+	<div class="page-header" style="padding-bottom: 9px; margin: 20px 0px 30px; border: 0px;">
+		&nbsp;</div>
+</section>
+<p>
+	&nbsp;</p>
+</section>
+<section id="main_gulp_tasks">
+	<div class="page-header"><h3>Main Gulp Tasks</h3><hr class="notop"></div>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<ol class="linenums" style="padding-right: 0px; padding-left: 0px; margin: 0px 0px 0px 33px; color: rgb(88, 88, 88); font-family: inherit; font-size: 14px; font-style: inherit; font-weight: inherit; background-color: rgb(243, 243, 243); border: 0px; outline: 0px; vertical-align: baseline; line-height: 1.5em;">
+	<li class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+		<span class="pln" style="color: rgb(72, 72, 76); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">$ gulp</span></li>
+</ol>
+<p class="L0" style="line-height: 18px; padding-left: 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px;">
+	<span class="pln" style="color: rgb(72, 72, 76);">&nbsp;</span><span style="color: rgb(101, 101, 101); font-family: Arial, verdana, arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">This command will run the default task without minify assets</span><span style="color: rgb(72, 72, 76);">&nbsp;</span></p>
+<p class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+	<span class="pln" style="color: rgb(72, 72, 76); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">2. &nbsp;$ gulp serve</span></p>
+<p class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+	<span style="background-color: rgb(243, 243, 243); color: rgb(101, 101, 101); font-family: Arial, verdana, arial, sans-serif; font-size: 14px;">This taks will start the app with a server in your favourite browser</span></p>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<p class="L0" style="line-height: 18px; padding-left: 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px;">
+	&nbsp;</p>
+<p class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+	<span class="pln" style="color: rgb(72, 72, 76); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">3, &nbsp; $ gulp serve&nbsp;</span><span class="pun" style="color: rgb(147, 161, 161); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">--</span><span class="pln" style="color: rgb(72, 72, 76); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">prod</span></p>
+<p class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+	<span style="background-color: rgb(243, 243, 243); color: rgb(101, 101, 101); font-family: Arial, verdana, arial, sans-serif; font-size: 14px;">This taks will start the app with a server in your favourite browser in production mode</span></p>
+<div style="font-size: 14px; background-color: rgb(243, 243, 243); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; color: rgb(101, 101, 101);">
+	&nbsp;</div>
+<p class="L0" style="line-height: 18px; padding-left: 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px;">
+	<span class="pln" style="color: rgb(72, 72, 76);">&nbsp;</span></p>
+<p class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+	<span class="pln" style="color: rgb(72, 72, 76); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">4. $ gulp build&nbsp;</span><span class="pun" style="color: rgb(147, 161, 161); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">--</span><span class="pln" style="color: rgb(72, 72, 76); margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline;">prod</span></p>
+<p class="L0" style="line-height: 18px; padding: 0px 0px 0px 12px; color: rgb(190, 190, 197); text-shadow: rgb(255, 255, 255) 0px 1px 0px; margin: 0px 0px 0px 36px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; list-style: decimal;">
+	<span style="color: rgb(101, 101, 101); font-family: Arial, verdana, arial, sans-serif; font-size: 14px; background-color: rgb(243, 243, 243);">This taks will generate the asset minified (without watch)</span></p>
+</section>
+<section id="webpack_and_react_hot_loader">
+	<div class="page-header"><h3>Webpack and React Hot Loader</h3><hr class="notop"></div>
+<p style="margin: 18px 0px; font-size: 14px; background-color: rgb(243, 243, 243); padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; line-height: 1.5em; color: rgb(101, 101, 101);">
+	Internally, the application is built using&nbsp;<a href="https://webpack.github.io/" style="color: rgb(49, 188, 231); text-decoration: none; margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit; font-style: inherit; font-family: inherit; vertical-align: baseline; cursor: pointer;">WebPack&nbsp;</a>which is a tool that analyze the code and builds a script ready for web browsers.</p>
+<p style="margin: 18px 0px; font-size: 14px; background-color: rgb(243, 243, 243); padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; line-height: 1.5em; color: rgb(101, 101, 101);">
+	The configuration of webpack is included in files&nbsp;<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">webpack.config.dev.js</span>&nbsp;and&nbsp;<span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: 700; font-style: inherit; font-family: inherit; vertical-align: baseline;">webpack.config.prod.js</span>&nbsp;for each environment respectively.</p>
+<p style="margin: 18px 0px; font-size: 14px; background-color: rgb(243, 243, 243); padding: 0px; border: 0px; outline: 0px; font-family: Arial, verdana, arial, sans-serif; vertical-align: baseline; line-height: 1.5em; color: rgb(101, 101, 101);">
+	For development stage, gulp will enable a webpack plugin called react-hot-loader which allows to reload components easily without waiting to recompile the entire app.</p>
+<div>
+	&nbsp;</div>
+</section>
+
+	</div>
+</body>
+</html>

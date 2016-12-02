@@ -55,7 +55,7 @@ if (top) {
 
 
 
-                    <td><a href="" className="mr-sm label label-success">this.props.users[user]['messages_sent']</a>
+                    <td><a href="" className="mr-sm label label-success">{this.props.users[user].messages_sent}</a>
                     </td>
                 </tr>
                   )})

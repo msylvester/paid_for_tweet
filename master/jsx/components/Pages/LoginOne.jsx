@@ -13,8 +13,8 @@ class LoginOne extends React.Component {
       super(props)
 
       this.checkLoginState = this.checkLoginState.bind(this);
-
-
+      this.fbLogin = this.fbLogin.bind(this)
+      this.login_button_text = "login"
       if (this.props.location.state != null)   {
         console.log(this.props.location.state.user.logged_out)
 
@@ -23,7 +23,8 @@ class LoginOne extends React.Component {
           login: '',
           registered: '',
           email: '',
-          users: {}
+          users: {},
+          loginButton: true
 
         }
 
@@ -111,7 +112,8 @@ componentDidMount() {
 
               that.setState(  {
 
-                login: true
+                login: true,
+                loading:false
 
 
               })
@@ -121,7 +123,8 @@ componentDidMount() {
               // but has not authenticated your app
               that.setState(  {
 
-                login: false
+                login: false,
+                loading:false
 
 
               })
@@ -130,7 +133,8 @@ componentDidMount() {
               // the user isn't logged in to Facebook.
               that.setState (  {
 
-                  login: false
+                  login: false,
+                  loading: false
               }
 
 
@@ -271,35 +275,30 @@ componentDidMount() {
                           try {
                               var userRef = firebase.database().ref('users/' + event.authResponse.userID);
                               ///check if new users
-                              try {
-                            //  var wtf = this.isInDb(event.authResponse.userID, firebase.database().ref('users'), temp)
+                                try {
+                  console.log("Therer aewr er ")
+                                      try {
+                                        var lclID = event.authResponse.userID
+                                      }
+                                      catch (eroor) {
 
+                                        console.log("Sfsaf aere r")
 
+                                      }
 
+                                      try {
+                                        var lclInput = firebase.database().ref('users')
+                                      }
+                                      catch (error) {
+                                        console.log("tere")
+                                      }
 
-                                                    console.log("Therer aewr er ")
-                                                  try {
-                                                    var lclID = event.authResponse.userID
-                                                  }
-                                                  catch (eroor) {
-
-                                                    console.log("Sfsaf aere r")
-
-                                                  }
-
-                                                  try {
-                                                    var lclInput = firebase.database().ref('users')
-                                                  }
-                                                  catch (error) {
-                                                    console.log("tere")
-                                                  }
-
-                                                  try {
-                                                          var dddd = temp
-                                                  }
-                                                  catch (error) {
-                                                  console.log("terasefe e")
-                                                  }
+                                      try {
+                                              var dddd = temp
+                                      }
+                                      catch (error) {
+                                      console.log("terasefe e")
+                                      }
 
 
 
@@ -309,7 +308,7 @@ componentDidMount() {
                                                     //updateStarCount(postElement, snapshot.val());
                                                       var keys = Object.keys(snapshot.val())
                                                       var inDB = false
-
+                                                      var lclID = event.authResponse.userID
                                                       keys.forEach((key) => {
                                                           if (key === lclID) {
                                                             inDB = true
@@ -325,8 +324,8 @@ componentDidMount() {
                                                     console.log("WERER @#E eererr")
                                                       console.log(snapshot.val())
                                                       console.log(snapshot.val()[lclID])
-                                                        updates['/users/' + user_id + '/pages/']=  snapshot.val()[lclID]['pages'];
-                                                        updates['/users/' + user_id + '/page_name_to_id/']=  snahpshot.val()[lclID]['page_name_to_id'];
+                                                        updates['/users/' + lcl_id + '/pages/']=  snapshot.val()[lclID]['pages'];
+                                                        updates['/users/' + lcl_id + '/page_name_to_id/']=  snahpshot.val()[lclID]['page_name_to_id'];
 
 
                                                         firebase.database().ref().update(updates).then((finish) => {
@@ -343,13 +342,13 @@ componentDidMount() {
 
                                                         console.log("WERER @#E erAER")
                                                         firebase.database().ref('users/' + event.authResponse.userID).set({
-                                                            email: lclInput.email,
-                                                            uid:lclInput.uid,
+                                                            email: dddd.email,
+                                                            uid:dddd.uid,
                                                             bot_connected:false,
-                                                            credential:lclInput.credential,
-                                                            pages:  lclInput.pages,
-                                                            page_name_to_id: lclInput.page_name_to_id,
-                                                            messenger_token: lclInput.messenger_token,
+                                                            credential:dddd.credential,
+                                                            pages:  dddd.pages,
+                                                            page_name_to_id: dddd.page_name_to_id,
+                                                            messenger_token: dddd.messenger_token,
                                                             struct_message:  {
                                                                    first:  {
                                                                        date_made:"",
@@ -366,10 +365,10 @@ componentDidMount() {
                                                                }
                                                              }
                                                            }).then((finish) => {
-                                                           dddd.setState (  {
+                                                           this.setState (  {
 
                                                              login: true,
-                                                             users: lclInput
+                                                             users:dddd
                                                            })
 
                                                           })
@@ -381,33 +380,6 @@ componentDidMount() {
                                                       }
 
                                                     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                               }
@@ -504,10 +476,7 @@ componentDidMount() {
                     console.log("hello  i hit this ")
                   //  console.log(firebase_user.providerData[0].uid)
 
-                      try {
-                          var userRef = firebase.database().ref('users/' + event.authResponse.userID);
-                        ///check if new users
-                        try {
+
                       //  var sdf = this.isInDb(event.authResponse.userID, firebase.database().ref('users'), temp)
 
 
@@ -629,13 +598,13 @@ componentDidMount() {
 
                           console.log("WERER @#E erAER")
                           firebase.database().ref('users/' + event.authResponse.userID).set({
-                              email: lclInput.email,
-                              uid:lclInput.uid,
+                              email: dddd.email,
+                              uid:dddd.uid,
                               bot_connected:false,
-                              credential:lclInput.credential,
-                              pages:  lclInput.pages,
-                              page_name_to_id: lclInput.page_name_to_id,
-                              messenger_token: lclInput.messenger_token,
+                              credential:dddd.credential,
+                              pages:  dddd.pages,
+                              page_name_to_id: dddd.page_name_to_id,
+                              messenger_token: dddd.messenger_token,
                               struct_message:  {
                                      first:  {
                                          date_made:"",
@@ -651,38 +620,28 @@ componentDidMount() {
 
                                  }
                                }
-                             }).then((finish) => {
-                             dddd.setState (  {
+                             })
+                             this.setState (  {
 
                                login: true,
-                               users: lclInput
+                               users: dddd
                              })
 
-                            })
 
+                           }
 
-
-
-
+                         })
+                         //close fb
+                       })
+//close if(!heck)
                         }
 
-                      })
-                      }
-                    catch(error) {
-                      console.log("there was tehr ewa fe")
-                    }
-
-                  }
-                  catch(error) {
-                    console.log("There was an eror tryin to set user ref")
-
-                  }
-
+//close unsbuscebv
               })
-       }
 
-     })
-   }
+
+     }
+
 
 
 
@@ -703,29 +662,6 @@ componentDidMount() {
     }
 
     }
-
-
-    //
-    //                   var firebase_user = firebase.auth().currentUser;
-    //
-    //
-    //                   var userRef = firebase.database().ref('users/' + firebase_user.providerData[0].uid);
-    //
-    //                   var that = this
-    //
-    //                   console.log("hello  i hit this ")
-    //                   console.log(firebase_user.providerData[0].uid)
-    //                   userRef.on('value', function(snapshot) {
-    //                     //updateStarCount(postElement, snapshot.val());
-    //                       console.log("about to be in this shit sat")
-    //                       console.log(snapshot.val())
-    //                       if (snapshot.val() != null) {
-    //
-    //                             this.setState ( { user: snapshot.val() } )
-    //
-    //
-    //                       }
-    //                   });
 
     componentDidUpdate(prevProps, prevState) {
 
@@ -765,59 +701,45 @@ componentDidMount() {
       }
 
     }
+fbLogin() {
+    FB.login((response) => {
+        this.state({
+          loginButton:false
 
-    render() {
+        })
+      console.log("fb login shit")
+    }, {scope: 'public_profile,email, manage_pages, publish_pages', return_scopes:true});
+}
+  render() {
+    var cButton = <p></p>
+    if (this.state.loginButton) {
+       cButton = <Button bsStyle="primary" bsSize="large" onClick={this.fbLogin}>Login</Button>
+     }
 
-
-
-      // if (this.state.loading) {
-      //
-      // }
-
-      // if (this.state.login ===true && this.state.registered === true) {
-      //
-      //           var  a = Object.keys(this.state.users)
-      //
-      //
-      //             if(a.length > 0) {
-      //
-      //                     const path = {
-      //                         pathname: '/home',
-      //                         state: { user: this.state.users }
-      //                       }
-      //             this.context.router.push(path)
-      //           }
-      //
-      //
-      //
-      // }
 
   if (!this.state.loading) {
         return (
+                    <div className="block-center mt-xl wd-xl">
+                         { /* START panel */ }
+                         <div className="panel panel-dark panel-flat">
+                             <div className="panel-heading text-center">
+                                 <a href="#">
+                                     <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
+                                 </a>
+                             </div>
+                             <div className="panel-body">
+                                 <p className="text-center pv">SIGN IN TO CONTINUE.</p>
 
-//
-          <div className="block-center mt-xl wd-xl">
-               { /* START panel */ }
-               <div className="panel panel-dark panel-flat">
-                   <div className="panel-heading text-center">
-                       <a href="#">
-                           <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
-                       </a>
-                   </div>
-                   <div className="panel-body">
-                       <p className="text-center pv">SIGN IN TO CONTINUE.</p>
-                       <Login/>
+                                {cButton}
+                               <p className="pt-lg text-center">👍</p>
 
-                       <p className="pt-lg text-center">Need to Bot?</p><a href="www.brainitch.com" className="btn btn-block btn-default">Go Get One!</a>
-
-                 </div>
-               </div>
-
-               { /* END panel */ }
-           </div>
+                           </div>
 
 
+                         </div>
+                       </div>
             );
+
           }
 
           return(          <div className="block-center mt-xl wd-xl">

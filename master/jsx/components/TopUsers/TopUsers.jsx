@@ -29,7 +29,7 @@ componentDidMount() {
     //   const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
 var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/").orderByChild('messages_sent');
       usersRef.once('value').then((snapshot) => {
-        console.log(snapshot.val())
+        if(snapshot.val() !== null && snapshot.val() !== "undefined") {
 
 
                   this.setState({
@@ -37,6 +37,13 @@ var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token 
                       loading:false
 
                   })
+                }
+                else {
+
+                  this.setState({
+                    loading:false
+                  })
+                }
             })
 
 
@@ -63,6 +70,7 @@ componentWillUpdate(nextProp, nextState)  {
 
     render() {
       //get the users who are connected
+
        const is_user_loaded = Object.keys(this.state.user_dict) ? true:false
 
               if(this.state.loading) {
@@ -81,7 +89,7 @@ componentWillUpdate(nextProp, nextState)  {
                         console.log("frustrated")
                         console.log(this.state.user_dict)
 
-                        return(<ContentWrapper><TableTest users={this.state.user_dict} titles={topFive}></TableTest></ContentWrapper>)
+                        return(<ContentWrapper><TableTest users={this.state.user_dict} top={true}></TableTest></ContentWrapper>)
 
                     }
                 }

@@ -60,6 +60,30 @@ class CalenderForm extends React.Component {
       var a, b,c = this. getTimeInfo()
       this.props.func_time(a, b, c)
 
+      if(this.state.value ==="T")  {
+        //add 24 jhrs
+        var currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 1);
+      //  console.log(Math.floor(currentDate/1000))
+        currentDate.setDate(currentDate.getDate() + 6)
+        console.log(Math.floor(currentDate/1000))
+        currentDate.setDate(currentDate.getDate() + 24)
+        console.log(Math.floor(currentDate/1000))
+
+
+
+
+      }
+
+
+      if(this.state.value ==="M") {
+
+      }
+
+      if(this.state.value === "W") {
+
+      }
+
 
   }
   getValidationState() {
@@ -82,33 +106,26 @@ class CalenderForm extends React.Component {
           validationState={this.getValidationState()}
         >
           <FormControl.Feedback />
-          <HelpBlock>Validation is based on string length.</HelpBlock>
+          <HelpBlock>Messages are sent 8:00 am your time</HelpBlock>
 
           <FormGroup controlId="formControlsSelect">
               <ControlLabel>What Time?</ControlLabel>
               <FormControl componentClass="select" placeholder="Choose A Time" value={this.state.select_value} onChange={this.handleSelect}>
-                <option value="1">1:00</option>
-                <option value="2">2:00</option>
-                <option value="3">3:00</option>
-                <option value="4">4:00</option>
-                <option value="5">5:00</option>
-                <option value="6">6:00</option>
-                <option value="7">7:00</option>
-                <option value="8">8:00</option>
-                <option value="9">9:00</option>
-                <option value="10">10:00</option>
-                <option value="11">11:00</option>
-                <option value="12">12:00</option>
+                <option value="T">Tomorrow</option>
+                <option value="W">Next Week</option>
+                <option value="M">Next Month</option>
+
 
               </FormControl>
 
+{
 
-
-              <ControlLabel>AM/PM</ControlLabel>
-              <FormControl componentClass="select" placeholder="Choose A Time" value={this.state.select_value} onChange={this.handleSelectA}>
-                <option value="PM">PM</option>
-                <option value="AM">AM</option>
-              </FormControl>
+              // <ControlLabel>AM/PM</ControlLabel>
+              // <FormControl componentClass="select" placeholder="Choose A Time" value={this.state.select_value} onChange={this.handleSelectA}>
+              //   <option value="PM">PM</option>
+              //   <option value="AM">AM</option>
+              // </FormControl>
+            }
           </FormGroup>
           <Button onClick={this.func_time}>Choose</Button>
 

@@ -16,7 +16,7 @@ class FormStandard extends React.Component {
   constructor(props) {
     super(props)
     console.log("in this short")
-    this.state = {preview:false, value:'', select_value:'', title_value:'',sub_value:'', image_value:'', button_one_title_value:'', button_one_url_value:'', button_two_title_value:'', button_two_url_value:'', button_three_title_value:'', button_three_url_value:'' }
+    this.state = {preview:false, value:'', select_value:'1', title_value:'',sub_value:'', image_value:'', button_one_title_value:'', button_one_url_value:'', button_two_title_value:'', button_two_url_value:'', button_three_title_value:'', button_three_url_value:'' }
     this.getValidationState = this.getValidationState.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSelect = this.handleSelect.bind(this)

@@ -313,6 +313,7 @@ handleDateSubmitButton() {
 }
 componentWillUpdate(nextProp, n) {
 console.log("I am updating")
+console.log(n)
 
 }
 
@@ -514,6 +515,37 @@ send_later() {
 }
 
 send_now() {
+
+  var newPostKey = firebase.database().ref("users/" + this.props.user.uid +"/struct_message").push().key;
+  var newPostKeyTwo = firebase.database().ref("users/" + this.props.user.uid +"/segments").push().key;
+  var postData = {
+      date_made:+ new Date(),
+      date_sent:'',
+      message:this.state.message_preview
+
+  }
+
+  var postDataTwo= {
+
+      age:this.state.audience.age,
+      gender:this.state.audience.gender,
+      region:this.state.audience.region
+
+
+  }
+
+  var update = {}
+  update['users/'+this.props.user.uid+ "/struct_message/" + newPostKey]= postData;
+  update['struct_message/' + newPostKey] = postData;
+  firebase.database().ref().update(update);
+
+
+  var update_two = {}
+  update_two['users/'+this.props.user.uid+ "/segments/" + newPostKeyTwo]= postDataTwo;
+  update_two['segments/' + newPostKeyTwo] = postDataTwo;
+  firebase.database().ref().update(update_two);
+
+
 console.log(this.state)
   this.setState( {
     one:false,
@@ -636,7 +668,7 @@ if (this.props.user.bot_connected) {
         //once they hit the big one
         if (this.state.close===true) {
           return(<ContentWrapper>
-          <p>your message has been sent</p>
+          <p>your message will be sent in the next ten minutes</p>
           </ContentWrapper>)
 
 
@@ -664,7 +696,7 @@ if (this.props.user.bot_connected) {
 
 
                   <Button bsStyle="primary" bsSize="large" onClick={func_send_now}>Send Now</Button>
-
+                  <p> </p>
                   <Button bsStyle="primary" bsSize="large" onClick={func_send_later}>Send Later</Button>
                     </ContentWrapper>
           );
@@ -675,9 +707,10 @@ if (this.props.user.bot_connected) {
 
         if (this.state.calender===true) {
             //show calender
-
-            return (
-            <CalenderForm func_time={this.closeTime}></CalenderForm>)
+            return(<ContentWrapper><p>Send Later is currently under developmet 😂.  Do you want to send now?</p>
+                <Button bsStyle="primary" bsSize="large" onClick={func_send_now}>Send Now</Button></ContentWrapper>)
+            // return (
+            // <CalenderForm func_time={this.closeTime}></CalenderForm>)
         }
 
 

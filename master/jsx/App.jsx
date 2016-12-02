@@ -46,7 +46,7 @@ window.fbAsyncInit = function() {
     cookie: true,
      status:true,
     xfbml: true,
-    version: 'v2.7',
+    version: 'v2.6',
   });
 ReactDOM.render(
     <Router history={browserHistory}>
@@ -57,7 +57,7 @@ ReactDOM.render(
       <Route path="/" component={BasePage}>
         {/* Default route*/}
               <IndexRoute component={LoginOne} />
-              <Route path="notfound" component={NotFound}/>
+<Route path="notfound" component={NotFound}/>
               <Route path="login" component={LoginOne}/>
       </Route>
 
@@ -82,7 +82,7 @@ ReactDOM.render(
 
 
         {/* Not found handler */}
-        <Route path="*" component={NotFound}/>
+
 
     </Router>,
     document.getElementById('app')
@@ -90,10 +90,10 @@ ReactDOM.render(
 
 };
 
-(function(d, s, id){
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
+  if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1754356628111030";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));

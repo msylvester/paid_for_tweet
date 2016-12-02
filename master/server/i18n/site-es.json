@@ -1,3 +1,5 @@
+
+
 {
   "dashboard": {
     "WELCOME": "Bienvenido a Hans"
@@ -17,6 +19,7 @@
       "FANS": "Personas",
       "NEWFANS": "Nuevas Personas",
       "TOPUSERS": "Personas Mejores",
+        "SUBSCRIBED":"Subscribed",
       "menu": {
         "MENU": "Televisiont",
         "SUBMENU": "Prepara",

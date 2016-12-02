@@ -42,7 +42,7 @@ class SingleView extends React.Component {
   getSelected(eventKey, a) {
 
     var that = this.state;
-
+console.log(eventKey)
     this.setState( {
 
       select:eventKey
@@ -54,7 +54,7 @@ class SingleView extends React.Component {
   disconnect() {
 
     const user_id = firebase.auth().currentUser.providerData[0].uid;
-    const url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+ this.props.user.messenger_token
+    const url_delete = "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token="+ this.props.user.messenger_token
 
 
     fetch(url_delete, {
@@ -178,7 +178,7 @@ class SingleView extends React.Component {
     // xhttp.send();
 
 
-    const url_post = "https://graph.facebook.com/v2.8/me/subscribed_apps?access_token="+this.state.pages[this.state.select]
+    const url_post = "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token="+this.state.pages[this.state.select]
 
     fetch(url_post, {
       method: 'POST'

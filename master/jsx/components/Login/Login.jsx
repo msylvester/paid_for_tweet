@@ -26,16 +26,9 @@ componentDidMount() {
 
         return (
 
-
-				<div
-					 className="fb-login-button"
-					 data-max-rows="1"
-					 data-size="xlarge"
-					 data-show-faces="false"
-					 scope="public_profile,email, manage_pages, publish_pages"
-					 data-auto-logout-link="true"
-					 >
-				</div>
+<ContentWrapper>
+			<div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
+</ContentWrapper>
 
 
         );
