@@ -6,7 +6,7 @@ import ContentWrapper from '../Layout/ContentWrapper';
 class Home extends React.Component {
 
   constructor(props) {
-    console.log("herer")
+
     super(props)
     console.log(props)
   }

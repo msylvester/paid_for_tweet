@@ -24,13 +24,12 @@ class SingleView extends React.Component {
   constructor(props) {
 
     super(props)
-    console.log(this)
+
 
     this.state = {connected: this.props.user.bot_connected, pages:this.props.user.pages, select: ""}
-    console.log("SFDFF")
-    //console.log(this.props.location.state.user.page_name_to_id)
+
+
     this.names = this.props.user.page_name_to_id
-    //this.listeners = []
     this.generateKey = this.generateKey.bind(this);
     this.getSelected = this.getSelected.bind(this);
     this.disconnect = this.disconnect.bind(this);
@@ -42,7 +41,7 @@ class SingleView extends React.Component {
   getSelected(eventKey, a) {
 
     var that = this.state;
-console.log(eventKey)
+
     this.setState( {
 
       select:eventKey
@@ -60,10 +59,9 @@ console.log(eventKey)
     fetch(url_delete, {
     	method: 'DELETE'
     }).then((response) => {
-    	 console.log('status: ', response.status);
+
        if (response.ok) {
 
-         console.log('delete went through')
 
 
          const postData = false ;
@@ -107,67 +105,6 @@ console.log(eventKey)
     });
 
 
-
-
-    // userRef.once('value').then((snapshot)=> {
-    //
-    //           if (snapshot.val() != null) {
-    //
-    //               const page_one = snapshot.val().pages;
-    //               const messenger_token = snapshot.val().messenger_token
-    //               const h = that;
-    //               const url_delete = "https://graph.facebook.com/v2.7/me/subscribed_apps?access_token="+ messenger_token
-    //
-    //               const postData = false ;
-    //               const postData_two = "";
-    //               const postData_three = "";
-    //
-    //               var updates = {};
-    //
-    //
-    //               updates['/users/' + user_id + '/bot_connected']= postData;
-    //               updates['/users/' + user_id + '/messenger_token']= postData_two;
-    //
-    //               updates['/users/' + user_id + '/bot_connected_name']= postData_three;
-    //
-    //
-    //               firebase.database().ref().update(updates);
-    //
-    //               // url (required), options (optional)
-    //               fetch(url_delete, {
-    //               	method: 'DELETE'
-    //               }).then((response) => {
-    //               	 console.log('status: ', response.status);
-    //                  if (response.ok) {
-    //
-    //                    console.log('delete went through')
-    //
-    //                    h.setState( {
-    //                      connected:false,
-    //                      pages:page_one,
-    //                      select:""
-    //                   });
-    //
-    //                  } else {
-    //
-    //                    console.log('delete failed')
-    //
-    //                  }
-    //
-    //
-    //               }).catch(function(err) {
-    //                console.log('There has been a problem with your fetch operation: ' + err.message);
-    //               });
-    //
-    //
-    //             }
-    //
-    //
-    //           });
-
-
-
-
     }
 
   generateKey() {
@@ -201,14 +138,12 @@ console.log(eventKey)
 
 
     var user_id = firebase.auth().currentUser.providerData[0].uid;
-    console.log(user_id)
+
 
     var updates = {};
     var postData = true;
     var postData_two = this.state.pages[this.state.select];
 
-    console.log("ASREREW awer")
-    console.log(this.names[this.state.select])
     const d = this.props.user.pages[this.state.select] ? this.props.user.pages[this.state.select]:''
     const e = this.names[this.state.select]
     var token_and_page_id = {
@@ -235,10 +170,6 @@ console.log(eventKey)
     names_keys.forEach(function(name) {
       console.log(name)
 
-        // if (this.names[this.state.select] === this.names[name]) {
-        //
-        //   use_this_name = name
-        // }
     })
 
     var key = this.state.pages[this.state.select];
@@ -247,10 +178,6 @@ console.log(eventKey)
 
 
     //add bots to both places
-
-
-
-
     var updates_two = {}
     updates_two['/FBmess/hans_venue/page_array'] = token_and_page_id;
 
@@ -262,8 +189,6 @@ console.log(eventKey)
     firebase.database().ref().update(updates_three);
 
 
-    // postData_new_bot['messenger_token'] =  this.state.pages[this.state.select]
-    //
 
     var updates_four = {}
     updates_four['/users/' + user_id + '/messenger_token']= postData_two;
@@ -278,28 +203,24 @@ console.log(eventKey)
     updates_six['/users/' + user_id + '/bot_connected']= true;
     firebase.database().ref().update(updates_six);
 
-    console.log("here")
+
     this.setState = (   {
 
         connected: true
 
     })
-    console.log("set state")
+
 
   }
 
     render() {
-        console.log("about to log singleview state")
-        console.log(this.state)
-        console.log(this.state.connected)
-        // const mainMenu = this.state.pages.map((page) => <MenuItem eventKey={i} data-set-lang="en">page</MenuItem>);
 
         var index = 0;
         var func_click = this.generateKey;
         var func_select = this.getSelected;
         var counter = 0;
         var that = this;
-        console.log(Object.keys(this.state.pages));
+      
         var key_page = Object.keys(this.state.pages)
         var func_disc = this.disconnect;
 

@@ -31,21 +31,8 @@ class FormStandard extends React.Component {
     this.next = this.next.bind(this)
   }
     next(){
-      // console.log("here ser ")
-      // console.log(this.state.preview)
-      // var local = true
-      // if (!this.state.preview) {
-      //   local = true
-      //   this.setState = ( {
-      //         preview:true
-      //   })
-      // }
-      // else {
-      //   this.setState = ( {
-      //         preview:false
-      //   })
-      // }
-      // console.log(local)
+
+
       var numberOfButtons= (this.state.select_value ? this.state.select_value:'none');
       var title= (this.state.title_value ?  this.state.title_value:'none');
       var subValue = (this.state.sub_value ? this.state.sub_value:'none')
@@ -74,7 +61,7 @@ class FormStandard extends React.Component {
       this.props.funct(dict_target)
     }
     getValidationState() {
-      //const length = this.state.value.length;
+
       const length = 11
       if (length > 10) return 'success';
       else if (length > 5) return 'warning';
@@ -113,10 +100,7 @@ class FormStandard extends React.Component {
           this.setState({button_one_url_value: e.target.value });
         }
 
-       //
-      //   <div id ={"two"}>
-      //  <Preview buttons={this.state.select_value} title={this.state.title_value} sub={this.state.sub_value} image={this.state.image_value} buttonOne={this.state.button_one_title_value} buttonOneUrl = {this.state.button_one_url_value}></Preview>
-      //  </div>
+
 
         handleButtonTwoUrlChange(e) {
           console.log(e)

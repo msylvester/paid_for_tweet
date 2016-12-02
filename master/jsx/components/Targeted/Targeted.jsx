@@ -64,28 +64,28 @@ componentWillUpdate(nextProps, nextState) {
 
 func_close_target(audience)  {
 
-          console.log(audience['age'])
-            console.log(audience['gender'])
-                console.log(audience['region'])
-            var gender = audience['gender']
-            var age = audience['age']
-            var region = audience['region']
+      console.log(audience['age'])
+      console.log(audience['gender'])
+      console.log(audience['region'])
+      var gender = audience['gender']
+      var age = audience['age']
+      var region = audience['region']
 
 
 
 
 
 
-        console.log('d')
-      console.log(gender)
+    console.log('d')
+    console.log(gender)
     var lclAudience = {
           gender:gender,
           age:age,
           region:region
       }
 
-console.log(lclAudience)
-console.log(this)
+    console.log(lclAudience)
+    console.log(this)
 
     this.setState( {
         third:false,
@@ -141,28 +141,24 @@ console.log(this.state)
 
 //get audience
 handleTargetMessageButtonClick(audience) {
-  console.log(audience['age'])
-    console.log(audience['gender'])
-        console.log(audience['region'])
+
     var gender = audience['gender']
     var age = audience['age']
     var region = audience['region']
 
-  console.log(audience)
-  console.log('d')
-console.log(gender)
-var lclAudience = {
-    gender:gender,
-    age:age,
-    region:region
-}
 
-  this.setState({
-    second:false,
-    type:"one",
-    audience:audience
-      }
-  )
+    var lclAudience = {
+        gender:gender,
+        age:age,
+        region:region
+    }
+
+      this.setState({
+        second:false,
+        type:"one",
+        audience:audience
+          }
+      )
 
 }
 
@@ -312,35 +308,21 @@ handleDateSubmitButton() {
   })
 }
 componentWillUpdate(nextProp, n) {
-console.log("I am updating")
-console.log(n)
+
 
 }
 
 //design for image based, enter text
 handleChangeForMessage(event) {
 
-        try{
-          console.log(event)
-        }
-        catch (ex) {
-          console.log("hery ae")
-        }
 
-        try{
-
-
-        }
-        catch (ex) {
-          console.log("hery erer")
-        }
 
         try{
 
           this.setState({value: event.target.value});
         }
         catch (ex) {
-          console.log("hery mes ")
+          console.log(ex)
         }
 
 
@@ -349,21 +331,6 @@ handleChangeForMessage(event) {
 
 //design for image based, enter text
 handleChange(event) {
-
-      try{
-        console.log(event)
-      }
-      catch (ex) {
-        console.log("hery ae")
-      }
-
-      try{
-
-
-      }
-      catch (ex) {
-        console.log("hery erer")
-      }
 
       try{
 
@@ -415,10 +382,6 @@ this.setState({button_three_url: event.target.value});
 
 handleSubmit() {
   //get the info from the text box
-  //
-  //e.preventDefault()
-  console.log("heree")
-  console.log(this._send_only_message)
 
   this.setState(  {
     one:false,
@@ -521,7 +484,9 @@ send_now() {
   var postData = {
       date_made:+ new Date(),
       date_sent:'',
-      message:this.state.message_preview
+      message:this.state.message_preview,
+      messenger_token:this.props.user.messenger_token,
+      segment:newPostKeyTwo
 
   }
 
@@ -540,10 +505,13 @@ send_now() {
   firebase.database().ref().update(update);
 
 
+
+
   var update_two = {}
   update_two['users/'+this.props.user.uid+ "/segments/" + newPostKeyTwo]= postDataTwo;
   update_two['segments/' + newPostKeyTwo] = postDataTwo;
   firebase.database().ref().update(update_two);
+
 
 
 console.log(this.state)
@@ -709,7 +677,6 @@ if (this.props.user.bot_connected) {
             //show calender
             return(<ContentWrapper><p>Send Later is currently under developmet 😂.  Do you want to send now?</p>
                 <Button bsStyle="primary" bsSize="large" onClick={func_send_now}>Send Now</Button></ContentWrapper>)
-            // return (
             // <CalenderForm func_time={this.closeTime}></CalenderForm>)
         }
 
@@ -740,7 +707,7 @@ if (this.props.user.bot_connected) {
                     Submit
                   </Button>
                 </div>
-</ContentWrapper>)
+              </ContentWrapper>)
 
         }
 
@@ -758,7 +725,7 @@ if (this.props.user.bot_connected) {
                     Submit
                   </Button>
                 </div>
-</ContentWrapper>)
+              </ContentWrapper>)
 
         }
 
@@ -776,7 +743,7 @@ if (this.props.user.bot_connected) {
                     Submit
                   </Button>
                 </div>
-</ContentWrapper>)
+              </ContentWrapper>)
 
         }
 
@@ -787,23 +754,7 @@ if (this.props.user.bot_connected) {
         if (this.state.five == true)   {
 
 /*
-      return( <Dropdown id = {"base"}>
-            <Dropdown.Toggle>
-                  Choose what to send
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="animated fadeInUpShort">
-
-              {
-              message_types.map(function(key, i) {
-
-                return (<MenuItem key={Math.random()} eventKey={key} data-set-lang="en" onSelect={func_select}>{key}</MenuItem>);
-
-              })
-              }
-
-            </Dropdown.Menu>
-
-          </Dropdown>)
+  
 */
 
 

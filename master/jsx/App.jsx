@@ -1,14 +1,3 @@
-/*!
- *
- * Angle - Bootstrap Admin App + ReactJS
- *
- * Version: 3.4
- * Author: @themicon_co
- * Website: http://themicon.co
- * License: https://wrapbootstrap.com/help/licenses
- *
- */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, hashHistory, browserHistory, IndexRoute } from 'react-router';
@@ -23,12 +12,13 @@ import FormWizard from './components/Forms/FormWizard';
 import Login from './components/Login/Login';
 import SingleView from './components/SingleView/SingleView';
 import Targeted from './components/Targeted/Targeted';
-import SubMenu from './components/SubMenu/SubMenu';
+
 import Fans from './components/Fans/Fans';
 import TopUsers from './components/TopUsers/TopUsers';
 import NewFans from './components/NewFans/NewFans';
 import LoginOne from './components/Pages/LoginOne';
 import NotFound from './components/Pages/NotFound';
+import ThankYou from './components/Pages/ThankYou';
 import Home from './components/Home/Home';
 import Logout from './components/Logout/Logout';
 import Preview from './components/Targeted/Preview';
@@ -57,23 +47,24 @@ ReactDOM.render(
       <Route path="/" component={BasePage}>
         {/* Default route*/}
               <IndexRoute component={LoginOne} />
-<Route path="notfound" component={NotFound}/>
+              <Route path="notfound" component={NotFound}/>
               <Route path="login" component={LoginOne}/>
+              <Route path="thankyou" component={ThankYou}/>
       </Route>
 
 
         <Route path="/" component={Base}>
 
-            <Route path="home" component={Home}/>
-            <Route path="singleview" component={SingleView}/>
-            <Route path="targeted" component={Targeted}/>
+        <Route path="home" component={Home}/>
+        <Route path="singleview" component={SingleView}/>
+        <Route path="targeted" component={Targeted}/>
 
-            <Route path="fans" component={Fans}/>
-            <Route path="subscribed" component={Subscribed}/>
-            <Route path="topUsers" component={TopUsers}/>
-            <Route path="logout"  component={Logout} />
+        <Route path="fans" component={Fans}/>
+        <Route path="subscribed" component={Subscribed}/>
+        <Route path="topUsers" component={TopUsers}/>
+        <Route path="logout"  component={Logout} />
 
-            <Route path="preview" component={Preview}/>
+        <Route path="preview" component={Preview}/>
 
 
 
@@ -81,8 +72,8 @@ ReactDOM.render(
 
 
 
-        {/* Not found handler */}
-
+                {/* Not found handler */}
+                <Route path="*" component={NotFound}/>
 
     </Router>,
     document.getElementById('app')

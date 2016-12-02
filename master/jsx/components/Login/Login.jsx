@@ -8,27 +8,13 @@ import { Router, Route, Link, hashHistory, browserHistory, IndexRoute } from 're
 
 class Login extends React.Component {
 
-	constructor() {
-		super()
-
-
-
-	}
-
-componentDidMount() {
-
-}
-
-
     render() {
-
-
 
         return (
 
-<ContentWrapper>
-			<div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
-</ContentWrapper>
+            <ContentWrapper>
+            			<div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
+            </ContentWrapper>
 
 
         );

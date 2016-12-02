@@ -54,7 +54,7 @@ getValidationState() {
 
       }
       this.props.func_close_target(audience)
-      console.log("back")
+    
       this.setState({close:true})
 
   }
@@ -63,7 +63,7 @@ getValidationState() {
 
     if(this.state.close===true) {
 
-      return null   
+      return null
     }
 
     return (

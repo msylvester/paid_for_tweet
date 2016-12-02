@@ -21,7 +21,7 @@ class Logout extends React.Component {
         FB.logout((response) => {
 
               const path = {
-                  pathname: '/login',
+                  pathname: '/ThankYou',
                   state: { logged_out: true }
                 }
                this.context.router.push(path)

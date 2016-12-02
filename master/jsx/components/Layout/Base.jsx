@@ -22,8 +22,7 @@ class Base extends React.Component {
     constructor(props) {
     //    super();
         super(props)
-        console.log("fiond mefr ")
-        console.log(props)
+
         this.listeners =  []
         if (this.props.location.state.user != null) {
             this.state = {
@@ -48,42 +47,6 @@ class Base extends React.Component {
     }
 
 
-
-
-
-  // componentDidUpdate(prevProps, prevState) {
-  //         if (this.state.login === true && this.state.registered === true && this.state.user == null) {
-  //               //make a call to Firebase and get the user
-  //
-  //
-  //
-  //                   var firebase_user = firebase.auth().currentUser;
-  //
-  //
-  //                   var userRef = firebase.database().ref('users/' + firebase_user.providerData[0].uid);
-  //
-  //                   var that = this
-  //
-  //                   console.log("hello  i hit this ")
-  //                   console.log(firebase_user.providerData[0].uid)
-  //                   userRef.on('value', function(snapshot) {
-  //                     //updateStarCount(postElement, snapshot.val());
-  //                       console.log("about to be in this shit sat")
-  //                       console.log(snapshot.val())
-  //                       if (snapshot.val() != null) {
-  //
-  //                             this.setState ( { user: snapshot.val() } )
-  //
-  //
-  //                       }
-  //                   });
-  //             }
-  //
-  //
-  //
-  //   }
-
-
     componentWillMount() {
         var that = this;
 
@@ -94,21 +57,12 @@ class Base extends React.Component {
     componentDidMount(){
 
       var firebase_user = firebase.auth().currentUser;
-
-
       var userRef = firebase.database().ref('users/' + firebase_user.providerData[0].uid);
-
-
-
-      console.log("hello  i hit this ")
-      console.log(firebase_user.providerData[0].uid)
 
       //if bot connected status changes
       const that = this
       userRef.on('value', (snapshot) =>{
-        //updateStarCount(postElement, snapshot.val());
-          console.log("about to be in this shit sat")
-          console.log(snapshot.val())
+
           that.listeners.push(userRef)
           if (snapshot.val() != null) {
 
@@ -135,7 +89,6 @@ class Base extends React.Component {
         });
     }
 
-    //'auth.authResponseChange', checkLoginState
 
   }
 
@@ -160,68 +113,9 @@ class Base extends React.Component {
 
       //  const animationName = 'rag-fadeIn'
         var animationName = items[Math.floor(Math.random()*items.length)];
-//
-//         var render_email = ''
-//
-//         var email_matches = false
-//
-//
-//
-//
-// var c =  <ContentWrapper>
-//         <p>
-//
-//         You do not have a bot registered with Brainitch. Please email msylvest55@gmail.com to solve.
-//         </p>
-//
-//         </ContentWrapper>
-//
-// var use =   <Header/>
-//   var spinner =   <ContentWrapper>
-//
-//         <Row>
-//           <p>Loading your bot information </p>
-//           <Spinner spinnerName='double-bounce' />
-//
-//         </Row>
-//     </ContentWrapper>
-//
-//
-// //three cases, either they have a bot and are login
-// //or they login but they are not authroized
-// //for authorizd code it is, get authorized list, then compare to current user email
-//             console.log(this.state.login)
-//             console.log(this.state.registered)
-//
-//
-//             if (!this.state.login || !this.state.registered) {
-//
-//                 //browserHistory.push(path)
-//
-//             }
-//
-//             else if (this.state.login && !this.state.registered) {
-//
-//               use = c
-//
-//             }
-//
-//             else  {
-//               //get the current user email
-//               var user = firebase.auth().currentUser;
-//               console.log(user)
-//
-//
-//
-//             //  var getAuthorizedList = firebase.database().ref('Authorized/')
-//             if (this.state.user != null)  {
-          var b = <NotFound/>
-
-          var use = <Header/>
-
-
-
-          var  a =                 <div className="wrapper">
+        var b = <NotFound/>
+        var use = <Header/>
+        var  a =                 <div className="wrapper">
                           <Header />
 
                           <Sidebar />
@@ -255,23 +149,8 @@ class Base extends React.Component {
                 use = a
 
             }
-            //         }
-            //
-            //         else {
-            //           use = spinner
-            //
-            //
-            //         }
-            //
-            //
-            // }
-
-
-
 
             return (use)
-
-
 
           }
 

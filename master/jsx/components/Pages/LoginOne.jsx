@@ -36,7 +36,8 @@ class LoginOne extends React.Component {
         login: '',
         registered: '',
         email: '',
-        users: {}
+        users: {},
+        loginButton:true
 
       }
     }
@@ -61,29 +62,25 @@ componentDidMount() {
               FB.api('/' + uid, {fields: 'email'}, (response1) => {
                 if (response1 && !response1.error) {
                   /* handle the result */
-                  console.log("handling")
 
-                  console.log(response1)
                   const over_state = a
                   var starCountRef = firebase.database().ref('FBmess/');
 
                   starCountRef.once('value').then(function(snapshot) {
 
-                        console.log("*dfdfdf awer3 authoriazedd pringting")
-                        console.log(snapshot.val())
+
 
                         var keys_array = Object.keys(snapshot.val())
                             var auth_users = []
                         keys_array.forEach(bot => {
-                          console.log("T in teh key sarray ")
-                            console.log(snapshot.val()[bot]['user'])
+
                             //console.log(snapshot.val().bot.user)
                             auth_users.push(snapshot.val()[bot]['user'])
 
                         })
 
                       if (auth_users.find(x => x === response1.email) != undefined) {
-                          console.log("tasdfdf")
+
 
                             over_state.setState( {
                               email: response1.email,
@@ -92,7 +89,7 @@ componentDidMount() {
 
                       }
                       else {
-                          console.log("fucs ff")
+
                           over_state.setState( {
                             email: response1.email,
                             registered:false
@@ -103,12 +100,6 @@ componentDidMount() {
 
                 }
                });
-
-              console.log(response.authResponse)
-              console.log('connected' + uid)
-              //check firebase
-
-
 
               that.setState(  {
 
@@ -128,7 +119,7 @@ componentDidMount() {
 
 
               })
-                console.log('connected but not authorized' + uid)
+
             } else {
               // the user isn't logged in to Facebook.
               that.setState (  {
@@ -136,13 +127,7 @@ componentDidMount() {
                   login: false,
                   loading: false
               }
-
-
-
                 )
-
-
-               console.log('not logged on' + uid)
 
             }
            });
@@ -164,19 +149,16 @@ componentDidMount() {
 
 
     componentWillUnmount() {
-      console.log("ir gere ")
+
       FB.Event.unsubscribe(event, this.checkLoginState)
 
 
     }
 
     checkLoginState(event) {
-        console.log("made it to event")
-        console.log(event)
-        console.log(this)
-        var that = this
-        console.log('the')
-        console.log(that)
+
+      var that = this
+
        var current_state = this.state.login;
        if (event.authResponse!=null) {
          // User is signed-in Facebook.
@@ -185,9 +167,7 @@ componentDidMount() {
          var unsubscribe = firebase.auth().onAuthStateChanged( (firebaseUser) => {
            unsubscribe();
 
-           // Check if we are already signed-in Firebase with the correct user.
-           console.log("in this block")
-           console.log(firebaseUser)
+
 
            //see if the user is logged
            var check = false;
@@ -203,14 +183,13 @@ componentDidMount() {
                }
              }
          }
-       console.log("this didnt crash");
-       console.log(check);
+
 
 
                  if (!check) {
 
 
-                   console.log("this shoudl be a hit")
+
 
                    // Build Firebase credential with the Facebook auth token.
                    var credential = firebase.auth.FacebookAuthProvider.credential(event.authResponse.accessToken);
@@ -231,7 +210,7 @@ componentDidMount() {
                                  page_token:response.data[i].access_token
 
                              }
-                         //    this.page_array_id.push(response.data[i].id)
+
                              page_names[response.data[i].name] = response.data[i].access_token;
                              page_names_to_id[response.data[i].name] = response.data[i].id;
                              pages.push(a);
@@ -276,13 +255,13 @@ componentDidMount() {
                               var userRef = firebase.database().ref('users/' + event.authResponse.userID);
                               ///check if new users
                                 try {
-                  console.log("Therer aewr er ")
+
                                       try {
                                         var lclID = event.authResponse.userID
                                       }
                                       catch (eroor) {
 
-                                        console.log("Sfsaf aere r")
+                                      //  console.log("Sfsaf aere r")
 
                                       }
 
@@ -290,19 +269,16 @@ componentDidMount() {
                                         var lclInput = firebase.database().ref('users')
                                       }
                                       catch (error) {
-                                        console.log("tere")
+                                        //console.log("tere")
                                       }
 
                                       try {
                                               var dddd = temp
                                       }
                                       catch (error) {
-                                      console.log("terasefe e")
+                                      //console.log("terasefe e")
                                       }
 
-
-
-                                                    console.log("WERER @#E")
 
                                                     lclInput.once('value').then((snapshot) => {
                                                     //updateStarCount(postElement, snapshot.val());
@@ -321,9 +297,7 @@ componentDidMount() {
                                                         const postData_three = "";
 
                                                         var updates = {};
-                                                    console.log("WERER @#E eererr")
-                                                      console.log(snapshot.val())
-                                                      console.log(snapshot.val()[lclID])
+
                                                         updates['/users/' + lcl_id + '/pages/']=  snapshot.val()[lclID]['pages'];
                                                         updates['/users/' + lcl_id + '/page_name_to_id/']=  snahpshot.val()[lclID]['page_name_to_id'];
 
@@ -340,7 +314,7 @@ componentDidMount() {
                                                       else  {
                                                         //set
 
-                                                        console.log("WERER @#E erAER")
+
                                                         firebase.database().ref('users/' + event.authResponse.userID).set({
                                                             email: dddd.email,
                                                             uid:dddd.uid,
@@ -384,21 +358,14 @@ componentDidMount() {
 
                               }
                               catch(error) {
-                                console.log("the erro was here")
+                              //  console.log("the erro was here")
 
                               }
                           }
                           catch(error) {
-                            console.log("There was an eror tryin to set user ref")
+                          //  console.log("There was an eror tryin to set user ref")
 
                           }
-
-
-                      //  over_state.setState ( {
-                       //
-                      //    users:temp
-                      //  })
-
 
 
                        })
@@ -420,11 +387,7 @@ componentDidMount() {
                      // ...
                    });
 
-                  //  that.setState( {
-                   //
-                  //      login: true
-                   //
-                  //  })
+
 
                  } else {
                    console.log("gere i a me in the this shit");
@@ -454,10 +417,7 @@ componentDidMount() {
                      var user_email = ""
 
                      if (over_state.state.email != null) {
-
                          user_email = over_state.state.email
-
-
                      }
 
                      var temp = {       email: user_email,
@@ -471,25 +431,12 @@ componentDidMount() {
 
                     var userRef = firebase.database().ref('users/' + event.authResponse.userID);
 
-
-
-                    console.log("hello  i hit this ")
-                  //  console.log(firebase_user.providerData[0].uid)
-
-
-                      //  var sdf = this.isInDb(event.authResponse.userID, firebase.database().ref('users'), temp)
-
-
-
-
-                      console.log("Therer aewr er ")
-                      console.log("Therer aewr er ")
                     try {
                       var lclID = event.authResponse.userID
                     }
                     catch (error) {
 
-                      console.log("Sfsaf aere r")
+
 
                     }
 
@@ -497,16 +444,15 @@ componentDidMount() {
                       var lclInput = firebase.database().ref('users')
                     }
                     catch (error) {
-                      console.log("tere")
+                      //console.log(error.message)
                     }
 
                     try {
                             var dddd = temp
                     }
                     catch (error) {
-                    console.log("terasefe e")
+                    //  console.log(error.message)
                     }
-                      console.log("WERER @#E")
 
                       const local_this = this
                       const local_pages = page_names
@@ -530,9 +476,6 @@ componentDidMount() {
                           //  const postData_three = "";
 
                             var updates = {};
-                            console.log("WERER @#E eererr")
-                            console.log(local_ID)
-                            console.log(snapshot.val()[local_ID])
 
                             try  {
                             //  updates['/users/' + lclID + '/pages/'] = snapshot.val()[lclID]['pages'];
@@ -552,13 +495,13 @@ componentDidMount() {
 
                             }
                             catch(error) {
-                            console.log("actually they erorry s qwed  ")
+                              console.log(error.message)
                             }
                             try {
                             firebase.database().ref().update(updates)
                             }
                             catch (error){
-                              console.log("this is ane roror ")
+                              console.log(error.message)
                             }
 
 
@@ -586,9 +529,7 @@ componentDidMount() {
                             })
                           }
                           catch (error) {
-                            console.log(error.message)
-                            console.log(this.state)
-                            console.log("Tno sgi is actually ehre *()")
+
 
                           }
 
@@ -707,15 +648,17 @@ fbLogin() {
           loginButton:false
 
         })
-      console.log("fb login shit")
+
     }, {scope: 'public_profile,email, manage_pages, publish_pages', return_scopes:true});
 }
   render() {
     var cButton = <p></p>
     if (this.state.loginButton) {
-       cButton = <Button bsStyle="primary" bsSize="large" onClick={this.fbLogin}>Login</Button>
+      cButton = <Button bsStyle="primary" bsSize="large" onClick={this.fbLogin}>Login</Button>
      }
-
+     else {
+       cButton = <p>Cool, logged in, click refresh </p>
+     }
 
   if (!this.state.loading) {
         return (
@@ -730,8 +673,8 @@ fbLogin() {
                              <div className="panel-body">
                                  <p className="text-center pv">SIGN IN TO CONTINUE.</p>
 
-                                {cButton}
-                               <p className="pt-lg text-center">👍</p>
+                                 {cButton}
+                                 <p className="pt-lg text-center"></p>
 
                            </div>
 

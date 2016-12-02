@@ -21,18 +21,12 @@ class Fans extends React.Component {
 
 componentDidMount() {
 
-  console.log(this)
-  console.log("**ERR #E!@#R !@E R@~@ #")
-  console.log(this.props)
+
   if (this.props.user.bot_connected === true) {
-  console.log("I think it is failing there")
   const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
-  console.log("gonna log shit ")
- console.log(usersRef)
 
   usersRef.once('value').then((snapshot) => {
-        console.log("******")
-        console.log(snapshot.val())
+
         const array_temp = []
 
         if(snapshot.val()!== null && snapshot.val()!== "undefined" ) {
@@ -96,9 +90,7 @@ componentWillUpdate(nextProp, nextState)  {
     this.loading_bar = this.loading_bar + 20
   }
 
-  console.log("about to log stte for this sfasns")
-  console.log(this.state)
-  console.log(nextState)
+
 }
 
     render() {
@@ -118,9 +110,6 @@ componentWillUpdate(nextProp, nextState)  {
                     }
 
                     else {
-                        console.log("frustrated")
-                        console.log(this.state.user_dict)
-
                         return(<ContentWrapper><TableTest users={this.state.user_dict}></TableTest></ContentWrapper>)
 
                     }

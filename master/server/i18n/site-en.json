@@ -13,7 +13,7 @@
       "HEADER": "Main Navigation"
     },
     "nav": {
-      "SINGLEVIEW": "Home",
+      "SINGLEVIEW": "Bot Status",
       "FANS": "Fans",
       "NEWFANS": "New Fans",
       "SUBSCRIBED":"Subscribed",

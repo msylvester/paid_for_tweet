@@ -19,9 +19,6 @@
 
   componentDidMount() {
 
-    console.log(this)
-    console.log("**ERR #E!@#R !@E R@~@ #")
-    console.log(this.props)
 
     if (this.props.user.bot_connected === true) {
 
@@ -32,9 +29,10 @@
 
 
           if(snapshot.val()!== null && snapshot.val() !== "undefined") {
-          console.log(snapshot.val())
-          const array_temp = []
-  //const user_array = Object.keys(snapshot.val()) ? Object.keys(snapshot.val()):array_temp
+                  console.log(snapshot.val())
+                  var user_array = []
+                  const array_temp = []
+
                     let user_dict = {}
                     user_array.forEach(key=> {
                           if(snapshot.val()[key]['subscribed'] === true) {
@@ -78,9 +76,6 @@
       this.loading_bar = this.loading_bar + 20
     }
 
-    console.log("about to log stte for this sfasns")
-    console.log(this.state)
-    console.log(nextState)
   }
 
       render() {

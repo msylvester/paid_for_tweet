@@ -13,21 +13,16 @@ class TopUsers extends React.Component {
       this.state = {loading:true, user_dict:{}}
       this.loading_bar = 10
 
-
-
     }
 
 componentDidMount() {
 
-  console.log(this)
-  console.log("**ERR #E!@#R !@E R@~@ #")
-  console.log(this.props)
+
 
   if (this.props.user.bot_connected === true) {
 
 
-    //   const usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/");
-var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/").orderByChild('messages_sent');
+    var usersRef = firebase.database().ref('bot/' + this.props.user.messenger_token + "/users/").orderByChild('messages_sent');
       usersRef.once('value').then((snapshot) => {
         if(snapshot.val() !== null && snapshot.val() !== "undefined") {
 
@@ -63,9 +58,6 @@ componentWillUpdate(nextProp, nextState)  {
     this.loading_bar = this.loading_bar + 20
   }
 
-  console.log("about to log stte for this sfasns")
-  console.log(this.state)
-  console.log(nextState)
 }
 
     render() {
