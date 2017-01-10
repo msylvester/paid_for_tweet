@@ -13,13 +13,37 @@ class LoginTwo extends React.Component {
 
         this.state={
           login: "",
-          failed_login:""
+          failed_login:"",
+          email: "",
+          password: ""
         }
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.getValidationState = this.getValidationState.bind(this);
 
         }
 
+        getValidationState() {
+          //const length = this.state.value.length;
+          const length = 11
+          if (length > 10) return 'success';
+          else if (length > 5) return 'warning';
+          else if (length > 0) return 'error';
+        }
+
+
+
+    handleChange(e){
+      this.setState({email:e.target.value})
+
+    }
+
+    handleChangePassword(e){
+
+      this.setState({password:e.target.value})
+    }
 
     componentWillMount(){
       //check to see if a user is logged in, if yes, set login state to true
@@ -99,9 +123,31 @@ class LoginTwo extends React.Component {
                            </div>
                            <div className="panel-body">
                                <p className="text-center pv">SIGN IN TO CONTINUE.</p>
-                                 <form onSubmit={this.onSubmit}>
-                                   <LoginEmailPass />
-                                 </form>
+                                 <FormGroup
+                                   controlId="formBasicText"
+                                   validationState={this.getValidationState()}
+                                 >
+                                 {/*Look for email and password types on bootstrap*/}
+                                 <FormControl
+                                   type="text"
+                                   value={this.state.email}
+                                   placeholder="Enter email"
+                                   onChange={this.handleChange}
+                                 />
+
+                                 <FormControl
+                                   type="text"
+                                   value={this.state.password}
+                                   placeholder="Enter password"
+                                   onChange={this.handleChangePassword}
+                                 />
+
+                               <Button bsStyle={'info'} onClick={this.onSubmit}>
+                                 Submit
+                               </Button>
+                             </FormGroup>
+
+
 
 
                          </div>
