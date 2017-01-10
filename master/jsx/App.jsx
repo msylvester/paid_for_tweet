@@ -16,7 +16,7 @@ import Targeted from './components/Targeted/Targeted';
 import Fans from './components/Fans/Fans';
 import TopUsers from './components/TopUsers/TopUsers';
 import NewFans from './components/NewFans/NewFans';
-import LoginOne from './components/Pages/LoginOne';
+import LoginTwo from './components/Pages/LoginTwo';
 import NotFound from './components/Pages/NotFound';
 import ThankYou from './components/Pages/ThankYou';
 import Home from './components/Home/Home';
@@ -46,28 +46,25 @@ ReactDOM.render(
       {/*Pages*/}
       <Route path="/" component={BasePage}>
         {/* Default route*/}
-              <IndexRoute component={LoginOne} />
+            <IndexRoute component={LoginTwo} />
               <Route path="notfound" component={NotFound}/>
-              <Route path="login" component={LoginOne}/>
+            <Route path="login" component={LoginTwo}/>
               <Route path="thankyou" component={ThankYou}/>
       </Route>
 
 
-        <Route path="/" component={Base}>
+    <Route path="/" component={Base}>
 
-        <Route path="home" component={Home}/>
-        <Route path="singleview" component={SingleView}/>
-        <Route path="targeted" component={Targeted}/>
+          <Route path="home" component={Home}/>
+          <Route path="singleview" component={SingleView}/>
+          <Route path="targeted" component={Targeted}/>
 
-        <Route path="fans" component={Fans}/>
-        <Route path="subscribed" component={Subscribed}/>
-        <Route path="topUsers" component={TopUsers}/>
-        <Route path="logout"  component={Logout} />
+          <Route path="fans" component={Fans}/>
+          <Route path="subscribed" component={Subscribed}/>
+          <Route path="topUsers" component={TopUsers}/>
+          <Route path="logout"  component={Logout} />
 
-        <Route path="preview" component={Preview}/>
-
-
-
+          <Route path="preview" component={Preview}/>
     </Route>
 
 
