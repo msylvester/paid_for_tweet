@@ -1,4 +1,19 @@
-function FieldGroup({ id, label, help, ...props }) {
+
+//i want you to fix this class at some point
+
+function FieldGroup({ id, label, help=null, props }) {
+
+/*fucniton FielGroup(Obj a )
+    where a = {
+
+    id:id,
+    label:label,
+    help:help,
+    prop
+
+    }
+
+*/
   return (
     <FormGroup controlId={id}>
       <ControlLabel>{label}</ControlLabel>
@@ -34,5 +49,5 @@ const LoginEmailPass = (
 
 
 )
-
+export default FieldGroup
 export default LoginEmailPass;

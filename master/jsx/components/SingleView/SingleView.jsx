@@ -6,15 +6,15 @@ import Spinner from 'react-spinkit';
 import NotFound from '../Pages/NotFound'
 
 //connect with Firbase
+//
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCBMuCtrDeAD8b7AcZykVGPoYnJrFf3Kjg",
+//   authDomain: "hansweb-beac1.firebaseapp.com",
+//   databaseURL: "https://hansweb-beac1.firebaseio.com",
+//   storageBucket: "hansweb-beac1.appspot.com",
+// };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCBMuCtrDeAD8b7AcZykVGPoYnJrFf3Kjg",
-  authDomain: "hansweb-beac1.firebaseapp.com",
-  databaseURL: "https://hansweb-beac1.firebaseio.com",
-  storageBucket: "hansweb-beac1.appspot.com",
-};
-
-const firebase = Firebase.initializeApp(firebaseConfig);
+  // const firebase = Firebase.initializeApp(firebaseConfig);
 
 
 class SingleView extends React.Component {
@@ -220,7 +220,7 @@ class SingleView extends React.Component {
         var func_select = this.getSelected;
         var counter = 0;
         var that = this;
-      
+
         var key_page = Object.keys(this.state.pages)
         var func_disc = this.disconnect;
 
