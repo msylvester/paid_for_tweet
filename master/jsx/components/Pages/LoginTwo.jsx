@@ -12,7 +12,7 @@ class LoginTwo extends React.Component {
 
     constructor(props){
         super(props);
-
+        this.makeArrayFromData = this.makeArrayFromData.bind(this)
         this.state = {
           login:"",
           failed_login:"",
@@ -23,8 +23,8 @@ class LoginTwo extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
-        this.getValidationState = this.getValidationState.bind(this);
-
+        this.getValidationState = this.getValidationState.bind(this)
+        this.isElementBInA = this.isElementBInA.bind(this)
         }
 
 
@@ -40,7 +40,7 @@ class LoginTwo extends React.Component {
 
     handleChangeEmail(event){
       console.log(this.state.email)
-{/* this.setState({email:this.state.email}) */}
+      {/* this.setState({email:this.state.email}) */}
       this.setState({email:event.target.value})
 
     }
@@ -137,10 +137,64 @@ class LoginTwo extends React.Component {
 
     onSubmit(event){
       credentials.AUTH.signInWithEmailAndPassword(this.state.email, this.state.password).then((result) =>{
+
+        const usersRef = firebase.database().ref('RegisteredUsers/');
+
+
+        //get logged in users emial
+
+        usersRef.once('value').then((snapshot) => {
+            let dict_admin = snapshot.val()['brainitch'];
+            let ownsFbAppId = snapshot.val()['ownsFbAppId'];
+            let usesHans = snapshot.val()['usesHans'];
+            ///get us the current users email from fb abd see whic
+
+
+            //call that function to get an array of all emails in a given registered user bucket
+
+
+            //check ot see what type of user
+
+            // function(a, b) {
+            //     return a.indexOf(b) != -1
+            // }
+
+            //this is ugly af vut im gonan do it anyway
+
+
+
+            if(this.isElementBInA(this.makeArrayFromData(dict_admin), this.state.email)) {
+                //hey i have a branitich user
+
+                //here we want to route to a realaly easy web app
+
+                
+
+            }
+
+
+            else if(this.isElementBInA(this.makeArrayFromData(ownsFbAppId), this.state.email)) {
+
+              //user is non admin and has a fb app id
+            }
+
+            else if(this.isElementBInA(this.makeArrayFromData(usesHans), this.state.email)) {
+              //user is using app for intended purpose
+            }
+
+
+            else {
+
+               //we have some kind of errorr
+               //because this case would be user is logged in but is not present among the Registered Users branch in Firebase
+            }
+
+        })
+
         this.setState({
           login:true,
           failed_login:false
-
+//Check to see what type of users they are, we want to locate our users in registered user, Registered user, employee, we want to check where fibase key....values .on (once,""
         })
       }).catch(function(error) {
         // Handle Errors here.
@@ -160,6 +214,28 @@ class LoginTwo extends React.Component {
 
 
 
+  //is element b in a
+
+  isElementBInA(arrayA, b) {
+   return arrayA.indexOf(b) != -1
+
+  }
+
+  //makeArrayFromData
+
+  makeArrayFromData(objectObj) {
+    //get the keys in an array
+    const array_for_object = Object.keys(objectObj)
+
+    //populate with array data
+    let arrayA = []
+
+  return  array_for_object.map((object)=>arrayA.push(object))
+
+
+  }
+
+
 //look at abstract admin to verify a user is in db
 //if is authorized, alert("this is user a  he is logged in")
 
@@ -170,7 +246,9 @@ class LoginTwo extends React.Component {
       //If credentials are false/ don't exist, set this.failedlogin state to true
 
     render(){
-
+        let title =                             <a href="#">
+                     <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
+                 </a>
       // return to the panel,the image and empty form
 
         if (this.state.login==="" && this.state.failed_login === ""){
@@ -179,13 +257,11 @@ class LoginTwo extends React.Component {
 
                   <div className="block-center mt-xl wd-xl">
                        { /* START panel */ }
-                       <div className="panel panel-dark panel-flat">
-                           <div className="panel-heading text-center">
-                               <a href="#">
-                                   <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
-                               </a>
-                           </div>
-                           <div className="panel-body">
+                       <Panel style={{'height':'50%',  'width':'50%'}} header={title}>
+
+
+
+
                                <p className="text-left pv">SIGN IN TO CONTINUE.</p>
 
 
@@ -241,10 +317,11 @@ class LoginTwo extends React.Component {
 
 
 
-                         </div>
 
 
-                       </div>
+
+
+                       </Panel>
                      </div>
           );
 }
@@ -281,14 +358,14 @@ class LoginTwo extends React.Component {
 
                   return (
 
-                              <div className="block-center mt-xl wd-xl">
-                                   { /* START panel */ }
-                                   <div className="panel panel-dark panel-flat">
-                                       <div className="panel-heading text-center">
-                                           <a href="#">
-                                               <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
-                                           </a>
-                                       </div>
+                                <div className="block-center mt-xl wd-xl">
+                                     { /* START panel */ }
+                                     <div className="panel panel-dark panel-flat">
+                                         <div className="panel-heading text-center">
+                                             <a href="#">
+                                                 <img src="img/logo.png" alt="Image" className="block-center img-rounded" />
+                                             </a>
+                                         </div>
                                        <div className="panel-body">
                                            <p className="text-center pv">SIGN IN TO CONTINUE.</p>
                                            <form onSubmit={this.onSubmit}>

@@ -52,6 +52,13 @@ ReactDOM.render(
               <Route path="thankyou" component={ThankYou}/>
       </Route>
 
+      {/*Pages*/}
+      <Route path="/" component={BasePage}>
+        {/* Default route*/}
+            <Route path="adminForBrain" component={NotFound}/>
+      </Route>
+
+
 
     <Route path="/" component={Base}>
 

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8c0c65f98b56a6b71edb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "14e0ac48c7d71aa56673"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -55063,66 +55063,56 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-
-	      if (
-
+	      var title = _react2.default.createElement(
+	        'a',
+	        { href: '#' },
+	        _react2.default.createElement('img', { src: 'img/logo.png', alt: 'Image', className: 'block-center img-rounded' })
+	      );
 	      // return to the panel,the image and empty form
-	      this.state.login === "" && this.state.failed_login === "") {
+
+	      if (this.state.login === "" && this.state.failed_login === "") {
 
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'block-center mt-xl wd-xl' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'panel panel-dark panel-flat' },
+	            _reactBootstrap.Panel,
+	            { style: { 'height': '50%', 'width': '50%' }, header: title },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'panel-heading text-center' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: '#' },
-	                _react2.default.createElement('img', { src: 'img/logo.png', alt: 'Image', className: 'block-center img-rounded' })
-	              )
+	              'p',
+	              { className: 'text-left pv' },
+	              'SIGN IN TO CONTINUE.'
 	            ),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'panel-body' },
-	              _react2.default.createElement(
-	                'p',
-	                { className: 'text-left pv' },
-	                'SIGN IN TO CONTINUE.'
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.FormGroup,
-	                {
-	                  controlId: 'formBasicText',
+	              _reactBootstrap.FormGroup,
+	              {
+	                controlId: 'formBasicText',
 
-	                  validationState: this.getValidationState()
+	                validationState: this.getValidationState()
+	              },
+	              _react2.default.createElement(_reactBootstrap.FormControl, {
+	                type: 'text',
+	                style: {
+	                  'width': '50%'
 	                },
-	                _react2.default.createElement(_reactBootstrap.FormControl, {
-	                  type: 'text',
-	                  style: {
-	                    'width': '50%'
-	                  },
-	                  value: this.state.email,
-	                  placeholder: 'Enter email',
-	                  onChange: this.handleChangeEmail
-	                }),
-	                _react2.default.createElement(_reactBootstrap.FormControl, {
-	                  type: 'text',
-	                  style: {
-	                    'width': '50%'
+	                value: this.state.email,
+	                placeholder: 'Enter email',
+	                onChange: this.handleChangeEmail
+	              }),
+	              _react2.default.createElement(_reactBootstrap.FormControl, {
+	                type: 'text',
+	                style: {
+	                  'width': '50%'
 
-	                  },
-	                  value: this.state.password,
-	                  placeholder: 'Enter password',
-	                  onChange: this.handleChangePassword
-	                }),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'info', onClick: this.onSubmit },
-	                  'Submit'
-	                )
+	                },
+	                value: this.state.password,
+	                placeholder: 'Enter password',
+	                onChange: this.handleChangePassword
+	              }),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { bsStyle: 'info', onClick: this.onSubmit },
+	                'Submit'
 	              )
 	            )
 	          )
